@@ -1,0 +1,155 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use quitanda;
+Database changed
+mysql> update frutas set nome = 'Morango';
+Query OK, 10 rows affected (0.03 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> select * from frutas;
++----+---------+------------+--------+----------------+--------------+
+| id | nome    | quantidade | estado | data_aquisicao | id_categoria |
++----+---------+------------+--------+----------------+--------------+
+|  1 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  2 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  3 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  4 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  5 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  6 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  7 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  8 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  9 | Morango |       NULL | NULL   | NULL           |         NULL |
+| 10 | Morango |       NULL | NULL   | NULL           |         NULL |
++----+---------+------------+--------+----------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> update frutas set nome = 'Tomate' where id = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from frutas;
++----+---------+------------+--------+----------------+--------------+
+| id | nome    | quantidade | estado | data_aquisicao | id_categoria |
++----+---------+------------+--------+----------------+--------------+
+|  1 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  2 | Tomate  |       NULL | NULL   | NULL           |         NULL |
+|  3 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  4 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  5 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  6 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  7 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  8 | Morango |       NULL | NULL   | NULL           |         NULL |
+|  9 | Morango |       NULL | NULL   | NULL           |         NULL |
+| 10 | Morango |       NULL | NULL   | NULL           |         NULL |
++----+---------+------------+--------+----------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> update frutas set nome = 'Fruta do conde' where id = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from frutas;
++----+----------------+------------+--------+----------------+--------------+
+| id | nome           | quantidade | estado | data_aquisicao | id_categoria |
++----+----------------+------------+--------+----------------+--------------+
+|  1 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  2 | Tomate         |       NULL | NULL   | NULL           |         NULL |
+|  3 | Fruta do conde |       NULL | NULL   | NULL           |         NULL |
+|  4 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  5 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  6 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  7 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  8 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  9 | Morango        |       NULL | NULL   | NULL           |         NULL |
+| 10 | Morango        |       NULL | NULL   | NULL           |         NULL |
++----+----------------+------------+--------+----------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> update frutas set nome = 'Pitaya' where id = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update frutas set nome = 'Acerola' where id = 5;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update frutas set nome = 'Bergamota where id = 6;
+    '> ;
+    '> \c
+    '> '\c
+mysql> update frutas set nome = 'Bergamota' where id = 6;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update categorias set nome = 'Legumes Orgânicos' where id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update categorias set nome = 'Frutas Orgânicas' where id = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update categorias set nome = 'Grãos Orgânicos' where id = 3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update categorias set nome = 'Vegetais Orgânicos' where id = 4;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from categorias;
++----+--------------------+
+| id | nome               |
++----+--------------------+
+|  1 | Legumes Orgânicos  |
+|  2 | Frutas Orgânicas   |
+|  3 | Grãos Orgânicos    |
+|  4 | Vegetais Orgânicos |
+|  5 | Outros             |
++----+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from frutas;
++----+----------------+------------+--------+----------------+--------------+
+| id | nome           | quantidade | estado | data_aquisicao | id_categoria |
++----+----------------+------------+--------+----------------+--------------+
+|  1 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  2 | Tomate         |       NULL | NULL   | NULL           |         NULL |
+|  3 | Fruta do conde |       NULL | NULL   | NULL           |         NULL |
+|  4 | Pitaya         |       NULL | NULL   | NULL           |         NULL |
+|  5 | Acerola        |       NULL | NULL   | NULL           |         NULL |
+|  6 | Bergamota      |       NULL | NULL   | NULL           |         NULL |
+|  7 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  8 | Morango        |       NULL | NULL   | NULL           |         NULL |
+|  9 | Morango        |       NULL | NULL   | NULL           |         NULL |
+| 10 | Morango        |       NULL | NULL   | NULL           |         NULL |
++----+----------------+------------+--------+----------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> exec sp_fkeys 'frutas';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exec sp_fkeys 'frutas'' at line 1
+mysql> select * from frutas where referenced_table_name = 'categorias';
+ERROR 1054 (42S22): Unknown column 'referenced_table_name' in 'where clause'
+mysql> select frutas from information_schema.key_column_usage where referenced_table_name = 'categorias';
+ERROR 1054 (42S22): Unknown column 'frutas' in 'field list'
+mysql> select * from information_schema.key_column_usage where referenced_table_name = 'categorias';
++--------------------+-------------------+--------------------+---------------+--------------+------------+--------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+| CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME    | TABLE_CATALOG | TABLE_SCHEMA | TABLE_NAME | COLUMN_NAME  | ORDINAL_POSITION | POSITION_IN_UNIQUE_CONSTRAINT | REFERENCED_TABLE_SCHEMA | REFERENCED_TABLE_NAME | REFERENCED_COLUMN_NAME |
++--------------------+-------------------+--------------------+---------------+--------------+------------+--------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+| def                | quitanda          | fk_fruta_categoria | def           | quitanda     | frutas     | id_categoria |                1 |                             1 | quitanda                | categorias            | id
+       |
++--------------------+-------------------+--------------------+---------------+--------------+------------+--------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+1 row in set (0.01 sec)
+
+mysql>

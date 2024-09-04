@@ -1,0 +1,460 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++-----------------------+
+| Database              |
++-----------------------+
+| biblioteca            |
+| empresa               |
+| ex24_sistema_projetos |
+| information_schema    |
+| mysql                 |
+| performance_schema    |
+| quitanda              |
+| sakila                |
+| sys                   |
+| world                 |
++-----------------------+
+10 rows in set (0.00 sec)
+
+mysql> create database ex25_reservas_voos
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use ex25_reservas_voos;
+Database changed
+mysql> create table voos (
+    -> id int auto_increment,
+    -> numero_unico int unique not null,
+    -> data_hora_partida datetime,
+    -> destino varchar(100),
+    -> companias_aereas_id int,
+    -> aeroporto_partida_id int,
+    -> aeroporto_chegada_id int,
+    -> passageiros_id int,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table aeroportos (
+    -> id int auto_increment,
+    -> nome varchar(100) not null,
+    -> cidade varchar(100),
+    -> pais varchar(100),
+    -> codigo_iata int unique not null,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table bilhetes (
+    -> id int auto_increment,
+    -> numero_unico int unique not null,
+    -> voos_id int,
+    -> passageiros_id int,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table companias_aeras (
+    -> id int auto_increment,
+    -> nome varchar(100) not null,
+    -> pais_origem varchar(100),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table passageiros (
+    -> id int auto_increment,
+    -> nome varchar(100) not null,
+    -> data_nascimento date,
+    -> genero varchar(100),
+    -> nacionalidade varchar(100),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> alter table voos
+    -> add constraint fk_voos_compania
+    -> foreign key (companias_aereas_id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> rename table companias_aeras to companias_aereas;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> alter table voos
+    -> add constraint fk_voos_compania
+    -> foreign key (companias_aereas_id)
+    -> references companias_aereas(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table voos
+    -> add constraint fk_voos_aeroporto_partida
+    -> foreign key (aeroporto_partida_id)
+    -> references aeroportos(id);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table voos
+    -> add constraint fk_voos_aeroporto_chegada
+    -> foreign key (aeroporto_chegada_id)
+    -> references aeroportos(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table voos
+    -> add constraint fk_voos_passageiros
+    -> foreign key (passageiros_id)
+    -> references passageiros(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table bilhetes
+    -> add constraint fk_bilhetes_voos
+    -> foreign key (voos_id)
+    -> references voos(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table bilhetes
+    -> add constraint fk_bilhetes_passageiros
+    -> foreign key (passageiros_id)
+    -> references passageiros(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++------------------------------+
+| Tables_in_ex25_reservas_voos |
++------------------------------+
+| aeroportos                   |
+| bilhetes                     |
+| companias_aereas             |
+| passageiros                  |
+| voos                         |
++------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> desc aeroportos
+    -> ;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int          | NO   | PRI | NULL    | auto_increment |
+| nome        | varchar(100) | NO   |     | NULL    |                |
+| cidade      | varchar(100) | YES  |     | NULL    |                |
+| pais        | varchar(100) | YES  |     | NULL    |                |
+| codigo_iata | int          | NO   | UNI | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc bilhetes;
++----------------+------+------+-----+---------+----------------+
+| Field          | Type | Null | Key | Default | Extra          |
++----------------+------+------+-----+---------+----------------+
+| id             | int  | NO   | PRI | NULL    | auto_increment |
+| numero_unico   | int  | NO   | UNI | NULL    |                |
+| voos_id        | int  | YES  | MUL | NULL    |                |
+| passageiros_id | int  | YES  | MUL | NULL    |                |
++----------------+------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc companias_aereas;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int          | NO   | PRI | NULL    | auto_increment |
+| nome        | varchar(100) | NO   |     | NULL    |                |
+| pais_origem | varchar(100) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc passageiros;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int          | NO   | PRI | NULL    | auto_increment |
+| nome            | varchar(100) | NO   |     | NULL    |                |
+| data_nascimento | date         | YES  |     | NULL    |                |
+| genero          | varchar(100) | YES  |     | NULL    |                |
+| nacionalidade   | varchar(100) | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc voos;
++----------------------+--------------+------+-----+---------+----------------+
+| Field                | Type         | Null | Key | Default | Extra          |
++----------------------+--------------+------+-----+---------+----------------+
+| id                   | int          | NO   | PRI | NULL    | auto_increment |
+| numero_unico         | int          | NO   | UNI | NULL    |                |
+| data_hora_partida    | datetime     | YES  |     | NULL    |                |
+| destino              | varchar(100) | YES  |     | NULL    |                |
+| companias_aereas_id  | int          | YES  | MUL | NULL    |                |
+| aeroporto_partida_id | int          | YES  | MUL | NULL    |                |
+| aeroporto_chegada_id | int          | YES  | MUL | NULL    |                |
+| passageiros_id       | int          | YES  | MUL | NULL    |                |
++----------------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> rename database biblioteca to ex_23_biblioteca;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database biblioteca to ex_23_biblioteca' at line 1
+mysql> use frutas;
+ERROR 1049 (42000): Unknown database 'frutas'
+mysql> show databases;
++-----------------------+
+| Database              |
++-----------------------+
+| biblioteca            |
+| empresa               |
+| ex24_sistema_projetos |
+| ex25_reservas_voos    |
+| information_schema    |
+| mysql                 |
+| performance_schema    |
+| quitanda              |
+| sakila                |
+| sys                   |
+| world                 |
++-----------------------+
+11 rows in set (0.01 sec)
+
+mysql> use quitanda;
+Database changed
+mysql> show frutas;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'frutas' at line 1
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
+| id_categoria   | int          | YES  | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> insert into frutas (
+    -> nome)
+    -> values ('Laranja')
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 4
+mysql> show tables;
++--------------------+
+| Tables_in_quitanda |
++--------------------+
+| categorias         |
+| frutas             |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc categorias;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Legumes');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc categorias;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from categorias;
++----+---------+
+| id | nome    |
++----+---------+
+|  1 | Legumes |
++----+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Frutas');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from categorias;
++----+---------+
+| id | nome    |
++----+---------+
+|  1 | Legumes |
+|  2 | Frutas  |
++----+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Grãos');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from categorias;
++----+---------+
+| id | nome    |
++----+---------+
+|  1 | Legumes |
+|  2 | Frutas  |
+|  3 | Grãos   |
++----+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Verduras','Outros');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into categorias (nome, nome) values ('Verduras','Outros');
+ERROR 1110 (42000): Column 'nome' specified twice
+mysql> insert into categorias (nome) values ('Verduras''Outros');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from categorias;
++----+-----------------+
+| id | nome            |
++----+-----------------+
+|  1 | Legumes         |
+|  2 | Frutas          |
+|  3 | Grãos           |
+|  4 | Verduras'Outros |
++----+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from categorias (nome) values ('Verduras' 'Outros');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(nome) values ('Verduras' 'Outros')' at line 1
+mysql> insert into categorias (nome) values ('Verduras')('Outros');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('Outros')' at line 1
+mysql> insert into categorias (nome) values ('Outros');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from categorias;
++----+-----------------+
+| id | nome            |
++----+-----------------+
+|  1 | Legumes         |
+|  2 | Frutas          |
+|  3 | Grãos           |
+|  4 | Verduras'Outros |
+|  5 | Outros          |
++----+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Laranja');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into frutas (nome) values ('Pêra');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Maça');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Uva');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Banana');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Manga');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Melancia');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Melão');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into frutas (nome) values ('Abacate');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into frutas (nome) values ('Mamão');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from frutas/
+    -> \c
+mysql> select * from frutas;
++----+----------+------------+--------+----------------+--------------+
+| id | nome     | quantidade | estado | data_aquisicao | id_categoria |
++----+----------+------------+--------+----------------+--------------+
+|  1 | Laranja  |       NULL | NULL   | NULL           |         NULL |
+|  2 | Pêra     |       NULL | NULL   | NULL           |         NULL |
+|  3 | Maça     |       NULL | NULL   | NULL           |         NULL |
+|  4 | Uva      |       NULL | NULL   | NULL           |         NULL |
+|  5 | Banana   |       NULL | NULL   | NULL           |         NULL |
+|  6 | Manga    |       NULL | NULL   | NULL           |         NULL |
+|  7 | Melancia |       NULL | NULL   | NULL           |         NULL |
+|  8 | Melão    |       NULL | NULL   | NULL           |         NULL |
+|  9 | Abacate  |       NULL | NULL   | NULL           |         NULL |
+| 10 | Mamão    |       NULL | NULL   | NULL           |         NULL |
++----+----------+------------+--------+----------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from categorias;
++----+-----------------+
+| id | nome            |
++----+-----------------+
+|  1 | Legumes         |
+|  2 | Frutas          |
+|  3 | Grãos           |
+|  4 | Verduras'Outros |
+|  5 | Outros          |
++----+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> update categorias
+    -> set nome = 'Verduras'
+    -> where id = 4;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from categorias;
++----+----------+
+| id | nome     |
++----+----------+
+|  1 | Legumes  |
+|  2 | Frutas   |
+|  3 | Grãos    |
+|  4 | Verduras |
+|  5 | Outros   |
++----+----------+
+5 rows in set (0.00 sec)
+
+mysql> update frutas
+    -> set
+    -> nome = 'Melância'
+    -> where
+    -> id = 7
+    -> ;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from frutas;
++----+----------+------------+--------+----------------+--------------+
+| id | nome     | quantidade | estado | data_aquisicao | id_categoria |
++----+----------+------------+--------+----------------+--------------+
+|  1 | Laranja  |       NULL | NULL   | NULL           |         NULL |
+|  2 | Pêra     |       NULL | NULL   | NULL           |         NULL |
+|  3 | Maça     |       NULL | NULL   | NULL           |         NULL |
+|  4 | Uva      |       NULL | NULL   | NULL           |         NULL |
+|  5 | Banana   |       NULL | NULL   | NULL           |         NULL |
+|  6 | Manga    |       NULL | NULL   | NULL           |         NULL |
+|  7 | Melância |       NULL | NULL   | NULL           |         NULL |
+|  8 | Melão    |       NULL | NULL   | NULL           |         NULL |
+|  9 | Abacate  |       NULL | NULL   | NULL           |         NULL |
+| 10 | Mamão    |       NULL | NULL   | NULL           |         NULL |
++----+----------+------------+--------+----------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql>

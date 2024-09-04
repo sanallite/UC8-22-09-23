@@ -1,0 +1,2852 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 581
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create view FrutasQuantidade
+    -> as nome, quantidade
+    -> from frutas
+    -> where quantidade < 10;
+ERROR 1046 (3D000): No database selected
+mysql> use quitanda;
+Database changed
+mysql> create view FrutasQuantidade
+    -> as nome, quantidade
+    -> from frutas
+    -> where quantidade < 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nome, quantidade
+from frutas
+where quantidade < 10' at line 2
+mysql> create view FrutasQuantidade
+    -> as select nome, quantidade
+    -> from frutas
+    -> where quantidade < 10;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from FrutasQuantidade;
++---------------+------------+
+| nome          | quantidade |
++---------------+------------+
+| Laranja Bahia |          5 |
++---------------+------------+
+1 row in set (0.00 sec)
+
+mysql> use sakila;
+Database changed
+mysql> desc tables;
+ERROR 1146 (42S02): Table 'sakila.tables' doesn't exist
+mysql> show tables;
++------------------+
+| Tables_in_sakila |
++------------------+
+| aluguel          |
+| ator             |
+| categoria        |
+| cidade           |
+| cliente          |
+| endereco         |
+| filme            |
+| filme_ator       |
+| filme_categoria  |
+| filme_texto      |
+| funcionario      |
+| idioma           |
+| inventario       |
+| loja             |
+| pagamento        |
+| pais             |
++------------------+
+16 rows in set (0.01 sec)
+
+mysql> desc filme;
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                 | Type                                                                | Null | Key | Default           | Extra                                         |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| filme_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| titulo                | varchar(255)                                                        | NO   | MUL | NULL              |                                               |
+| descricao             | text                                                                | YES  |     | NULL              |                                               |
+| ano_de_lancamento     | year                                                                | YES  |     | NULL              |                                               |
+| idioma_id             | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| idioma_original_id    | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| duracao_da_locacao    | tinyint unsigned                                                    | NO   |     | 3
+       |                                               |
+| preco_da_locacao      | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| duracao_do_filme      | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| custo_de_substituicao | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| classificacao         | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G
+       |                                               |
+| recursos_especiais    | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| ultima_atualizacao    | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows\cn set (0.01 sec)
+mysql>
+mysql> create view filme_ano_lancamento as
+    -> select titulo, ano_de_lancamento
+    -> from filme;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from filme_ano_lancamento;
++-----------------------------+-------------------+
+| titulo                      | ano_de_lancamento |
++-----------------------------+-------------------+
+| ACADEMY DINOSAUR            |              2006 |
+| ACE GOLDFINGER              |              2006 |
+| ADAPTATION HOLES            |              2006 |
+| AFFAIR PREJUDICE            |              2006 |
+| AFRICAN EGG                 |              2006 |
+| AGENT TRUMAN                |              2008 |
+| AIRPLANE SIERRA             |              2006 |
+| AIRPORT POLLOCK             |              2006 |
+| ALABAMA DEVIL               |              2006 |
+| ALADDIN CALENDAR            |              2006 |
+| ALAMO VIDEOTAPE             |              2006 |
+| ALASKA PHANTOM              |              2006 |
+| ALI FOREVER                 |              2006 |
+| ALICE FANTASIA              |              2006 |
+| ALIEN CENTER                |              2006 |
+| ALLEY EVOLUTION             |              2006 |
+| ALONE TRIP                  |              2006 |
+| ALTER VICTORY               |              2006 |
+| AMADEUS HOLY                |              2006 |
+| AMELIE HELLFIGHTERS         |              2006 |
+| AMERICAN CIRCUS             |              2006 |
+| AMISTAD MIDSUMMER           |              2006 |
+| ANACONDA CONFESSIONS        |              2006 |
+| ANALYZE HOOSIERS            |              2006 |
+| ANGELS LIFE                 |              2006 |
+| ANNIE IDENTITY              |              2006 |
+| ANONYMOUS HUMAN             |              2006 |
+| ANTHEM LUKE                 |              2006 |
+| ANTITRUST TOMATOES          |              2006 |
+| ANYTHING SAVANNAH           |              2006 |
+| APACHE DIVINE               |              2006 |
+| APOCALYPSE FLAMINGOS        |              2006 |
+| APOLLO TEEN                 |              2006 |
+| ARABIA DOGMA                |              2006 |
+| ARACHNOPHOBIA ROLLERCOASTER |              2006 |
+| ARGONAUTS TOWN              |              2006 |
+| ARIZONA BANG                |              2008 |
+| ARK RIDGEMONT               |              2006 |
+| ARMAGEDDON LOST             |              2006 |
+| ARMY FLINTSTONES            |              2006 |
+| ARSENIC INDEPENDENCE        |              2006 |
+| ARTIST COLDBLOODED          |              2006 |
+| ATLANTIS CAUSE              |              2006 |
+| ATTACKS HATE                |              2006 |
+| ATTRACTION NEWTON           |              2006 |
+| AUTUMN CROW                 |              2006 |
+| BABY HALL                   |              2007 |
+| BACKLASH UNDEFEATED         |              2007 |
+| BADMAN DAWN                 |              2007 |
+| BAKED CLEOPATRA             |              2007 |
+| BALLOON HOMEWARD            |              2007 |
+| BALLROOM MOCKINGBIRD        |              2007 |
+| BANG KWAI                   |              2007 |
+| BANGER PINOCCHIO            |              2007 |
+| BARBARELLA STREETCAR        |              2007 |
+| BAREFOOT MANCHURIAN         |              2007 |
+| BASIC EASY                  |              2007 |
+| BEACH HEARTBREAKERS         |              2007 |
+| BEAR GRACELAND              |              2007 |
+| BEAST HUNCHBACK             |              2007 |
+| BEAUTY GREASE               |              2007 |
+| BED HIGHBALL                |              2007 |
+| BEDAZZLED MARRIED           |              2007 |
+| BEETHOVEN EXORCIST          |              2007 |
+| BEHAVIOR RUNAWAY            |              2008 |
+| BENEATH RUSH                |              2007 |
+| BERETS AGENT                |              2007 |
+| BETRAYED REAR               |              2007 |
+| BEVERLY OUTLAW              |              2007 |
+| BIKINI BORROWERS            |              2007 |
+| BILKO ANONYMOUS             |              2007 |
+| BILL OTHERS                 |              2007 |
+| BINGO TALENTED              |              2007 |
+| BIRCH ANTITRUST             |              2007 |
+| BIRD INDEPENDENCE           |              2007 |
+| BIRDCAGE CASPER             |              2007 |
+| BIRDS PERDITION             |              2007 |
+| BLACKOUT PRIVATE            |              2007 |
+| BLADE POLISH                |              2007 |
+| BLANKET BEVERLY             |              2007 |
+| BLINDNESS GUN               |              2007 |
+| BLOOD ARGONAUTS             |              2007 |
+| BLUES INSTINCT              |              2007 |
+| BOILED DARES                |              2007 |
+| BONNIE HOLOCAUST            |              2007 |
+| BOOGIE AMELIE               |              2007 |
+| BOONDOCK BALLROOM           |              2007 |
+| BORN SPINAL                 |              2007 |
+| BORROWERS BEDAZZLED         |              2007 |
+| BOULEVARD MOB               |              2007 |
+| BOUND CHEAPER               |              2007 |
+| BOWFINGER GABLES            |              2007 |
+| BRANNIGAN SUNRISE           |              2007 |
+| BRAVEHEART HUMAN            |              2007 |
+| BREAKFAST GOLDFINGER        |              2007 |
+| BREAKING HOME               |              2007 |
+| BRIDE INTRIGUE              |              2007 |
+| BRIGHT ENCOUNTERS           |              2007 |
+| BRINGING HYSTERICAL         |              2007 |
+| BROOKLYN DESERT             |              2007 |
+| BROTHERHOOD BLANKET         |              2007 |
+| BUBBLE GROSSE               |              2007 |
+| BUCKET BROTHERHOOD          |              2007 |
+| BUGSY SONG                  |              2007 |
+| BULL SHAWSHANK              |              2007 |
+| BULWORTH COMMANDMENTS       |              2007 |
+| BUNCH MINDS                 |              2007 |
+| BUTCH PANTHER               |              2007 |
+| BUTTERFLY CHOCOLAT          |              2007 |
+| CABIN FLASH                 |              2006 |
+| CADDYSHACK JEDI             |              2006 |
+| CALENDAR GUNFIGHT           |              2006 |
+| CALIFORNIA BIRDS            |              2006 |
+| CAMELOT VACATION            |              2006 |
+| CAMPUS REMEMBER             |              2006 |
+| CANDIDATE PERDITION         |              2006 |
+| CANDLES GRAPES              |              2006 |
+| CANYON STOCK                |              2006 |
+| CAPER MOTIONS               |              2006 |
+| CARIBBEAN LIBERTY           |              2006 |
+| CAROL TEXAS                 |              2006 |
+| CARRIE BUNCH                |              2006 |
+| CASABLANCA SUPER            |              2006 |
+| CASPER DRAGONFLY            |              2006 |
+| CASSIDY WYOMING             |              2006 |
+| CASUALTIES ENCINO           |              2006 |
+| CAT CONEHEADS               |              2006 |
+| CATCH AMISTAD               |              2006 |
+| CAUSE DATE                  |              2006 |
+| CELEBRITY HORN              |              2006 |
+| CENTER DINOSAUR             |              2006 |
+| CHAINSAW UPTOWN             |              2006 |
+| CHAMBER ITALIAN             |              2006 |
+| CHAMPION FLATLINERS         |              2006 |
+| CHANCE RESURRECTION         |              2006 |
+| CHAPLIN LICENSE             |              2006 |
+| CHARADE DUFFEL              |              2008 |
+| CHARIOTS CONSPIRACY         |              2006 |
+| CHASING FIGHT               |              2006 |
+| CHEAPER CLYDE               |              2006 |
+| CHICAGO NORTH               |              2006 |
+| CHICKEN HELLFIGHTERS        |              2008 |
+| CHILL LUCK                  |              2006 |
+| CHINATOWN GLADIATOR         |              2006 |
+| CHISUM BEHAVIOR             |              2006 |
+| CHITTY LOCK                 |              2006 |
+| CHOCOLAT HARRY              |              2006 |
+| CHOCOLATE DUCK              |              2006 |
+| CHRISTMAS MOONSHINE         |              2006 |
+| CIDER DESIRE                |              2006 |
+| CINCINATTI WHISPERER        |              2006 |
+| CIRCUS YOUTH                |              2006 |
+| CITIZEN SHREK               |              2006 |
+| CLASH FREDDY                |              2006 |
+| CLEOPATRA DEVIL             |              2006 |
+| CLERKS ANGELS               |              2006 |
+| CLOCKWORK PARADISE          |              2006 |
+| CLONES PINOCCHIO            |              2006 |
+| CLOSER BANG                 |              2006 |
+| CLUB GRAFFITI               |              2006 |
+| CLUE GRAIL                  |              2006 |
+| CLUELESS BUCKET             |              2006 |
+| CLYDE THEORY                |              2006 |
+| COAST RAINBOW               |              2006 |
+| COLDBLOODED DARLING         |              2006 |
+| COLOR PHILADELPHIA          |              2006 |
+| COMA HEAD                   |              2006 |
+| COMANCHEROS ENEMY           |              2006 |
+| COMFORTS RUSH               |              2006 |
+| COMMAND DARLING             |              2006 |
+| COMMANDMENTS EXPRESS        |              2006 |
+| CONEHEADS SMOOCHY           |              2006 |
+| CONFESSIONS MAGUIRE         |              2006 |
+| CONFIDENTIAL INTERVIEW      |              2006 |
+| CONFUSED CANDLES            |              2006 |
+| CONGENIALITY QUEST          |              2006 |
+| CONNECTICUT TRAMP           |              2006 |
+| CONNECTION MICROCOSMOS      |              2006 |
+| CONQUERER NUTS              |              2006 |
+| CONSPIRACY SPIRIT           |              2006 |
+| CONTACT ANONYMOUS           |              2006 |
+| CONTROL ANTHEM              |              2006 |
+| CONVERSATION DOWNHILL       |              2006 |
+| CORE SUIT                   |              2006 |
+| COWBOY DOOM                 |              2008 |
+| CRAFT OUTFIELD              |              2006 |
+| CRANES RESERVOIR            |              2006 |
+| CRAZY HOME                  |              2006 |
+| CREATURES SHAKESPEARE       |              2006 |
+| CREEPERS KANE               |              2006 |
+| CROOKED FROGMEN             |              2006 |
+| CROSSING DIVORCE            |              2006 |
+| CROSSROADS CASUALTIES       |              2006 |
+| CROW GREASE                 |              2006 |
+| CROWDS TELEMARK             |              2006 |
+| CRUELTY UNFORGIVEN          |              2006 |
+| CRUSADE HONEY               |              2006 |
+| CRYSTAL BREAKING            |              2006 |
+| CUPBOARD SINNERS            |              2006 |
+| CURTAIN VIDEOTAPE           |              2006 |
+| CYCLONE FAMILY              |              2006 |
+| DADDY PITTSBURGH            |              2006 |
+| DAISY MENAGERIE             |              2006 |
+| DALMATIONS SWEDEN           |              2006 |
+| DANCES NONE                 |              2006 |
+| DANCING FEVER               |              2006 |
+| DANGEROUS UPTOWN            |              2006 |
+| DARES PLUTO                 |              2006 |
+| DARKNESS WAR                |              2006 |
+| DARKO DORADO                |              2006 |
+| DARLING BREAKING            |              2006 |
+| DARN FORRESTER              |              2006 |
+| DATE SPEED                  |              2006 |
+| DAUGHTER MADIGAN            |              2006 |
+| DAWN POND                   |              2006 |
+| DAY UNFAITHFUL              |              2006 |
+| DAZED PUNK                  |              2006 |
+| DECEIVER BETRAYED           |              2006 |
+| DEEP CRUSADE                |              2006 |
+| DEER VIRGINIAN              |              2006 |
+| DELIVERANCE MULHOLLAND      |              2006 |
+| DESERT POSEIDON             |              2006 |
+| DESIRE ALIEN                |              2006 |
+| DESPERATE TRAINSPOTTING     |              2006 |
+| DESTINATION JERK            |              2006 |
+| DESTINY SATURDAY            |              2006 |
+| DETAILS PACKER              |              2006 |
+| DETECTIVE VISION            |              2006 |
+| DEVIL DESIRE                |              2006 |
+| DIARY PANIC                 |              2006 |
+| DINOSAUR SECRETARY          |              2006 |
+| DIRTY ACE                   |              2006 |
+| DISCIPLE MOTHER             |              2008 |
+| DISTURBING SCARFACE         |              2006 |
+| DIVIDE MONSTER              |              2006 |
+| DIVINE RESURRECTION         |              2006 |
+| DIVORCE SHINING             |              2006 |
+| DOCTOR GRAIL                |              2006 |
+| DOGMA FAMILY                |              2006 |
+| DOLLS RAGE                  |              2006 |
+| DONNIE ALLEY                |              2006 |
+| DOOM DANCING                |              2006 |
+| DOORS PRESIDENT             |              2006 |
+| DORADO NOTTING              |              2006 |
+| DOUBLE WRATH                |              2006 |
+| DOUBTFIRE LABYRINTH         |              2006 |
+| DOWNHILL ENOUGH             |              2006 |
+| DOZEN LION                  |              2006 |
+| DRACULA CRYSTAL             |              2006 |
+| DRAGON SQUAD                |              2006 |
+| DRAGONFLY STRANGERS         |              2006 |
+| DREAM PICKUP                |              2006 |
+| DRIFTER COMMANDMENTS        |              2006 |
+| DRIVER ANNIE                |              2006 |
+| DRIVING POLISH              |              2006 |
+| DROP WATERFRONT             |              2006 |
+| DRUMLINE CYCLONE            |              2006 |
+| DRUMS DYNAMITE              |              2006 |
+| DUCK RACER                  |              2006 |
+| DUDE BLINDNESS              |              2006 |
+| DUFFEL APOCALYPSE           |              2006 |
+| DUMBO LUST                  |              2006 |
+| DURHAM PANKY                |              2006 |
+| DWARFS ALTER                |              2006 |
+| DYING MAKER                 |              2006 |
+| DYNAMITE TARZAN             |              2006 |
+| EAGLES PANKY                |              2006 |
+| EARLY HOME                  |              2006 |
+| EARRING INSTINCT            |              2006 |
+| EARTH VISION                |              2006 |
+| EASY GLADIATOR              |              2006 |
+| EDGE KISSING                |              2006 |
+| EFFECT GLADIATOR            |              2006 |
+| EGG IGBY                    |              2006 |
+| EGYPT TENENBAUMS            |              2008 |
+| ELEMENT FREDDY              |              2006 |
+| ELEPHANT TROJAN             |              2006 |
+| ELF MURDER                  |              2006 |
+| ELIZABETH SHANE             |              2006 |
+| EMPIRE MALKOVICH            |              2006 |
+| ENCINO ELF                  |              2006 |
+| ENCOUNTERS CURTAIN          |              2006 |
+| ENDING CROWDS               |              2006 |
+| ENEMY ODDS                  |              2006 |
+| ENGLISH BULWORTH            |              2006 |
+| ENOUGH RAGING               |              2006 |
+| ENTRAPMENT SATISFACTION     |              2006 |
+| ESCAPE METROPOLIS           |              2006 |
+| EVE RESURRECTION            |              2006 |
+| EVERYONE CRAFT              |              2006 |
+| EVOLUTION ALTER             |              2006 |
+| EXCITEMENT EVE              |              2006 |
+| EXORCIST STING              |              2006 |
+| EXPECATIONS NATURAL         |              2006 |
+| EXPENDABLE STALLION         |              2008 |
+| EXPRESS LONELY              |              2006 |
+| EXTRAORDINARY CONQUERER     |              2006 |
+| EYES DRIVING                |              2006 |
+| FACTORY DRAGON              |              2006 |
+| FALCON VOLUME               |              2006 |
+| FAMILY SWEET                |              2006 |
+| FANTASIA PARK               |              2006 |
+| FANTASY TROOPERS            |              2006 |
+| FARGO GANDHI                |              2006 |
+| FATAL HAUNTED               |              2006 |
+| FEATHERS METAL              |              2006 |
+| FELLOWSHIP AUTUMN           |              2006 |
+| FERRIS MOTHER               |              2008 |
+| FEUD FROGMEN                |              2006 |
+| FEVER EMPIRE                |              2006 |
+| FICTION CHRISTMAS           |              2006 |
+| FIDDLER LOST                |              2006 |
+| FIDELITY DEVIL              |              2006 |
+| FIGHT JAWBREAKER            |              2006 |
+| FINDING ANACONDA            |              2006 |
+| FIRE WOLVES                 |              2006 |
+| FIREBALL PHILADELPHIA       |              2006 |
+| FIREHOUSE VIETNAM           |              2006 |
+| FISH OPUS                   |              2006 |
+| FLAMINGOS CONNECTICUT       |              2006 |
+| FLASH WARS                  |              2006 |
+| FLATLINERS KILLER           |              2006 |
+| FLIGHT LIES                 |              2006 |
+| FLINTSTONES HAPPINESS       |              2006 |
+| FLOATS GARDEN               |              2006 |
+| FLYING HOOK                 |              2006 |
+| FOOL MOCKINGBIRD            |              2008 |
+| FOREVER CANDIDATE           |              2006 |
+| FORREST SONS                |              2006 |
+| FORRESTER COMANCHEROS       |              2006 |
+| FORWARD TEMPLE              |              2006 |
+| FRANKENSTEIN STRANGER       |              2006 |
+| FREAKY POCUS                |              2006 |
+| FREDDY STORM                |              2006 |
+| FREEDOM CLEOPATRA           |              2006 |
+| FRENCH HOLIDAY              |              2006 |
+| FRIDA SLIPPER               |              2006 |
+| FRISCO FORREST              |              2006 |
+| FROGMEN BREAKING            |              2006 |
+| FRONTIER CABIN              |              2006 |
+| FROST HEAD                  |              2006 |
+| FUGITIVE MAGUIRE            |              2006 |
+| FULL FLATLINERS             |              2006 |
+| FURY MURDER                 |              2006 |
+| GABLES METROPOLIS           |              2008 |
+| GALAXY SWEETHEARTS          |              2006 |
+| GAMES BOWFINGER             |              2006 |
+| GANDHI KWAI                 |              2006 |
+| GANGS PRIDE                 |              2006 |
+| GARDEN ISLAND               |              2006 |
+| GASLIGHT CRUSADE            |              2006 |
+| GATHERING CALENDAR          |              2006 |
+| GENTLEMEN STAGE             |              2006 |
+| GHOST GROUNDHOG             |              2006 |
+| GHOSTBUSTERS ELF            |              2006 |
+| GIANT TROOPERS              |              2006 |
+| GILBERT PELICAN             |              2006 |
+| GILMORE BOILED              |              2006 |
+| GLADIATOR WESTWARD          |              2006 |
+| GLASS DYING                 |              2006 |
+| GLEAMING JAWBREAKER         |              2006 |
+| GLORY TRACY                 |              2006 |
+| GO PURPLE                   |              2006 |
+| GODFATHER DIARY             |              2006 |
+| GOLD RIVER                  |              2006 |
+| GOLDFINGER SENSIBILITY      |              2006 |
+| GOLDMINE TYCOON             |              2006 |
+| GONE TROUBLE                |              2006 |
+| GOODFELLAS SALUTE           |              2006 |
+| GORGEOUS BINGO              |              2006 |
+| GOSFORD DONNIE              |              2006 |
+| GRACELAND DYNAMITE          |              2006 |
+| GRADUATE LORD               |              2006 |
+| GRAFFITI LOVE               |              2008 |
+| GRAIL FRANKENSTEIN          |              2006 |
+| GRAPES FURY                 |              2006 |
+| GREASE YOUTH                |              2006 |
+| GREATEST NORTH              |              2006 |
+| GREEDY ROOTS                |              2006 |
+| GREEK EVERYONE              |              2006 |
+| GRINCH MASSAGE              |              2006 |
+| GRIT CLOCKWORK              |              2008 |
+| GROOVE FICTION              |              2006 |
+| GROSSE WONDERFUL            |              2006 |
+| GROUNDHOG UNCUT             |              2006 |
+| GUMP DATE                   |              2006 |
+| GUN BONNIE                  |              2006 |
+| GUNFIGHT MOON               |              2006 |
+| GUNFIGHTER MUSSOLINI        |              2006 |
+| GUYS FALCON                 |              2006 |
+| HALF OUTFIELD               |              2006 |
+| HALL CASSIDY                |              2006 |
+| HALLOWEEN NUTS              |              2006 |
+| HAMLET WISDOM               |              2006 |
+| HANDICAP BOONDOCK           |              2006 |
+| HANGING DEEP                |              2006 |
+| HANKY OCTOBER               |              2006 |
+| HANOVER GALAXY              |              2006 |
+| HAPPINESS UNITED            |              2006 |
+| HARDLY ROBBERS              |              2006 |
+| HAROLD FRENCH               |              2006 |
+| HARPER DYING                |              2006 |
+| HARRY IDAHO                 |              2006 |
+| HATE HANDICAP               |              2006 |
+| HAUNTED ANTITRUST           |              2006 |
+| HAUNTING PIANIST            |              2006 |
+| HAWK CHILL                  |              2006 |
+| HEAD STRANGER               |              2006 |
+| HEARTBREAKERS BRIGHT        |              2006 |
+| HEAVEN FREEDOM              |              2006 |
+| HEAVENLY GUN                |              2006 |
+| HEAVYWEIGHTS BEAST          |              2006 |
+| HEDWIG ALTER                |              2006 |
+| HELLFIGHTERS SIERRA         |              2008 |
+| HIGH ENCINO                 |              2006 |
+| HIGHBALL POTTER             |              2006 |
+| HILLS NEIGHBORS             |              2006 |
+| HOBBIT ALIEN                |              2006 |
+| HOCUS FRIDA                 |              2006 |
+| HOLES BRANNIGAN             |              2006 |
+| HOLIDAY GAMES               |              2006 |
+| HOLLOW JEOPARDY             |              2006 |
+| HOLLYWOOD ANONYMOUS         |              2006 |
+| HOLOCAUST HIGHBALL          |              2006 |
+| HOLY TADPOLE                |              2006 |
+| HOME PITY                   |              2006 |
+| HOMEWARD CIDER              |              2006 |
+| HOMICIDE PEACH              |              2006 |
+| HONEY TIES                  |              2006 |
+| HOOK CHARIOTS               |              2006 |
+| HOOSIERS BIRDCAGE           |              2006 |
+| HOPE TOOTSIE                |              2006 |
+| HORN WORKING                |              2006 |
+| HORROR REIGN                |              2006 |
+| HOTEL HAPPINESS             |              2006 |
+| HOURS RAGE                  |              2006 |
+| HOUSE DYNAMITE              |              2006 |
+| HUMAN GRAFFITI              |              2006 |
+| HUNCHBACK IMPOSSIBLE        |              2006 |
+| HUNGER ROOF                 |              2006 |
+| HUNTER ALTER                |              2006 |
+| HUNTING MUSKETEERS          |              2006 |
+| HURRICANE AFFAIR            |              2006 |
+| HUSTLER PARTY               |              2006 |
+| HYDE DOCTOR                 |              2006 |
+| HYSTERICAL GRAIL            |              2006 |
+| ICE CROSSING                |              2006 |
+| IDAHO LOVE                  |              2006 |
+| IDENTITY LOVER              |              2006 |
+| IDOLS SNATCHERS             |              2006 |
+| IGBY MAKER                  |              2006 |
+| ILLUSION AMELIE             |              2006 |
+| IMAGE PRINCESS              |              2006 |
+| IMPACT ALADDIN              |              2006 |
+| IMPOSSIBLE PREJUDICE        |              2006 |
+| INCH JET                    |              2006 |
+| INDEPENDENCE HOTEL          |              2006 |
+| INDIAN LOVE                 |              2006 |
+| INFORMER DOUBLE             |              2006 |
+| INNOCENT USUAL              |              2006 |
+| INSECTS STONE               |              2006 |
+| INSIDER ARIZONA             |              2006 |
+| INSTINCT AIRPORT            |              2006 |
+| INTENTIONS EMPIRE           |              2006 |
+| INTERVIEW LIAISONS          |              2006 |
+| INTOLERABLE INTENTIONS      |              2006 |
+| INTRIGUE WORST              |              2006 |
+| INVASION CYCLONE            |              2006 |
+| IRON MOON                   |              2006 |
+| ISHTAR ROCKETEER            |              2006 |
+| ISLAND EXORCIST             |              2006 |
+| ITALIAN AFRICAN             |              2006 |
+| JACKET FRISCO               |              2006 |
+| JADE BUNCH                  |              2006 |
+| JAPANESE RUN                |              2006 |
+| JASON TRAP                  |              2006 |
+| JAWBREAKER BROOKLYN         |              2006 |
+| JAWS HARRY                  |              2006 |
+| JEDI BENEATH                |              2006 |
+| JEEPERS WEDDING             |              2006 |
+| JEKYLL FROGMEN              |              2006 |
+| JEOPARDY ENCINO             |              2006 |
+| JERICHO MULAN               |              2006 |
+| JERK PAYCHECK               |              2006 |
+| JERSEY SASSY                |              2006 |
+| JET NEIGHBORS               |              2006 |
+| JINGLE SAGEBRUSH            |              2006 |
+| JOON NORTHWEST              |              2006 |
+| JUGGLER HARDLY              |              2006 |
+| JUMANJI BLADE               |              2006 |
+| JUMPING WRATH               |              2006 |
+| JUNGLE CLOSER               |              2006 |
+| KANE EXORCIST               |              2006 |
+| KARATE MOON                 |              2006 |
+| KENTUCKIAN GIANT            |              2006 |
+| KICK SAVANNAH               |              2006 |
+| KILL BROTHERHOOD            |              2006 |
+| KILLER INNOCENT             |              2006 |
+| KING EVOLUTION              |              2006 |
+| KISS GLORY                  |              2006 |
+| KISSING DOLLS               |              2006 |
+| KNOCK WARLOCK               |              2006 |
+| KRAMER CHOCOLATE            |              2006 |
+| KWAI HOMEWARD               |              2006 |
+| LABYRINTH LEAGUE            |              2006 |
+| LADY STAGE                  |              2006 |
+| LADYBUGS ARMAGEDDON         |              2006 |
+| LAMBS CINCINATTI            |              2006 |
+| LANGUAGE COWBOY             |              2006 |
+| LAWLESS VISION              |              2006 |
+| LAWRENCE LOVE               |              2006 |
+| LEAGUE HELLFIGHTERS         |              2006 |
+| LEATHERNECKS DWARFS         |              2006 |
+| LEBOWSKI SOLDIERS           |              2006 |
+| LEGALLY SECRETARY           |              2006 |
+| LEGEND JEDI                 |              2006 |
+| LESSON CLEOPATRA            |              2006 |
+| LIAISONS SWEET              |              2006 |
+| LIBERTY MAGNIFICENT         |              2006 |
+| LICENSE WEEKEND             |              2006 |
+| LIES TREATMENT              |              2006 |
+| LIFE TWISTED                |              2006 |
+| LIGHTS DEER                 |              2006 |
+| LION UNCUT                  |              2006 |
+| LOATHING LEGALLY            |              2006 |
+| LOCK REAR                   |              2006 |
+| LOLA AGENT                  |              2006 |
+| LOLITA WORLD                |              2006 |
+| LONELY ELEPHANT             |              2006 |
+| LORD ARIZONA                |              2006 |
+| LOSE INCH                   |              2006 |
+| LOSER HUSTLER               |              2006 |
+| LOST BIRD                   |              2006 |
+| LOUISIANA HARRY             |              2006 |
+| LOVE SUICIDES               |              2006 |
+| LOVELY JINGLE               |              2008 |
+| LOVER TRUMAN                |              2006 |
+| LOVERBOY ATTACKS            |              2006 |
+| LUCK OPUS                   |              2006 |
+| LUCKY FLYING                |              2006 |
+| LUKE MUMMY                  |              2006 |
+| LUST LOCK                   |              2006 |
+| MADIGAN DORADO              |              2006 |
+| MADISON TRAP                |              2006 |
+| MADNESS ATTACKS             |              2006 |
+| MADRE GABLES                |              2006 |
+| MAGIC MALLRATS              |              2008 |
+| MAGNIFICENT CHITTY          |              2006 |
+| MAGNOLIA FORRESTER          |              2006 |
+| MAGUIRE APACHE              |              2006 |
+| MAIDEN HOME                 |              2008 |
+| MAJESTIC FLOATS             |              2006 |
+| MAKER GABLES                |              2006 |
+| MALKOVICH PET               |              2006 |
+| MALLRATS UNITED             |              2006 |
+| MALTESE HOPE                |              2006 |
+| MANCHURIAN CURTAIN          |              2006 |
+| MANNEQUIN WORST             |              2006 |
+| MARRIED GO                  |              2006 |
+| MARS ROMAN                  |              2006 |
+| MASK PEACH                  |              2006 |
+| MASKED BUBBLE               |              2006 |
+| MASSACRE USUAL              |              2006 |
+| MASSAGE IMAGE               |              2006 |
+| MATRIX SNOWMAN              |              2006 |
+| MAUDE MOD                   |              2006 |
+| MEET CHOCOLATE              |              2006 |
+| MEMENTO ZOOLANDER           |              2006 |
+| MENAGERIE RUSHMORE          |              2006 |
+| MERMAID INSECTS             |              2006 |
+| METAL ARMAGEDDON            |              2006 |
+| METROPOLIS COMA             |              2006 |
+| MICROCOSMOS PARADISE        |              2006 |
+| MIDNIGHT WESTWARD           |              2006 |
+| MIDSUMMER GROUNDHOG         |              2006 |
+| MIGHTY LUCK                 |              2006 |
+| MILE MULAN                  |              2006 |
+| MILLION ACE                 |              2006 |
+| MINDS TRUMAN                |              2006 |
+| MINE TITANS                 |              2006 |
+| MINORITY KISS               |              2006 |
+| MIRACLE VIRTUAL             |              2006 |
+| MISSION ZOOLANDER           |              2006 |
+| MIXED DOORS                 |              2006 |
+| MOB DUFFEL                  |              2006 |
+| MOCKINGBIRD HOLLYWOOD       |              2006 |
+| MOD SECRETARY               |              2006 |
+| MODEL FISH                  |              2006 |
+| MODERN DORADO               |              2008 |
+| MONEY HAROLD                |              2008 |
+| MONSOON CAUSE               |              2006 |
+| MONSTER SPARTACUS           |              2006 |
+| MONTEREY LABYRINTH          |              2006 |
+| MONTEZUMA COMMAND           |              2006 |
+| MOON BUNCH                  |              2006 |
+| MOONSHINE CABIN             |              2006 |
+| MOONWALKER FOOL             |              2006 |
+| MOSQUITO ARMAGEDDON         |              2006 |
+| MOTHER OLEANDER             |              2006 |
+| MOTIONS DETAILS             |              2006 |
+| MOULIN WAKE                 |              2006 |
+| MOURNING PURPLE             |              2006 |
+| MOVIE SHAKESPEARE           |              2006 |
+| MULAN MOON                  |              2006 |
+| MULHOLLAND BEAST            |              2006 |
+| MUMMY CREATURES             |              2006 |
+| MUPPET MILE                 |              2006 |
+| MURDER ANTITRUST            |              2006 |
+| MUSCLE BRIGHT               |              2006 |
+| MUSIC BOONDOCK              |              2006 |
+| MUSKETEERS WAIT             |              2006 |
+| MUSSOLINI SPOILERS          |              2006 |
+| MYSTIC TRUMAN               |              2006 |
+| NAME DETECTIVE              |              2006 |
+| NASH CHOCOLAT               |              2006 |
+| NATIONAL STORY              |              2006 |
+| NATURAL STOCK               |              2006 |
+| NECKLACE OUTBREAK           |              2008 |
+| NEIGHBORS CHARADE           |              2006 |
+| NEMO CAMPUS                 |              2006 |
+| NETWORK PEAK                |              2006 |
+| NEWSIES STORY               |              2006 |
+| NEWTON LABYRINTH            |              2006 |
+| NIGHTMARE CHILL             |              2008 |
+| NONE SPIKING                |              2006 |
+| NOON PAPI                   |              2006 |
+| NORTH TEQUILA               |              2006 |
+| NORTHWEST POLISH            |              2006 |
+| NOTORIOUS REUNION           |              2006 |
+| NOTTING SPEAKEASY           |              2006 |
+| NOVOCAINE FLIGHT            |              2006 |
+| NUTS TIES                   |              2006 |
+| OCTOBER SUBMARINE           |              2006 |
+| ODDS BOOGIE                 |              2006 |
+| OKLAHOMA JUMANJI            |              2006 |
+| OLEANDER CLUE               |              2006 |
+| OPEN AFRICAN                |              2006 |
+| OPERATION OPERATION         |              2006 |
+| OPPOSITE NECKLACE           |              2006 |
+| OPUS ICE                    |              2006 |
+| ORANGE GRAPES               |              2006 |
+| ORDER BETRAYED              |              2006 |
+| ORIENT CLOSER               |              2006 |
+| OSCAR GOLD                  |              2006 |
+| OTHERS SOUP                 |              2006 |
+| OUTBREAK DIVINE             |              2006 |
+| OUTFIELD MASSACRE           |              2006 |
+| OUTLAW HANKY                |              2006 |
+| OZ LIAISONS                 |              2006 |
+| PACIFIC AMISTAD             |              2006 |
+| PACKER MADIGAN              |              2006 |
+| PAJAMA JAWBREAKER           |              2006 |
+| PANIC CLUB                  |              2006 |
+| PANKY SUBMARINE             |              2006 |
+| PANTHER REDS                |              2006 |
+| PAPI NECKLACE               |              2008 |
+| PARADISE SABRINA            |              2006 |
+| PARIS WEEKEND               |              2006 |
+| PARK CITIZEN                |              2006 |
+| PARTY KNOCK                 |              2006 |
+| PAST SUICIDES               |              2006 |
+| PATHS CONTROL               |              2008 |
+| PATIENT SISTER              |              2006 |
+| PATRIOT ROMAN               |              2006 |
+| PATTON INTERVIEW            |              2006 |
+| PAYCHECK WAIT               |              2006 |
+| PEACH INNOCENT              |              2006 |
+| PEAK FOREVER                |              2006 |
+| PEARL DESTINY               |              2006 |
+| PELICAN COMFORTS            |              2006 |
+| PERDITION FARGO             |              2006 |
+| PERFECT GROOVE              |              2006 |
+| PERSONAL LADYBUGS           |              2006 |
+| PET HAUNTING                |              2008 |
+| PHANTOM GLORY               |              2006 |
+| PHILADELPHIA WIFE           |              2006 |
+| PIANIST OUTFIELD            |              2006 |
+| PICKUP DRIVING              |              2006 |
+| PILOT HOOSIERS              |              2006 |
+| PINOCCHIO SIMON             |              2006 |
+| PIRATES ROXANNE             |              2006 |
+| PITTSBURGH HUNCHBACK        |              2006 |
+| PITY BOUND                  |              2006 |
+| PIZZA JUMANJI               |              2006 |
+| PLATOON INSTINCT            |              2006 |
+| PLUTO OLEANDER              |              2006 |
+| POCUS PULP                  |              2006 |
+| POLISH BROOKLYN             |              2006 |
+| POLLOCK DELIVERANCE         |              2006 |
+| POND SEATTLE                |              2006 |
+| POSEIDON FOREVER            |              2006 |
+| POTLUCK MIXED               |              2006 |
+| POTTER CONNECTICUT          |              2006 |
+| PREJUDICE OLEANDER          |              2006 |
+| PRESIDENT BANG              |              2006 |
+| PRIDE ALAMO                 |              2006 |
+| PRIMARY GLASS               |              2006 |
+| PRINCESS GIANT              |              2006 |
+| PRIVATE DROP                |              2006 |
+| PRIX UNDEFEATED             |              2006 |
+| PSYCHO SHRUNK               |              2006 |
+| PULP BEVERLY                |              2006 |
+| PUNK DIVORCE                |              2006 |
+| PURE RUNNER                 |              2006 |
+| PURPLE MOVIE                |              2006 |
+| QUEEN LUKE                  |              2006 |
+| QUEST MUSSOLINI             |              2006 |
+| QUILLS BULL                 |              2006 |
+| RACER EGG                   |              2006 |
+| RAGE GAMES                  |              2006 |
+| RAGING AIRPLANE             |              2006 |
+| RAIDERS ANTITRUST           |              2006 |
+| RAINBOW SHOCK               |              2008 |
+| RANDOM GO                   |              2006 |
+| RANGE MOONWALKER            |              2008 |
+| REAP UNFAITHFUL             |              2006 |
+| REAR TRADING                |              2006 |
+| REBEL AIRPORT               |              2006 |
+| RECORDS ZORRO               |              2006 |
+| REDEMPTION COMFORTS         |              2006 |
+| REDS POCUS                  |              2006 |
+| REEF SALUTE                 |              2006 |
+| REIGN GENTLEMEN             |              2006 |
+| REMEMBER DIARY              |              2006 |
+| REQUIEM TYCOON              |              2006 |
+| RESERVOIR ADAPTATION        |              2006 |
+| RESURRECTION SILVERADO      |              2006 |
+| REUNION WITCHES             |              2006 |
+| RIDER CADDYSHACK            |              2006 |
+| RIDGEMONT SUBMARINE         |              2006 |
+| RIGHT CRANES                |              2006 |
+| RINGS HEARTBREAKERS         |              2006 |
+| RIVER OUTLAW                |              2006 |
+| ROAD ROXANNE                |              2006 |
+| ROBBERS JOON                |              2006 |
+| ROBBERY BRIGHT              |              2006 |
+| ROCK INSTINCT               |              2006 |
+| ROCKETEER MOTHER            |              2006 |
+| ROCKY WAR                   |              2006 |
+| ROLLERCOASTER BRINGING      |              2006 |
+| ROMAN PUNK                  |              2006 |
+| ROOF CHAMPION               |              2006 |
+| ROOM ROMAN                  |              2006 |
+| ROOTS REMEMBER              |              2006 |
+| ROSES TREASURE              |              2006 |
+| ROUGE SQUAD                 |              2006 |
+| ROXANNE REBEL               |              2006 |
+| RUGRATS SHAKESPEARE         |              2006 |
+| RULES HUMAN                 |              2006 |
+| RUN PACIFIC                 |              2006 |
+| RUNAWAY TENENBAUMS          |              2006 |
+| RUNNER MADIGAN              |              2006 |
+| RUSH GOODFELLAS             |              2008 |
+| RUSHMORE MERMAID            |              2006 |
+| SABRINA MIDNIGHT            |              2006 |
+| SADDLE ANTITRUST            |              2006 |
+| SAGEBRUSH CLUELESS          |              2006 |
+| SAINTS BRIDE                |              2006 |
+| SALUTE APOLLO               |              2006 |
+| SAMURAI LION                |              2006 |
+| SANTA PARIS                 |              2006 |
+| SASSY PACKER                |              2006 |
+| SATISFACTION CONFIDENTIAL   |              2006 |
+| SATURDAY LAMBS              |              2006 |
+| SATURN NAME                 |              2006 |
+| SAVANNAH TOWN               |              2006 |
+| SCALAWAG DUCK               |              2006 |
+| SCARFACE BANG               |              2006 |
+| SCHOOL JACKET               |              2006 |
+| SCISSORHANDS SLUMS          |              2006 |
+| SCORPION APOLLO             |              2006 |
+| SEA VIRGIN                  |              2006 |
+| SEABISCUIT PUNK             |              2006 |
+| SEARCHERS WAIT              |              2006 |
+| SEATTLE EXPECATIONS         |              2006 |
+| SECRET GROUNDHOG            |              2006 |
+| SECRETARY ROUGE             |              2006 |
+| SECRETS PARADISE            |              2006 |
+| SENSE GREEK                 |              2006 |
+| SENSIBILITY REAR            |              2006 |
+| SEVEN SWARM                 |              2006 |
+| SHAKESPEARE SADDLE          |              2006 |
+| SHANE DARKNESS              |              2006 |
+| SHANGHAI TYCOON             |              2006 |
+| SHAWSHANK BUBBLE            |              2006 |
+| SHEPHERD MIDSUMMER          |              2006 |
+| SHINING ROSES               |              2006 |
+| SHIP WONDERLAND             |              2006 |
+| SHOCK CABIN                 |              2006 |
+| SHOOTIST SUPERFLY           |              2006 |
+| SHOW LORD                   |              2006 |
+| SHREK LICENSE               |              2006 |
+| SHRUNK DIVINE               |              2006 |
+| SIDE ARK                    |              2006 |
+| SIEGE MADRE                 |              2006 |
+| SIERRA DIVIDE               |              2006 |
+| SILENCE KANE                |              2006 |
+| SILVERADO GOLDFINGER        |              2006 |
+| SIMON NORTH                 |              2006 |
+| SINNERS ATLANTIS            |              2006 |
+| SISTER FREDDY               |              2006 |
+| SKY MIRACLE                 |              2006 |
+| SLACKER LIAISONS            |              2006 |
+| SLEEPING SUSPECTS           |              2006 |
+| SLEEPLESS MONSOON           |              2006 |
+| SLEEPY JAPANESE             |              2006 |
+| SLEUTH ORIENT               |              2006 |
+| SLING LUKE                  |              2006 |
+| SLIPPER FIDELITY            |              2006 |
+| SLUMS DUCK                  |              2006 |
+| SMILE EARRING               |              2006 |
+| SMOKING BARBARELLA          |              2006 |
+| SMOOCHY CONTROL             |              2006 |
+| SNATCH SLIPPER              |              2006 |
+| SNATCHERS MONTEZUMA         |              2006 |
+| SNOWMAN ROLLERCOASTER       |              2006 |
+| SOLDIERS EVOLUTION          |              2006 |
+| SOMETHING DUCK              |              2006 |
+| SONG HEDWIG                 |              2006 |
+| SONS INTERVIEW              |              2006 |
+| SORORITY QUEEN              |              2006 |
+| SOUP WISDOM                 |              2006 |
+| SOUTH WAIT                  |              2006 |
+| SPARTACUS CHEAPER           |              2006 |
+| SPEAKEASY DATE              |              2006 |
+| SPEED SUIT                  |              2006 |
+| SPICE SORORITY              |              2006 |
+| SPIKING ELEMENT             |              2006 |
+| SPINAL ROCKY                |              2006 |
+| SPIRIT FLINTSTONES          |              2006 |
+| SPIRITED CASUALTIES         |              2006 |
+| SPLASH GUMP                 |              2006 |
+| SPLENDOR PATTON             |              2006 |
+| SPOILERS HELLFIGHTERS       |              2006 |
+| SPY MILE                    |              2006 |
+| SQUAD FISH                  |              2008 |
+| STAGE WORLD                 |              2006 |
+| STAGECOACH ARMAGEDDON       |              2006 |
+| STALLION SUNDANCE           |              2006 |
+| STAMPEDE DISTURBING         |              2006 |
+| STAR OPERATION              |              2006 |
+| STATE WASTELAND             |              2006 |
+| STEEL SANTA                 |              2006 |
+| STEERS ARMAGEDDON           |              2006 |
+| STEPMOM DREAM               |              2006 |
+| STING PERSONAL              |              2006 |
+| STOCK GLASS                 |              2006 |
+| STONE FIRE                  |              2006 |
+| STORM HAPPINESS             |              2006 |
+| STORY SIDE                  |              2006 |
+| STRAIGHT HOURS              |              2006 |
+| STRANGELOVE DESIRE          |              2006 |
+| STRANGER STRANGERS          |              2006 |
+| STRANGERS GRAFFITI          |              2006 |
+| STREAK RIDGEMONT            |              2006 |
+| STREETCAR INTENTIONS        |              2006 |
+| STRICTLY SCARFACE           |              2006 |
+| SUBMARINE BED               |              2006 |
+| SUGAR WONKA                 |              2008 |
+| SUICIDES SILENCE            |              2006 |
+| SUIT WALLS                  |              2006 |
+| SUMMER SCARFACE             |              2006 |
+| SUN CONFESSIONS             |              2006 |
+| SUNDANCE INVASION           |              2006 |
+| SUNRISE LEAGUE              |              2006 |
+| SUNSET RACER                |              2006 |
+| SUPER WYOMING               |              2006 |
+| SUPERFLY TRIP               |              2006 |
+| SUSPECTS QUILLS             |              2006 |
+| SWARM GOLD                  |              2006 |
+| SWEDEN SHINING              |              2006 |
+| SWEET BROTHERHOOD           |              2006 |
+| SWEETHEARTS SUSPECTS        |              2006 |
+| TADPOLE PARK                |              2006 |
+| TALENTED HOMICIDE           |              2006 |
+| TARZAN VIDEOTAPE            |              2006 |
+| TAXI KICK                   |              2006 |
+| TEEN APOLLO                 |              2006 |
+| TELEGRAPH VOYAGE            |              2008 |
+| TELEMARK HEARTBREAKERS      |              2006 |
+| TEMPLE ATTRACTION           |              2006 |
+| TENENBAUMS COMMAND          |              2006 |
+| TEQUILA PAST                |              2006 |
+| TERMINATOR CLUB             |              2006 |
+| TEXAS WATCH                 |              2006 |
+| THEORY MERMAID              |              2006 |
+| THIEF PELICAN               |              2006 |
+| THIN SAGEBRUSH              |              2006 |
+| TIES HUNGER                 |              2006 |
+| TIGHTS DAWN                 |              2006 |
+| TIMBERLAND SKY              |              2006 |
+| TITANIC BOONDOCK            |              2006 |
+| TITANS JERK                 |              2006 |
+| TOMATOES HELLFIGHTERS       |              2006 |
+| TOMORROW HUSTLER            |              2006 |
+| TOOTSIE PILOT               |              2008 |
+| TORQUE BOUND                |              2006 |
+| TOURIST PELICAN             |              2006 |
+| TOWERS HURRICANE            |              2006 |
+| TOWN ARK                    |              2006 |
+| TRACY CIDER                 |              2006 |
+| TRADING PINOCCHIO           |              2006 |
+| TRAFFIC HOBBIT              |              2006 |
+| TRAIN BUNCH                 |              2006 |
+| TRAINSPOTTING STRANGERS     |              2006 |
+| TRAMP OTHERS                |              2006 |
+| TRANSLATION SUMMER          |              2006 |
+| TRAP GUYS                   |              2006 |
+| TREASURE COMMAND            |              2006 |
+| TREATMENT JEKYLL            |              2008 |
+| TRIP NEWTON                 |              2006 |
+| TROJAN TOMORROW             |              2008 |
+| TROOPERS METAL              |              2006 |
+| TROUBLE DATE                |              2006 |
+| TRUMAN CRAZY                |              2006 |
+| TURN STAR                   |              2006 |
+| TUXEDO MILE                 |              2006 |
+| TWISTED PIRATES             |              2006 |
+| TYCOON GATHERING            |              2006 |
+| UNBREAKABLE KARATE          |              2006 |
+| UNCUT SUICIDES              |              2006 |
+| UNDEFEATED DALMATIONS       |              2006 |
+| UNFAITHFUL KILL             |              2006 |
+| UNFORGIVEN ZOOLANDER        |              2006 |
+| UNITED PILOT                |              2006 |
+| UNTOUCHABLES SUNRISE        |              2006 |
+| UPRISING UPTOWN             |              2006 |
+| UPTOWN YOUNG                |              2006 |
+| USUAL UNTOUCHABLES          |              2006 |
+| VACATION BOONDOCK           |              2006 |
+| VALENTINE VANISHING         |              2006 |
+| VALLEY PACKER               |              2006 |
+| VAMPIRE WHALE               |              2006 |
+| VANILLA DAY                 |              2006 |
+| VANISHED GARDEN             |              2006 |
+| VANISHING ROCKY             |              2006 |
+| VARSITY TRIP                |              2006 |
+| VELVET TERMINATOR           |              2006 |
+| VERTIGO NORTHWEST           |              2006 |
+| VICTORY ACADEMY             |              2006 |
+| VIDEOTAPE ARSENIC           |              2006 |
+| VIETNAM SMOOCHY             |              2006 |
+| VILLAIN DESPERATE           |              2006 |
+| VIRGIN DAISY                |              2006 |
+| VIRGINIAN PLUTO             |              2006 |
+| VIRTUAL SPOILERS            |              2006 |
+| VISION TORQUE               |              2006 |
+| VOICE PEACH                 |              2006 |
+| VOLCANO TEXAS               |              2006 |
+| VOLUME HOUSE                |              2006 |
+| VOYAGE LEGALLY              |              2006 |
+| WAGON JAWS                  |              2006 |
+| WAIT CIDER                  |              2006 |
+| WAKE JAWS                   |              2006 |
+| WALLS ARTIST                |              2006 |
+| WANDA CHAMBER               |              2006 |
+| WAR NOTTING                 |              2006 |
+| WARDROBE PHANTOM            |              2006 |
+| WARLOCK WEREWOLF            |              2006 |
+| WARS PLUTO                  |              2006 |
+| WASH HEAVENLY               |              2006 |
+| WASTELAND DIVINE            |              2006 |
+| WATCH TRACY                 |              2006 |
+| WATERFRONT DELIVERANCE      |              2006 |
+| WATERSHIP FRONTIER          |              2006 |
+| WEDDING APOLLO              |              2008 |
+| WEEKEND PERSONAL            |              2006 |
+| WEREWOLF LOLA               |              2006 |
+| WEST LION                   |              2006 |
+| WESTWARD SEABISCUIT         |              2006 |
+| WHALE BIKINI                |              2006 |
+| WHISPERER GIANT             |              2006 |
+| WIFE TURN                   |              2006 |
+| WILD APOLLO                 |              2006 |
+| WILLOW TRACY                |              2006 |
+| WIND PHANTOM                |              2006 |
+| WINDOW SIDE                 |              2006 |
+| WISDOM WORKER               |              2006 |
+| WITCHES PANIC               |              2006 |
+| WIZARD COLDBLOODED          |              2006 |
+| WOLVES DESIRE               |              2006 |
+| WOMEN DORADO                |              2006 |
+| WON DARES                   |              2006 |
+| WONDERFUL DROP              |              2006 |
+| WONDERLAND CHRISTMAS        |              2006 |
+| WONKA SEA                   |              2006 |
+| WORDS HUNTER                |              2008 |
+| WORKER TARZAN               |              2006 |
+| WORKING MICROCOSMOS         |              2006 |
+| WORLD LEATHERNECKS          |              2006 |
+| WORST BANGER                |              2006 |
+| WRATH MILE                  |              2006 |
+| WRONG BEHAVIOR              |              2006 |
+| WYOMING STORM               |              2006 |
+| YENTL IDAHO                 |              2006 |
+| YOUNG LANGUAGE              |              2006 |
+| YOUTH KICK                  |              2006 |
+| ZHIVAGO CORE                |              2006 |
+| ZOOLANDER FICTION           |              2006 |
+| ZORRO ARK                   |              2006 |
++-----------------------------+-------------------+
+1000 rows in set (0.00 sec)
+
+mysql> create procedure 'Consula'()
+    -> select * from frutas
+    -> where quantidade < 100
+    -> limit 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Consula'()
+select * from frutas
+where quantidade < 100
+limit 10' at line 1
+mysql> use quitanda;
+Database changed
+mysql> create procedure 'Consula'()
+    -> select * from frutas
+    -> where quantidade < 100
+    -> limit 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Consula'()
+select * from frutas
+where quantidade < 100
+limit 10' at line 1
+mysql> create procedure 'Consulta()'
+    -> select * from frutas
+    -> where quantidade < 100
+    -> limit 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Consulta()'
+select * from frutas
+where quantidade < 100
+limit 10' at line 1
+mysql> create procedure Consulta()
+    -> select * from frutas
+    -> where quantidade < 100
+    -> limit 10;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call consulta;
++----+---------------+------------+------------+--------------+--------+------------+-------+
+| id | nome          | quantidade | cor        | categoria_id | estado | data       | preco |
++----+---------------+------------+------------+--------------+--------+------------+-------+
+| 21 | Laranja Bahia |          5 | Laranja né |            1 | Ótimo  | 1999-05-13 |  3.99 |
+| 22 | Banana        |         12 | Amarela    |            1 | Bom    | 1999-05-12 |  1.99 |
++----+---------------+------------+------------+--------------+--------+------------+-------+
+2 rows in set (0.02 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE PROCEDURE filmesCurtos2008()
+    -> \c;
+ERROR:
+No query specified
+
+mysql> use sakila;/
+Database changed
+    -> use sakila;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '/
+use sakila' at line 1
+mysql> show tables;
++----------------------+
+| Tables_in_sakila     |
++----------------------+
+| aluguel              |
+| ator                 |
+| categoria            |
+| cidade               |
+| cliente              |
+| endereco             |
+| filme                |
+| filme_ano_lancamento |
+| filme_ator           |
+| filme_categoria      |
+| filme_texto          |
+| funcionario          |
+| idioma               |
+| inventario           |
+| loja                 |
+| pagamento            |
+| pais                 |
++----------------------+
+17 rows in set (0.02 sec)
+
+mysql> CREATE PROCEDURE filmesCurtos2008()
+    -> SELECT titulo, ano_de_lancamento, duracao
+    -> FROM filme
+    -> WHERE titulo LIKE "A%"
+    -> AND ano_de_lancamento = '2008'
+    -> AND duracao < 90;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL filmesCurtos2008;
+ERROR 1054 (42S22): Unknown column 'duracao' in 'field list'
+mysql> desc filme;
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                 | Type                                                                | Null | Key | Default           | Extra                                         |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| filme_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| titulo                | varchar(255)                                                        | NO   | MUL | NULL              |                                               |
+| descricao             | text                                                                | YES  |     | NULL              |                                               |
+| ano_de_lancamento     | year                                                                | YES  |     | NULL              |                                               |
+| idioma_id             | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| idioma_original_id    | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| duracao_da_locacao    | tinyint unsigned                                                    | NO   |     | 3
+       |                                               |
+| preco_da_locacao      | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| duracao_do_filme      | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| custo_de_substituicao | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| classificacao         | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G
+       |                                               |
+| recursos_especiais    | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| ultima_atualizacao    | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.00 sec)
+
+mysql> ALTER PROCEDURE filmesCurtos2008()
+    -> SELECT titulo, ano_de_lancamento, duracao_do_filme
+    -> FROM filme
+    -> WHERE titulo LIKE "A%"
+    -> AND ano_de_lancamento = '2008'
+    -> AND duracao_do_filme < 90;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '()
+SELECT titulo, ano_de_lancamento, duracao_do_filme
+FROM filme
+WHERE titulo LI' at line 1
+mysql> ALTER PROCEDURE filmesCurtos2008
+    -> SELECT titulo, ano_de_lancamento, duracao_do_filme
+    -> FROM filme
+    -> WHERE titulo LIKE "A%"
+    -> AND ano_de_lancamento = '2008'
+    -> AND duracao_do_filme < 90;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT titulo, ano_de_lancamento, duracao_do_filme
+FROM filme
+WHERE titulo LIKE ' at line 2
+mysql> show procedure status;
++----------+-------------------------------------+-----------+----------+---------------------+---------------------+---------------------+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
+| Db       | Name                                | Type      | Language | Definer             | Modified            | Created             | Security_type | Comment
+
+
+
+
+
+
+
+                                                                                                     | character_set_client | collation_connection | Database Collation |
++----------+-------------------------------------+-----------+----------+---------------------+---------------------+---------------------+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
+| quitanda | Consulta                            | PROCEDURE | SQL      | root@localhost      | 2023-10-27 09:54:58 | 2023-10-27 09:54:58 | DEFINER       |
+
+
+
+
+
+
+
+                                                                                                     | cp850
+    | cp850_general_ci     | utf8mb4_0900_ai_ci |
+| sakila   | filmesCurtos2008                    | PROCEDURE | SQL      | root@localhost      | 2023-10-27 10:07:02 | 2023-10-27 10:07:02 | DEFINER       |
+
+
+
+
+
+
+
+                                                                                                     | cp850
+    | cp850_general_ci     | utf8mb4_0900_ai_ci |
+| sys      | create_synonym_db                   | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Takes a source database name and synonym name, and then creates the
+synonym database with views that point to all of the tables within
+the source database.
+
+Useful for creating a "ps" synonym for "performance_schema",
+or "is" instead of "information_schema", for example.
+
+Parameters
+-----------
+
+in_db_name (VARCHAR(64)):
+  The database name that you would like to create a synonym for.
+in_synonym (VARCHAR(64)):
+  The database synonym name.
+
+Example
+-----------
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> CALL sys.create_synonym_db('performance_schema', 'ps');
++---------------------------------------+
+| summary                               |
++---------------------------------------+
+| Created 74 views in the `ps` database |
++---------------------------------------+
+1 row in set (8.57 sec)
+
+Query OK, 0 rows affected (8.57 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| ps                 |
+| sys                |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> SHOW FULL TABLES FROM ps;
++------------------------------------------------------+------------+
+| Tables_in_ps                                         | Table_type |
++------------------------------------------------------+------------+
+| accounts                                             | VIEW       |
+| cond_instances                                       | VIEW       |
+| events_stages_current                                | VIEW       |
+| events_stages_history                                | VIEW       |
+...
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | diagnostics                         | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Create a report of the current status of the server for diagnostics purposes. Data collected includes (some items depends on versions and settings):
+
+   * The GLOBAL VARIABLES
+   * Several sys schema views including metrics or equivalent (depending on version and settings)
+   * Queries in the 95th percentile
+   * Several ndbinfo views for MySQL Cluster
+   * Replication (both master and slave) information.
+
+Some of the sys schema views are calculated as initial (optional), overall, delta:
+
+   * The initial view is the content of the view at the start of this procedure.
+     This output will be the same as the the start values used for the delta view.
+     The initial view is included if @sys.diagnostics.include_raw = 'ON'.
+   * The overall view is the content of the view at the end of this procedure.
+     This output is the same as the end values used for the delta view.
+     The overall view is always included.
+   * The delta view is the difference from the beginning to the end. Note that for min and max values
+     they are simply the min or max value from the end view respectively, so does not necessarily reflect
+     the minimum/maximum value in the monitored period.
+     Note: except for the metrics views the delta is only calculation between the first and last outputs.
+
+Requires the SUPER privilege for "SET sql_log_bin = 0;".
+
+Parameters
+-----------
+
+in_max_runtime (INT UNSIGNED):
+  The maximum time to keep collecting data.
+  Use NULL to get the default which is 60 seconds, otherwise enter a value greater than 0.
+in_interval (INT UNSIGNED):
+  How long to sleep between data collections.
+  Use NULL to get the default which is 30 seconds, otherwise enter a value greater than 0.
+in_auto_config (ENUM('current', 'medium', 'full'))
+  Automatically enable Performance Schema instruments and consumers.
+  NOTE: The more that are enabled, the more impact on the performance.
+  Supported values are:
+     * current - use the current settings.
+     * medium - enable some settings. This requires the SUPER privilege.
+     * full - enables all settings. This will have a big impact on the
+              performance - be careful using this option. This requires
+              the SUPER privilege.
+  If another setting the 'current' is chosen, the current settings
+  are restored at the end of the procedure.
+
+
+Configuration Options
+----------------------
+
+sys.diagnostics.allow_i_s_tables
+  Specifies whether it is allowed to do table scan queries on information_schema.TABLES. This can be expensive if there
+  are many tables. Set to 'ON' to allow, 'OFF' to not allow.
+  Default is 'OFF'.
+
+sys.diagnostics.include_raw
+  Set to 'ON' to include the raw data (e.g. the original output of "SELECT * FROM sys.metrics").
+  Use this to get the initial values of the various views.
+  Default is 'OFF'.
+
+sys.statement_truncate_len
+  How much of queries in the process list output to include.
+  Default is 64.
+
+sys.debug
+  Whether to provide debugging output.
+  Default is 'OFF'. Set to 'ON' to include.
+
+
+Example
+--------
+
+To create a report and append it to the file diag.out:
+
+mysql> TEE diag.out;
+mysql> CALL sys.diagnostics(120, 30, 'current');
+...
+mysql> NOTEE;
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | execute_prepared_stmt               | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Takes the query in the argument and executes it using a prepared statement. The prepared statement is deallocated,
+so the procedure is mainly useful for executing one off dynamically created queries.
+
+The sys_execute_prepared_stmt prepared statement name is used for the query and is required not to exist.
+
+
+Parameters
+-----------
+
+in_query (longtext CHARACTER SET UTF8MB4):
+  The query to execute.
+
+
+Configuration Options
+----------------------
+
+sys.debug
+  Whether to provide debugging output.
+  Default is 'OFF'. Set to 'ON' to include.
+
+
+Example
+--------
+
+mysql> CALL sys.execute_prepared_stmt('SELECT * FROM sys.sys_config');
++------------------------+-------+---------------------+--------+
+| variable               | value | set_time            | set_by |
++------------------------+-------+---------------------+--------+
+| statement_truncate_len | 64    | 2015-06-30 13:06:00 | NULL   |
++------------------------+-------+---------------------+--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_disable_background_threads | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Disable all background thread instrumentation within Performance Schema.
+
+Parameters
+-----------
+
+None.
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_disable_background_threads();
++--------------------------------+
+| summary                        |
++--------------------------------+
+| Disabled 18 background threads |
++--------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+                   | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_disable_consumer           | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Disables consumers within Performance Schema
+matching the input pattern.
+
+Parameters
+-----------
+
+consumer (VARCHAR(128)):
+  A LIKE pattern match (using "%consumer%") of consumers to disable
+
+Example
+-----------
+
+To disable all consumers:
+
+mysql> CALL sys.ps_setup_disable_consumer('');
++--------------------------+
+| summary                  |
++--------------------------+
+| Disabled 15 consumers    |
++--------------------------+
+1 row in set (0.02 sec)
+
+To disable just the event_stage consumers:
+
+mysql> CALL sys.ps_setup_disable_comsumers('stage');
++------------------------+
+| summary                |
++------------------------+
+| Disabled 3 consumers   |
++------------------------+
+1 row in set (0.00 sec)
+
+
+                                             | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_disable_instrument         | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Disables instruments within Performance Schema
+matching the input pattern.
+
+Parameters
+-----------
+
+in_pattern (VARCHAR(128)):
+  A LIKE pattern match (using "%in_pattern%") of events to disable
+
+Example
+-----------
+
+To disable all mutex instruments:
+
+mysql> CALL sys.ps_setup_disable_instrument('wait/synch/mutex');
++--------------------------+
+| summary                  |
++--------------------------+
+| Disabled 155 instruments |
++--------------------------+
+1 row in set (0.02 sec)
+
+To disable just a specific TCP/IP based network IO instrument:
+
+mysql> CALL sys.ps_setup_disable_instrument('wait/io/socket/sql/server_tcpip_socket');
++------------------------+
+| summary                |
++------------------------+
+| Disabled 1 instruments |
++------------------------+
+1 row in set (0.00 sec)
+
+To disable all instruments:
+
+mysql> CALL sys.ps_setup_disable_instrument('');
++--------------------------+
+| summary                  |
++--------------------------+
+| Disabled 547 instruments |
++--------------------------+
+1 row in set (0.01 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_disable_thread             | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Disable the given connection/thread in Performance Schema.
+
+Parameters
+-----------
+
+in_connection_id (BIGINT):
+  The connection ID (PROCESSLIST_ID from performance_schema.threads
+  or the ID shown within SHOW PROCESSLIST)
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_disable_thread(3);
++-------------------+
+| summary           |
++-------------------+
+| Disabled 1 thread |
++-------------------+
+1 row in set (0.01 sec)
+
+To disable the current connection:
+
+mysql> CALL sys.ps_setup_disable_thread(CONNECTION_ID());
++-------------------+
+| summary           |
++-------------------+
+| Disabled 1 thread |
++-------------------+
+1 row in set (0.00 sec)
+
+
+                                                                                                            | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_enable_background_threads  | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Enable all background thread instrumentation within Performance Schema.
+
+Parameters
+-----------
+
+None.
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_enable_background_threads();
++-------------------------------+
+| summary                       |
++-------------------------------+
+| Enabled 18 background threads |
++-------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+                          | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_enable_consumer            | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Enables consumers within Performance Schema
+matching the input pattern.
+
+Parameters
+-----------
+
+consumer (VARCHAR(128)):
+  A LIKE pattern match (using "%consumer%") of consumers to enable
+
+Example
+-----------
+
+To enable all consumers:
+
+mysql> CALL sys.ps_setup_enable_consumer('');
++-------------------------+
+| summary                 |
++-------------------------+
+| Enabled 10 consumers    |
++-------------------------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+To enable just "waits" consumers:
+
+mysql> CALL sys.ps_setup_enable_consumer('waits');
++-----------------------+
+| summary               |
++-----------------------+
+| Enabled 3 consumers   |
++-----------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+                                                                                                                  | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_enable_instrument          | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Enables instruments within Performance Schema
+matching the input pattern.
+
+Parameters
+-----------
+
+in_pattern (VARCHAR(128)):
+  A LIKE pattern match (using "%in_pattern%") of events to enable
+
+Example
+-----------
+
+To enable all mutex instruments:
+
+mysql> CALL sys.ps_setup_enable_instrument('wait/synch/mutex');
++-------------------------+
+| summary                 |
++-------------------------+
+| Enabled 155 instruments |
++-------------------------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+To enable just a specific TCP/IP based network IO instrument:
+
+mysql> CALL sys.ps_setup_enable_instrument('wait/io/socket/sql/server_tcpip_socket');
++-----------------------+
+| summary               |
++-----------------------+
+| Enabled 1 instruments |
++-----------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+To enable all instruments:
+
+mysql> CALL sys.ps_setup_enable_instrument('');
++-------------------------+
+| summary                 |
++-------------------------+
+| Enabled 547 instruments |
++-------------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_enable_thread              | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Enable the given connection/thread in Performance Schema.
+
+Parameters
+-----------
+
+in_connection_id (BIGINT):
+  The connection ID (PROCESSLIST_ID from performance_schema.threads
+  or the ID shown within SHOW PROCESSLIST)
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_enable_thread(3);
++------------------+
+| summary          |
++------------------+
+| Enabled 1 thread |
++------------------+
+1 row in set (0.01 sec)
+
+To enable the current connection:
+
+mysql> CALL sys.ps_setup_enable_thread(CONNECTION_ID());
++------------------+
+| summary          |
++------------------+
+| Enabled 1 thread |
++------------------+
+1 row in set (0.00 sec)
+
+
+
+  | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_reload_saved               | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Reloads a saved Performance Schema configuration,
+so that you can alter the setup for debugging purposes,
+but restore it to a previous state.
+
+Use the companion procedure - ps_setup_save(), to
+save a configuration.
+
+Requires the SUPER privilege for "SET sql_log_bin = 0;".
+
+Parameters
+-----------
+
+None.
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_save();
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> UPDATE performance_schema.setup_instruments SET enabled = 'YES', timed = 'YES';
+Query OK, 547 rows affected (0.40 sec)
+Rows matched: 784  Changed: 547  Warnings: 0
+
+/* Run some tests that need more detailed instrumentation here */
+
+mysql> CALL sys.ps_setup_reload_saved();
+Query OK, 0 rows affected (0.32 sec)
+
+
+                                           | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_reset_to_default           | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Resets the Performance Schema setup to the default settings.
+
+Parameters
+-----------
+
+in_verbose (BOOLEAN):
+  Whether to print each setup stage (including the SQL) whilst running.
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_reset_to_default(true)\G
+*************************** 1. row ***************************
+status: Resetting: setup_actors
+DELETE
+FROM performance_schema.setup_actors
+ WHERE NOT (HOST = '%' AND USER = '%' AND `ROLE` = '%')
+1 row in set (0.00 sec)
+
+*************************** 1. row ***************************
+status: Resetting: setup_actors
+INSERT IGNORE INTO performance_schema.setup_actors
+VALUES ('%', '%', '%')
+1 row in set (0.00 sec)
+...
+
+mysql> CALL sys.ps_setup_reset_to_default(false)\G
+Query OK, 0 rows affected (0.00 sec)
+
+
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_save                       | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Saves the current configuration of Performance Schema,
+so that you can alter the setup for debugging purposes,
+but restore it to a previous state.
+
+Use the companion procedure - ps_setup_reload_saved(), to
+restore the saved config.
+
+The named lock "sys.ps_setup_save" is taken before the
+current configuration is saved. If the attempt to get the named
+lock times out, an error occurs.
+
+The lock is released after the settings have been restored by
+calling ps_setup_reload_saved().
+
+Requires the SUPER privilege for "SET sql_log_bin = 0;".
+
+Parameters
+-----------
+
+in_timeout INT
+  The timeout in seconds used when trying to obtain the lock.
+  A negative timeout means infinite timeout.
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_save(-1);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> UPDATE performance_schema.setup_instruments
+    ->    SET enabled = 'YES', timed = 'YES';
+Query OK, 547 rows affected (0.40 sec)
+Rows matched: 784  Changed: 547  Warnings: 0
+
+/* Run some tests that need more detailed instrumentation here */
+
+mysql> CALL sys.ps_setup_reload_saved();
+Query OK, 0 rows affected (0.32 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_show_disabled              | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Shows all currently disable Performance Schema configuration.
+
+Disabled users is only available for MySQL 5.7.6 and later.
+In earlier versions it was only possible to enable users.
+
+Parameters
+-----------
+
+in_show_instruments (BOOLEAN):
+  Whether to print disabled instruments (can print many items)
+
+in_show_threads (BOOLEAN):
+  Whether to print disabled threads
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_show_disabled(TRUE, TRUE);
++----------------------------+
+| performance_schema_enabled |
++----------------------------+
+|                          1 |
++----------------------------+
+1 row in set (0.00 sec)
+
++--------------------+
+| disabled_users     |
++--------------------+
+| 'mark'@'localhost' |
++--------------------+
+1 row in set (0.00 sec)
+
++-------------+----------------------+---------+-------+
+| object_type | objects              | enabled | timed |
++-------------+----------------------+---------+-------+
+| EVENT       | mysql.%              | NO      | NO    |
+| EVENT       | performance_schema.% | NO      | NO    |
+| EVENT       | information_schema.% | NO      | NO    |
+| FUNCTION    | mysql.%              | NO      | NO    |
+| FUNCTION    | performance_schema.% | NO      | NO    |
+| FUNCTION    | information_schema.% | NO      | NO    |
+| PROCEDURE   | mysql.%              | NO      | NO    |
+| PROCEDURE   | performance_schema.% | NO      | NO    |
+| PROCEDURE   | information_schema.% | NO      | NO    |
+| TABLE       | mysql.%              | NO      | NO    |
+| TABLE       | performance_schema.% | NO      | NO    |
+| TABLE       | information_schema.% | NO      | NO    |
+| TRIGGER     | mysql.%              | NO      | NO    |
+| TRIGGER     | performance_schema.% | NO      | NO    |
+| TRIGGER     | information_schema.% | NO      | NO    |
++-------------+----------------------+---------+-------+
+15 rows in set (0.00 sec)
+
++----------------------------------+
+| disabled_consumers               |
++----------------------------------+
+| events_stages_current            |
+| events_stages_history            |
+| events_stages_history_long       |
+| events_statements_history        |
+| events_statements_history_long   |
+| events_transactions_history      |
+| events_transactions_history_long |
+| events_waits_current             |
+| events_waits_history             |
+| events_waits_history_long        |
++----------------------------------+
+10 rows in set (0.00 sec)
+
+Empty set (0.00 sec)
+
++---------------------------------------------------------------------------------------+-------+
+| disabled_instruments                                                                  | timed |
++---------------------------------------------------------------------------------------+-------+
+| wait/synch/mutex/sql/TC_LOG_MMAP::LOCK_tc                                             | NO    |
+| wait/synch/mutex/sql/LOCK_des_key_file                                                | NO    |
+| wait/synch/mutex/sql/MYSQL_BIN_LOG::LOCK_commit                                       | NO    |
+...
+| memory/sql/servers_cache                                                              | NO    |
+| memory/sql/udf_mem                                                                    | NO    |
+| wait/lock/metadata/sql/mdl                                                            | NO    |
++---------------------------------------------------------------------------------------+-------+
+547 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_show_disabled_consumers    | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Shows all currently disabled consumers.
+
+Parameters
+-----------
+
+None
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_show_disabled_consumers();
+
++---------------------------+
+| disabled_consumers        |
++---------------------------+
+| events_statements_current |
+| global_instrumentation    |
+| thread_instrumentation    |
+| statements_digest         |
++---------------------------+
+4 rows in set (0.05 sec)
+
+
+
+
+                                                                                                             | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_show_disabled_instruments  | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Shows all currently disabled instruments.
+
+Parameters
+-----------
+
+None
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_show_disabled_instruments();
+
+
+
+
+
+
+
+           | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_show_enabled               | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Shows all currently enabled Performance Schema configuration.
+
+Parameters
+-----------
+
+in_show_instruments (BOOLEAN):
+  Whether to print enabled instruments (can print many items)
+
+in_show_threads (BOOLEAN):
+  Whether to print enabled threads
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_show_enabled(TRUE, TRUE);
++----------------------------+
+| performance_schema_enabled |
++----------------------------+
+|                          1 |
++----------------------------+
+1 row in set (0.00 sec)
+
++---------------+
+| enabled_users |
++---------------+
+| '%'@'%'       |
++---------------+
+1 row in set (0.01 sec)
+
++-------------+---------+---------+-------+
+| object_type | objects | enabled | timed |
++-------------+---------+---------+-------+
+| EVENT       | %.%     | YES     | YES   |
+| FUNCTION    | %.%     | YES     | YES   |
+| PROCEDURE   | %.%     | YES     | YES   |
+| TABLE       | %.%     | YES     | YES   |
+| TRIGGER     | %.%     | YES     | YES   |
++-------------+---------+---------+-------+
+5 rows in set (0.01 sec)
+
++---------------------------+
+| enabled_consumers         |
++---------------------------+
+| events_statements_current |
+| global_instrumentation    |
+| thread_instrumentation    |
+| statements_digest         |
++---------------------------+
+4 rows in set (0.05 sec)
+
++---------------------------------+-------------+
+| enabled_threads                 | thread_type |
++---------------------------------+-------------+
+| sql/main                        | BACKGROUND  |
+| sql/thread_timer_notifier       | BACKGROUND  |
+| innodb/io_ibuf_thread           | BACKGROUND  |
+| innodb/io_log_thread            | BACKGROUND  |
+| innodb/io_read_thread           | BACKGROUND  |
+| innodb/io_read_thread           | BACKGROUND  |
+| innodb/io_write_thread          | BACKGROUND  |
+| innodb/io_write_thread          | BACKGROUND  |
+| innodb/page_cleaner_thread      | BACKGROUND  |
+| innodb/srv_lock_timeout_thread  | BACKGROUND  |
+| innodb/srv_error_monitor_thread | BACKGROUND  |
+| innodb/srv_monitor_thread       | BACKGROUND  |
+| innodb/srv_master_thread        | BACKGROUND  |
+| innodb/srv_purge_thread         | BACKGROUND  |
+| innodb/srv_worker_thread        | BACKGROUND  |
+| innodb/srv_worker_thread        | BACKGROUND  |
+| innodb/srv_worker_thread        | BACKGROUND  |
+| innodb/buf_dump_thread          | BACKGROUND  |
+| innodb/dict_stats_thread        | BACKGROUND  |
+| sql/signal_handler              | BACKGROUND  |
+| sql/compress_gtid_table         | FOREGROUND  |
+| root@localhost                  | FOREGROUND  |
++---------------------------------+-------------+
+22 rows in set (0.01 sec)
+
++-------------------------------------+-------+
+| enabled_instruments                 | timed |
++-------------------------------------+-------+
+| wait/io/file/sql/map                | YES   |
+| wait/io/file/sql/binlog             | YES   |
+...
+| statement/com/Error                 | YES   |
+| statement/com/                      | YES   |
+| idle                                | YES   |
++-------------------------------------+-------+
+210 rows in set (0.08 sec)
+
+Query OK, 0 rows affected (0.89 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_show_enabled_consumers     | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Shows all currently enabled consumers.
+
+Parameters
+-----------
+
+None
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_show_enabled_consumers();
+
++---------------------------+
+| enabled_consumers         |
++---------------------------+
+| events_statements_current |
+| global_instrumentation    |
+| thread_instrumentation    |
+| statements_digest         |
++---------------------------+
+4 rows in set (0.05 sec)
+
+
+
+
+                                                                                                               | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_setup_show_enabled_instruments   | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Shows all currently enabled instruments.
+
+Parameters
+-----------
+
+None
+
+Example
+-----------
+
+mysql> CALL sys.ps_setup_show_enabled_instruments();
+
+
+
+
+
+
+
+             | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_statement_avg_latency_histogram  | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Outputs a textual histogram graph of the average latency values
+across all normalized queries tracked within the Performance Schema
+events_statements_summary_by_digest table.
+
+Can be used to show a very high level picture of what kind of
+latency distribution statements running within this instance have.
+
+Parameters
+-----------
+
+None.
+
+Example
+-----------
+
+mysql> CALL sys.ps_statement_avg_latency_histogram()\G
+*************************** 1. row ***************************
+Performance Schema Statement Digest Average Latency Histogram:
+
+  . = 1 unit
+  * = 2 units
+  # = 3 units
+
+(0 - 38ms)     240 | ################################################################################
+(38 - 77ms)    38  | ......................................
+(77 - 115ms)   3   | ...
+(115 - 154ms)  62  | *******************************
+(154 - 192ms)  3   | ...
+(192 - 231ms)  0   |
+(231 - 269ms)  0   |
+(269 - 307ms)  0   |
+(307 - 346ms)  0   |
+(346 - 384ms)  1   | .
+(384 - 423ms)  1   | .
+(423 - 461ms)  0   |
+(461 - 499ms)  0   |
+(499 - 538ms)  0   |
+(538 - 576ms)  0   |
+(576 - 615ms)  1   | .
+
+  Total Statements: 350; Buckets: 16; Bucket Size: 38 ms;
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_trace_statement_digest           | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Traces all instrumentation within Performance Schema for a specific
+Statement Digest.
+
+When finding a statement of interest within the
+performance_schema.events_statements_summary_by_digest table, feed
+the DIGEST value in to this procedure, set how long to poll for,
+and at what interval to poll, and it will generate a report of all
+statistics tracked within Performance Schema for that digest for the
+interval.
+
+It will also attempt to generate an EXPLAIN for the longest running
+example of the digest during the interval. Note this may fail, as:
+
+   * Performance Schema truncates long SQL_TEXT values (and hence the
+     EXPLAIN will fail due to parse errors)
+   * the default schema is sys (so tables that are not fully qualified
+     in the query may not be found)
+   * some queries such as SHOW are not supported in EXPLAIN.
+
+When the EXPLAIN fails, the error will be ignored and no EXPLAIN
+output generated.
+
+Requires the SUPER privilege for "SET sql_log_bin = 0;".
+
+Parameters
+-----------
+
+in_digest (VARCHAR(64)):
+  The statement digest identifier you would like to analyze
+in_runtime (INT):
+  The number of seconds to run analysis for
+in_interval (DECIMAL(2,2)):
+  The interval (in seconds, may be fractional) at which to try
+  and take snapshots
+in_start_fresh (BOOLEAN):
+  Whether to TRUNCATE the events_statements_history_long and
+  events_stages_history_long tables before starting
+in_auto_enable (BOOLEAN):
+  Whether to automatically turn on required consumers
+
+Example
+-----------
+
+mysql> call ps_trace_statement_digest('891ec6860f98ba46d89dd20b0c03652c', 10, 0.1, true, true);
++--------------------+
+| SUMMARY STATISTICS |
++--------------------+
+| SUMMARY STATISTICS |
++--------------------+
+1 row in set (9.11 sec)
+
++------------+-----------+-----------+-----------+---------------+------------+------------+
+| executions | exec_time | lock_time | rows_sent | rows_examined | tmp_tables | full_scans |
++------------+-----------+-----------+-----------+---------------+------------+------------+
+|         21 | 4.11 ms   | 2.00 ms   |         0 |            21 |          0 |          0 |
++------------+-----------+-----------+-----------+---------------+------------+------------+
+1 row in set (9.11 sec)
+
++------------------------------------------+-------+-----------+
+| event_name                               | count | latency   |
++------------------------------------------+-------+-----------+
+| stage/sql/checking query cache for query |    16 | 724.37 us |
+| stage/sql/statistics                     |    16 | 546.92 us |
+| stage/sql/freeing items                  |    18 | 520.11 us |
+| stage/sql/init                           |    51 | 466.80 us |
+...
+| stage/sql/cleaning up                    |    18 | 11.92 us  |
+| stage/sql/executing                      |    16 | 6.95 us   |
++------------------------------------------+-------+-----------+
+17 rows in set (9.12 sec)
+
++---------------------------+
+| LONGEST RUNNING STATEMENT |
++---------------------------+
+| LONGEST RUNNING STATEMENT |
++---------------------------+
+1 row in set (9.16 sec)
+
++-----------+-----------+-----------+-----------+---------------+------------+-----------+
+| thread_id | exec_time | lock_time | rows_sent | rows_examined | tmp_tables | full_scan |
++-----------+-----------+-----------+-----------+---------------+------------+-----------+
+|    166646 | 618.43 us | 1.00 ms   |         0 |             1 |          0 |         0 |
++-----------+-----------+-----------+-----------+---------------+------------+-----------+
+1 row in set (9.16 sec)
+
+// Truncated for clarity...
++-----------------------------------------------------------------+
+| sql_text                                                        |
++-----------------------------------------------------------------+
+| select hibeventhe0_.id as id1382_, hibeventhe0_.createdTime ... |
++-----------------------------------------------------------------+
+1 row in set (9.17 sec)
+
++------------------------------------------+-----------+
+| event_name                               | latency   |
++------------------------------------------+-----------+
+| stage/sql/init                           | 8.61 us   |
+| stage/sql/Waiting for query cache lock   | 453.23 us |
+| stage/sql/init                           | 331.07 ns |
+| stage/sql/checking query cache for query | 43.04 us  |
+...
+| stage/sql/freeing items                  | 30.46 us  |
+| stage/sql/cleaning up                    | 662.13 ns |
++------------------------------------------+-----------+
+18 rows in set (9.23 sec)
+
++----+-------------+--------------+-------+---------------+-----------+---------+-------------+------+-------+
+| id | select_type | table        | type  | possible_keys | key       | key_len | ref         | rows | Extra |
++----+-------------+--------------+-------+---------------+-----------+---------+-------------+------+-------+
+|  1 | SIMPLE      | hibeventhe0_ | const | fixedTime     | fixedTime | 775     | const,const |    1 | NULL  |
++----+-------------+--------------+-------+---------------+-----------+---------+-------------+------+-------+
+1 row in set (9.27 sec)
+
+Query OK, 0 rows affected (9.28 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_trace_thread                     | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Dumps all data within Performance Schema for an instrumented thread,
+to create a DOT formatted graph file.
+
+Each resultset returned from the procedure should be used for a complete graph
+
+Requires the SUPER privilege for "SET sql_log_bin = 0;".
+
+Parameters
+-----------
+
+in_thread_id (BIGINT UNSIGNED):
+  The thread that you would like a stack trace for
+in_outfile  (VARCHAR(255)):
+  The filename the dot file will be written to
+in_max_runtime (DECIMAL(20,2)):
+  The maximum time to keep collecting data.
+  Use NULL to get the default which is 60 seconds.
+in_interval (DECIMAL(20,2)):
+  How long to sleep between data collections.
+  Use NULL to get the default which is 1 second.
+in_start_fresh (BOOLEAN):
+  Whether to reset all Performance Schema data before tracing.
+in_auto_setup (BOOLEAN):
+  Whether to disable all other threads and enable all consumers/instruments.
+  This will also reset the settings at the end of the run.
+in_debug (BOOLEAN):
+  Whether you would like to include file:lineno in the graph
+
+Example
+-----------
+
+mysql> CALL sys.ps_trace_thread(25, CONCAT('/tmp/stack-', REPLACE(NOW(), ' ', '-'), '.dot'), NULL, NULL, TRUE, TRUE, TRUE);
++-------------------+
+| summary           |
++-------------------+
+| Disabled 1 thread |
++-------------------+
+1 row in set (0.00 sec)
+
++---------------------------------------------+
+| Info                                        |
++---------------------------------------------+
+| Data collection starting for THREAD_ID = 25 |
++---------------------------------------------+
+1 row in set (0.03 sec)
+
++-----------------------------------------------------------+
+| Info                                                      |
++-----------------------------------------------------------+
+| Stack trace written to /tmp/stack-2014-02-16-21:18:41.dot |
++-----------------------------------------------------------+
+1 row in set (60.07 sec)
+
++-------------------------------------------------------------------+
+| Convert to PDF                                                    |
++-------------------------------------------------------------------+
+| dot -Tpdf -o /tmp/stack_25.pdf /tmp/stack-2014-02-16-21:18:41.dot |
++-------------------------------------------------------------------+
+1 row in set (60.07 sec)
+
++-------------------------------------------------------------------+
+| Convert to PNG                                                    |
++-------------------------------------------------------------------+
+| dot -Tpng -o /tmp/stack_25.png /tmp/stack-2014-02-16-21:18:41.dot |
++-------------------------------------------------------------------+
+1 row in set (60.07 sec)
+
++------------------+
+| summary          |
++------------------+
+| Enabled 1 thread |
++------------------+
+1 row in set (60.32 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | ps_truncate_all_tables              | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Truncates all summary tables within Performance Schema,
+resetting all aggregated instrumentation as a snapshot.
+
+Parameters
+-----------
+
+in_verbose (BOOLEAN):
+  Whether to print each TRUNCATE statement before running
+
+Example
+-----------
+
+mysql> CALL sys.ps_truncate_all_tables(false);
++---------------------+
+| summary             |
++---------------------+
+| Truncated 44 tables |
++---------------------+
+1 row in set (0.10 sec)
+
+Query OK, 0 rows affected (0.10 sec)
+
+
+
+
+                                                  | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | statement_performance_analyzer      | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Create a report of the statements running on the server.
+
+The views are calculated based on the overall and/or delta activity.
+
+Requires the SUPER privilege for "SET sql_log_bin = 0;".
+
+Parameters
+-----------
+
+in_action (ENUM('snapshot', 'overall', 'delta', 'create_tmp', 'create_table', 'save', 'cleanup')):
+  The action to take. Supported actions are:
+    * snapshot      Store a snapshot. The default is to make a snapshot of the current content of
+                    performance_schema.events_statements_summary_by_digest, but by setting in_table
+                    this can be overwritten to copy the content of the specified table.
+                    The snapshot is stored in the sys.tmp_digests temporary table.
+    * overall       Generate analyzis based on the content specified by in_table. For the overall analyzis,
+                    in_table can be NOW() to use a fresh snapshot. This will overwrite an existing snapshot.
+                    Use NULL for in_table to use the existing snapshot. If in_table IS NULL and no snapshot
+                    exists, a new will be created.
+                    See also in_views and @sys.statement_performance_analyzer.limit.
+    * delta         Generate a delta analysis. The delta will be calculated between the reference table in
+                    in_table and the snapshot. An existing snapshot must exist.
+                    The action uses the sys.tmp_digests_delta temporary table.
+                    See also in_views and @sys.statement_performance_analyzer.limit.
+    * create_table  Create a regular table suitable for storing the snapshot for later use, e.g. for
+                    calculating deltas.
+    * create_tmp    Create a temporary table suitable for storing the snapshot for later use, e.g. for
+                    calculating deltas.
+    * save          Save the snapshot in the table specified by in_table. The table must exists and have
+                    the correct structure.
+                    If no snapshot exists, a new is created.
+    * cleanup       Remove the temporary tables used for the snapshot and delta.
+
+in_table (VARCHAR(129)):
+  The table argument used for some actions. Use the format 'db1.t1' or 't1' without using any backticks (`)
+  for quoting. Periods (.) are not supported in the database and table names.
+
+  The meaning of the table for each action supporting the argument is:
+
+    * snapshot      The snapshot is created based on the specified table. Set to NULL or NOW() to use
+                    the current content of performance_schema.events_statements_summary_by_digest.
+    * overall       The table with the content to create the overall analyzis for. The following values
+                    can be used:
+                      - A table name - use the content of that table.
+                      - NOW()        - create a fresh snapshot and overwrite the existing snapshot.
+                      - NULL         - use the last stored snapshot.
+    * delta         The table name is mandatory and specified the reference view to compare the currently
+                    stored snapshot against. If no snapshot exists, a new will be created.
+    * create_table  The name of the regular table to create.
+    * create_tmp    The name of the temporary table to create.
+    * save          The name of the table to save the currently stored snapshot into.
+
+in_views (SET ('with_runtimes_in_95th_percentile', 'analysis', 'with_errors_or_warnings',
+               'with_full_table_scans', 'with_sorting', 'with_temp_tables', 'custom'))
+  Which views to include:
+
+    * with_runtimes_in_95th_percentile  Based on the sys.statements_with_runtimes_in_95th_percentile view
+    * analysis                          Based on the sys.statement_analysis view
+    * with_errors_or_warnings           Based on the sys.statements_with_errors_or_warnings view
+    * with_full_table_scans             Based on the sys.statements_with_full_table_scans view
+    * with_sorting                      Based on the sys.statements_with_sorting view
+    * with_temp_tables                  Based on the sys.statements_with_temp_tables view
+    * custom                            Use a custom view. This view must be specified in @sys.statement_performance_analyzer.view to an existing view or a query
+
+Default is to include all except 'custom'.
+
+
+Configuration Options
+----------------------
+
+sys.statement_performance_analyzer.limit
+  The maximum number of rows to include for the views that does not have a built-in limit (e.g. the 95th percentile view).
+  If not set the limit is 100.
+
+sys.statement_performance_analyzer.view
+  Used together with the 'custom' view. If the value contains a space, it is considered a query, otherwise it must be
+  an existing view querying the performance_schema.events_statements_summary_by_digest table. There cannot be any limit
+  clause including in the query or view definition if @sys.statement_performance_analyzer.limit > 0.
+  If specifying a view, use the same format as for in_table.
+
+sys.debug
+  Whether to provide debugging output.
+  Default is 'OFF'. Set to 'ON' to include.
+
+
+Example
+--------
+
+To create a report with the queries in the 95th percentile since last truncate of performance_schema.events_statements_summary_by_digest
+and the delta for a 1 minute period:
+
+   1. Create a temporary table to store the initial snapshot.
+   2. Create the initial snapshot.
+   3. Save the initial snapshot in the temporary table.
+   4. Wait one minute.
+   5. Create a new snapshot.
+   6. Perform analyzis based on the new snapshot.
+   7. Perform analyzis based on the delta between the initial and new snapshots.
+
+mysql> CALL sys.statement_performance_analyzer('create_tmp', 'mydb.tmp_digests_ini', NULL);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> CALL sys.statement_performance_analyzer('snapshot', NULL, NULL);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CALL sys.statement_performance_analyzer('save', 'mydb.tmp_digests_ini', NULL);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DO SLEEP(60);
+Query OK, 0 rows affected (1 min 0.00 sec)
+
+mysql> CALL sys.statement_performance_analyzer('snapshot', NULL, NULL);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CALL sys.statement_performance_analyzer('overall', NULL, 'with_runtimes_in_95th_percentile');
++-----------------------------------------+
+| Next Output                             |
++-----------------------------------------+
+| Queries with Runtime in 95th Percentile |
++-----------------------------------------+
+1 row in set (0.05 sec)
+
+...
+
+mysql> CALL sys.statement_performance_analyzer('delta', 'mydb.tmp_digests_ini', 'with_runtimes_in_95th_percentile');
++-----------------------------------------+
+| Next Output                             |
++-----------------------------------------+
+| Queries with Runtime in 95th Percentile |
++-----------------------------------------+
+1 row in set (0.03 sec)
+
+...
+
+
+To create an overall report of the 95th percentile queries and the top 10 queries with full table scans:
+
+mysql> CALL sys.statement_performance_analyzer('snapshot', NULL, NULL);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SET @sys.statement_performance_analyzer.limit = 10;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL sys.statement_performance_analyzer('overall', NULL, 'with_runtimes_in_95th_percentile,with_full_table_scans');
++-----------------------------------------+
+| Next Output                             |
++-----------------------------------------+
+| Queries with Runtime in 95th Percentile |
++-----------------------------------------+
+1 row in set (0.01 sec)
+
+...
+
++-------------------------------------+
+| Next Output                         |
++-------------------------------------+
+| Top 10 Queries with Full Table Scan |
++-------------------------------------+
+1 row in set (0.09 sec)
+
+...
+
+
+Use a custom view showing the top 10 query sorted by total execution time refreshing the view every minute using
+the watch command in Linux.
+
+mysql> CREATE OR REPLACE VIEW mydb.my_statements AS
+    -> SELECT sys.format_statement(DIGEST_TEXT) AS query,
+    ->        SCHEMA_NAME AS db,
+    ->        COUNT_STAR AS exec_count,
+    ->        format_pico_time(SUM_TIMER_WAIT) AS total_latency,
+    ->        format_pico_time(AVG_TIMER_WAIT) AS avg_latency,
+    ->        ROUND(IFNULL(SUM_ROWS_SENT / NULLIF(COUNT_STAR, 0), 0)) AS rows_sent_avg,
+    ->        ROUND(IFNULL(SUM_ROWS_EXAMINED / NULLIF(COUNT_STAR, 0), 0)) AS rows_examined_avg,
+    ->        ROUND(IFNULL(SUM_ROWS_AFFECTED / NULLIF(COUNT_STAR, 0), 0)) AS rows_affected_avg,
+    ->        DIGEST AS digest
+    ->   FROM performance_schema.events_statements_summary_by_digest
+    -> ORDER BY SUM_TIMER_WAIT DESC;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CALL sys.statement_performance_analyzer('create_table', 'mydb.digests_prev', NULL);
+Query OK, 0 rows affected (0.10 sec)
+
+shell$ watch -n 60 "mysql sys --table -e "
+> SET @sys.statement_performance_analyzer.view = 'mydb.my_statements';
+> SET @sys.statement_performance_analyzer.limit = 10;
+> CALL statement_performance_analyzer('snapshot', NULL, NULL);
+> CALL statement_performance_analyzer('delta', 'mydb.digests_prev', 'custom');
+> CALL statement_performance_analyzer('save', 'mydb.digests_prev', NULL);
+> ""
+
+Every 60.0s: mysql sys --table -e "
+              ...  Mon Dec 22 10:58:51 2014
+
++----------------------------------+
+| Next Output                      |
++----------------------------------+
+| Top 10 Queries Using Custom View |
++----------------------------------+
++-------------------+-------+------------+---------------+-------------+---------------+-------------------+-------------------+----------------------------------+
+| query             | db    | exec_count | total_latency | avg_latency | rows_sent_avg | rows_examined_avg | rows_affected_avg | digest                           |
++-------------------+-------+------------+---------------+-------------+---------------+-------------------+-------------------+----------------------------------+
+...
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| sys      | table_exists                        | PROCEDURE | SQL      | mysql.sys@localhost | 2023-10-03 11:37:13 | 2023-10-03 11:37:13 | INVOKER       |
+Description
+-----------
+
+Tests whether the table specified in in_db and in_table exists either as a regular
+table, or as a temporary table. The returned value corresponds to the table that
+will be used, so if there's both a temporary and a permanent table with the given
+name, then 'TEMPORARY' will be returned.
+
+Parameters
+-----------
+
+in_db (VARCHAR(64)):
+  The database name to check for the existance of the table in.
+
+in_table (VARCHAR(64)):
+  The name of the table to check the existance of.
+
+out_exists ENUM('', 'BASE TABLE', 'VIEW', 'TEMPORARY'):
+  The return value: whether the table exists. The value is one of:
+    * ''           - the table does not exist neither as a base table, view, nor temporary table.
+    * 'BASE TABLE' - the table name exists as a permanent base table table.
+    * 'VIEW'       - the table name exists as a view.
+    * 'TEMPORARY'  - the table name exists as a temporary table.
+
+Example
+--------
+
+mysql> CREATE DATABASE db1;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> use db1;
+Database changed
+mysql> CREATE TABLE t1 (id INT PRIMARY KEY);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> CREATE TABLE t2 (id INT PRIMARY KEY);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> CREATE view v_t1 AS SELECT * FROM t1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE TEMPORARY TABLE t1 (id INT PRIMARY KEY);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL sys.table_exists('db1', 't1', @exists); SELECT @exists;
+Query OK, 0 rows affected (0.00 sec)
+
++------------+
+| @exists    |
++------------+
+| TEMPORARY  |
++------------+
+1 row in set (0.00 sec)
+
+mysql> CALL sys.table_exists('db1', 't2', @exists); SELECT @exists;
+Query OK, 0 rows affected (0.00 sec)
+
++------------+
+| @exists    |
++------------+
+| BASE TABLE |
++------------+
+1 row in set (0.01 sec)
+
+mysql> CALL sys.table_exists('db1', 'v_t1', @exists); SELECT @exists;
+Query OK, 0 rows affected (0.00 sec)
+
++---------+
+| @exists |
++---------+
+| VIEW    |
++---------+
+1 row in set (0.00 sec)
+
+mysql> CALL sys.table_exists('db1', 't3', @exists); SELECT @exists;
+Query OK, 0 rows affected (0.01 sec)
+
++---------+
+| @exists |
++---------+
+|         |
++---------+
+1 row in set (0.00 sec)
+ | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
++----------+-------------------------------------+-----------+----------+---------------------+---------------------+---------------------+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
+28 rows in set (0.02 sec)
+
+mysql>
+       show procedure status like "filme%";
++--------+------------------+-----------+----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db     | Name             | Type      | Language | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++--------+------------------+-----------+----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| sakila | filmesCurtos2008 | PROCEDURE | SQL      | root@localhost | 2023-10-27 10:07:02 | 2023-10-27 10:07:02 | DEFINER       |         | cp850                | cp850_general_ci     | utf8mb4_0900_ai_ci |
++--------+------------------+-----------+----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+1 row in set (0.02 sec)
+
+mysql> drop procedure filmesCurtos2008;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE PROCEDURE filmesCurtos2008()
+    -> SELECT titulo, ano_de_lancamento, duracao_do_filme
+    -> FROM filme
+    -> WHERE titulo LIKE "A%"
+    -> AND ano_de_lancamento = '2008'
+    -> AND duracao_do_filme < 90;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call filmesCurtos2008;
+Empty set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT titulo, ano_de_lancamento, duracao_do_filme
+    -> FROM filme
+    -> WHERE titulo LIKE "A%"
+    -> AND ano_de_lancamento = '2008'
+    -> AND duracao_do_filme < 90;
+Empty set (0.00 sec)
+
+mysql> SELECT titulo, ano_de_lancamento, duracao_do_filme
+    -> FROM filme
+    -> WHERE titulo LIKE "A%"
+    -> AND ano_de_lancamento = '2008';
++--------------+-------------------+------------------+
+| titulo       | ano_de_lancamento | duracao_do_filme |
++--------------+-------------------+------------------+
+| AGENT TRUMAN |              2008 |              169 |
+| ARIZONA BANG |              2008 |              121 |
++--------------+-------------------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> use frutas;
+ERROR 1049 (42000): Unknown database 'frutas'
+mysql> use quitanda;
+Database changed
+mysql> create table log (
+    -> id int auto_increment,
+    -> assunto varchar(300),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_quitanda |
++--------------------+
+| categorias         |
+| frutas             |
+| frutasquantidade   |
+| log                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> delimiter $
+mysql> create trigger log after insert
+    -> on frutas
+    -> for each row
+    -> begin
+    -> insert into log (assunto) values ("Inserção de dados realizada com sucesso.");
+    -> end;
+    -> end $
+Query OK, 0 rows affected (0.03 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> delimiter;
+    -> \c;
+    -> zc
+    -> \c
+mysql> create trigger log after insert
+    -> on frutas
+    -> for each row
+    -> being
+    -> insert into log (assunto) values ("Inserção realizada com sucesso.");
+    -> end $
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insert into log (assunto) values ("Inserção realizadacom sucesso.");
+end' at line 5
+mysql> delimiter $
+mysql> create trigger log after insert
+    -> on frutas
+    -> for each row
+    -> being
+    -> insert into log (assunto) values ("Inserção realizada com sucesso.");
+    -> end $
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insert into log (assunto) values ("Inserção realizadacom sucesso.");
+end' at line 5
+mysql> select * from log.
+    -> ;
+    -> \c
+mysql> select * from log;
+    -> \c
+mysql> end $
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> select * from log;
+    -> \c;
+    -> \c
+mysql> delimiter;
+    -> end $
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter;end' at line 1
+mysql> end $
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> delimiter;
+    ->
+    ->
+    ->
+    -> \c
+mysql> select * from log;
+    -> \c
+mysql> delimiter $
+mysql> end $
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> delimiter;
+    -> \c
+mysql>

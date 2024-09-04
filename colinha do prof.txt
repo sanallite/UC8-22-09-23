@@ -1,0 +1,47 @@
+//Ver os bancos de dados
+show databases;
+
+ 
+
+//Criar banco de dados
+create database nome_banco;
+
+ 
+
+//Para selecionar o BD e usar
+use nome_banco;
+
+ 
+
+//Criar tabelas e atributos
+create table nome_tabela (
+    atributo tipo (tamanho),
+    atributo tipo_dado (tamanho),
+    primary key (atributo)
+);
+
+ 
+
+//Ver atributos da tabela
+desc nome_tabela;
+
+ 
+
+//inserir 
+insert into nome_tabela (coluna1,coluna2) values ('valor1','valor2');
+ 
+//ver os dados
+select * from nome_tabela;
+
+//para criar um tabela usando chaves estrangeiras
+
+ 
+
+create table nome_tabela(
+codigo int (10) auto_increment,
+cod_funcionario int (10),
+nome varchar (255),
+data_nasc date,
+primary key (codigo),
+foreign key (cod_funcionario) references funcionario(codigo)
+);

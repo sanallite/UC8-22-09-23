@@ -1,0 +1,621 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use biblioteca;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_biblioteca |
++----------------------+
+| autores              |
+| editoras             |
+| emprestimos          |
+| leitores             |
+| livros               |
++----------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from livros;
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+| id | isbn      | titulo                                               | ano_publicacao | autores_id | editoras_id |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+|  1 |      1822 | A Fundamental Importância da Legitimidade Monárquica |           2020 |          2 |        NULL |
+|  2 |      1840 | Catecismo Tradicionalista Orleanista                 |           2020 |       NULL |        NULL |
+|  3 |     97865 | Floradas na Serra                                    |           1939 |       NULL |        NULL |
+|  4 |   2847149 | Trepandé                                             |           1972 |       NULL |        NULL |
+|  5 |    141441 | Vida de Jesus                                        |           1978 |       NULL |        NULL |
+|  6 |   1981549 | A Voz do Oeste                                       |           1948 |       NULL |        NULL |
+|  7 | 636366336 | O Cavaleiro de Itararé                               |           1955 |       NULL |        NULL |
+|  8 | 292572567 | O Ritmo da História                                  |           NULL |       NULL |        NULL |
+|  9 | 257825725 | Como Nasceram as Cidades do Brasil                   |           1946 |       NULL |        NULL |
+| 10 |  11021301 | O Esperado                                           |           1981 |       NULL |        NULL |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from editoras;
++----+-----------------+-------------------------+----------+
+| id | nome            | endereco                | telefone |
++----+-----------------+-------------------------+----------+
+|  1 | Ação Orleanista | Rio de Janeiro          |     NULL |
+|  2 | Lisboa          | Belo Horizonte          |     NULL |
+|  3 | Bloch           | Rio de Janeiro          |     NULL |
+|  4 | Legião Anchieta | São José dos Campos     |     NULL |
+|  5 | Senac           | Rua Calixto Razzolini   |     NULL |
+|  6 | Globo           | Rio de Janeiro          |     NULL |
+|  7 | Pró Monarquia   | Rua Itápolis, 873       |     NULL |
+|  8 | JBC             | Al. dos Maracatins, 780 |     NULL |
+|  9 | MCD             | Rua 25, 35              |     NULL |
+| 10 | RCH             | Rua Chile, 2134         |     NULL |
++----+-----------------+-------------------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> update livros set editoras_id = 1 where id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from livros;
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+| id | isbn      | titulo                                               | ano_publicacao | autores_id | editoras_id |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+|  1 |      1822 | A Fundamental Importância da Legitimidade Monárquica |           2020 |          2 |           1 |
+|  2 |      1840 | Catecismo Tradicionalista Orleanista                 |           2020 |       NULL |        NULL |
+|  3 |     97865 | Floradas na Serra                                    |           1939 |       NULL |        NULL |
+|  4 |   2847149 | Trepandé                                             |           1972 |       NULL |        NULL |
+|  5 |    141441 | Vida de Jesus                                        |           1978 |       NULL |        NULL |
+|  6 |   1981549 | A Voz do Oeste                                       |           1948 |       NULL |        NULL |
+|  7 | 636366336 | O Cavaleiro de Itararé                               |           1955 |       NULL |        NULL |
+|  8 | 292572567 | O Ritmo da História                                  |           NULL |       NULL |        NULL |
+|  9 | 257825725 | Como Nasceram as Cidades do Brasil                   |           1946 |       NULL |        NULL |
+| 10 |  11021301 | O Esperado                                           |           1981 |       NULL |        NULL |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> update livros set editoras_id = 1, autores_id = 2 where id = 2,2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',2' at line 1
+mysql> update livros set editoras_id = 1, autores_id = 2 where id = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from livros;
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+| id | isbn      | titulo                                               | ano_publicacao | autores_id | editoras_id |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+|  1 |      1822 | A Fundamental Importância da Legitimidade Monárquica |           2020 |          2 |           1 |
+|  2 |      1840 | Catecismo Tradicionalista Orleanista                 |           2020 |          2 |           1 |
+|  3 |     97865 | Floradas na Serra                                    |           1939 |       NULL |        NULL |
+|  4 |   2847149 | Trepandé                                             |           1972 |       NULL |        NULL |
+|  5 |    141441 | Vida de Jesus                                        |           1978 |       NULL |        NULL |
+|  6 |   1981549 | A Voz do Oeste                                       |           1948 |       NULL |        NULL |
+|  7 | 636366336 | O Cavaleiro de Itararé                               |           1955 |       NULL |        NULL |
+|  8 | 292572567 | O Ritmo da História                                  |           NULL |       NULL |        NULL |
+|  9 | 257825725 | Como Nasceram as Cidades do Brasil                   |           1946 |       NULL |        NULL |
+| 10 |  11021301 | O Esperado                                           |           1981 |       NULL |        NULL |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from autores;
++----+---------------------------+-----------------+-------------+
+| id | nome                      | data_nascimento | pais_origem |
++----+---------------------------+-----------------+-------------+
+|  1 | Plínio Salgado            | 1895-01-22      | Brasil      |
+|  2 | Renan                     | 1990-01-01      | Brasil      |
+|  3 | Márcio                    | 1999-05-11      | Brasil      |
+|  4 | Thiago                    | 1994-12-04      | Brasil      |
+|  5 | Rafael                    | 1986-04-24      | Brasil      |
+|  6 | Dinah Silveira de Queiroz | 1911-11-09      | Brasil      |
+|  7 | Heitor                    | 2004-08-30      | Brasil      |
+|  8 | José Castorino Teodoro    | 1946-03-20      | Brasil      |
+|  9 | Adolpho Bloch             | 1908-10-08      | Ucrânia     |
+| 10 | Adolph Hitler             | 1899-04-20      | Áustria     |
++----+---------------------------+-----------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> update livros set autores_id = 6, editoras_id = 3 where id = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update livros set autores_id = 1, editoras_id = 2 where id = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update livros set autores_id = 1, editoras_id = 3 where id = 5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update livros set autores_id = 1, editoras_id = 5 where id = 6;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update livros set autores_id = 1, editoras_id = 6 where id = 7;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update livros set autores_id = 1, editoras_id = 8 where id = 8;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update livros set autores_id = 1, editoras_id = 9 where id = 9;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update livros set autores_id = 1, editoras_id = 2 where id = 10;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from livros;
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+| id | isbn      | titulo                                               | ano_publicacao | autores_id | editoras_id |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+|  1 |      1822 | A Fundamental Importância da Legitimidade Monárquica |           2020 |          2 |           1 |
+|  2 |      1840 | Catecismo Tradicionalista Orleanista                 |           2020 |          2 |           1 |
+|  3 |     97865 | Floradas na Serra                                    |           1939 |          6 |           3 |
+|  4 |   2847149 | Trepandé                                             |           1972 |          1 |           2 |
+|  5 |    141441 | Vida de Jesus                                        |           1978 |          1 |           3 |
+|  6 |   1981549 | A Voz do Oeste                                       |           1948 |          1 |           5 |
+|  7 | 636366336 | O Cavaleiro de Itararé                               |           1955 |          1 |           6 |
+|  8 | 292572567 | O Ritmo da História                                  |           NULL |          1 |           8 |
+|  9 | 257825725 | Como Nasceram as Cidades do Brasil                   |           1946 |          1 |           9 |
+| 10 |  11021301 | O Esperado                                           |           1981 |          1 |           2 |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from editoras;
++----+-----------------+-------------------------+----------+
+| id | nome            | endereco                | telefone |
++----+-----------------+-------------------------+----------+
+|  1 | Ação Orleanista | Rio de Janeiro          |     NULL |
+|  2 | Lisboa          | Belo Horizonte          |     NULL |
+|  3 | Bloch           | Rio de Janeiro          |     NULL |
+|  4 | Legião Anchieta | São José dos Campos     |     NULL |
+|  5 | Senac           | Rua Calixto Razzolini   |     NULL |
+|  6 | Globo           | Rio de Janeiro          |     NULL |
+|  7 | Pró Monarquia   | Rua Itápolis, 873       |     NULL |
+|  8 | JBC             | Al. dos Maracatins, 780 |     NULL |
+|  9 | MCD             | Rua 25, 35              |     NULL |
+| 10 | RCH             | Rua Chile, 2134         |     NULL |
++----+-----------------+-------------------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from autores;
++----+---------------------------+-----------------+-------------+
+| id | nome                      | data_nascimento | pais_origem |
++----+---------------------------+-----------------+-------------+
+|  1 | Plínio Salgado            | 1895-01-22      | Brasil      |
+|  2 | Renan                     | 1990-01-01      | Brasil      |
+|  3 | Márcio                    | 1999-05-11      | Brasil      |
+|  4 | Thiago                    | 1994-12-04      | Brasil      |
+|  5 | Rafael                    | 1986-04-24      | Brasil      |
+|  6 | Dinah Silveira de Queiroz | 1911-11-09      | Brasil      |
+|  7 | Heitor                    | 2004-08-30      | Brasil      |
+|  8 | José Castorino Teodoro    | 1946-03-20      | Brasil      |
+|  9 | Adolpho Bloch             | 1908-10-08      | Ucrânia     |
+| 10 | Adolph Hitler             | 1899-04-20      | Áustria     |
++----+---------------------------+-----------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from leitores;
++----+----------------+----------+-------+----------+
+| id | nome           | endereco | email | telefone |
++----+----------------+----------+-------+----------+
+|  1 | Márcio Teodoro | NULL     | NULL  |      999 |
+|  2 | Miyu Shako     | NULL     | NULL  |     7272 |
+|  3 | Haiyori Kairin | NULL     | NULL  |       17 |
+|  4 | Magical Fany   | NULL     | NULL  |     2147 |
+|  5 | Kenny Goring   | NULL     | NULL  |   111406 |
+|  6 | Odilson        | NULL     | NULL  |     2011 |
+|  7 | Gabrielle      | NULL     | NULL  |     8765 |
+|  8 | Kamilly        | NULL     | NULL  |    92043 |
+|  9 | Bruna          | NULL     | NULL  |    80085 |
+| 10 | Gawr Gura      | NULL     | NULL  |        0 |
++----+----------------+----------+-------+----------+
+10 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_biblioteca |
++----------------------+
+| autores              |
+| editoras             |
+| emprestimos          |
+| leitores             |
+| livros               |
++----------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emprestimos;
+Empty set (0.00 sec)
+
+mysql> desc emprestimos;
++--------------------+----------+------+-----+---------+----------------+
+| Field              | Type     | Null | Key | Default | Extra          |
++--------------------+----------+------+-----+---------+----------------+
+| id                 | int      | NO   | PRI | NULL    | auto_increment |
+| data_inicio        | datetime | YES  |     | NULL    |                |
+| data_devolucao     | datetime | YES  |     | NULL    |                |
+| leitores_id        | int      | YES  | MUL | NULL    |                |
+| livros_id          | int      | YES  | MUL | NULL    |                |
+| livros_autores_id  | int      | YES  | MUL | NULL    |                |
+| livros_editoras_id | int      | YES  | MUL | NULL    |                |
++--------------------+----------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-10-17', '2023-10-31', 1, 3, 6, 3);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from emprestimos;
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+| id | data_inicio         | data_devolucao      | leitores_id | livros_id | livros_autores_id | livros_editoras_id |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+|  1 | 2023-10-17 00:00:00 | 2023-10-31 00:00:00 |           1 |         3 |                 6 |                  3 |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-10-17 11:00:00', '2023-10-31 23:59:00', 1, 1, 2, 1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emprestimos;
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+| id | data_inicio         | data_devolucao      | leitores_id | livros_id | livros_autores_id | livros_editoras_id |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+|  1 | 2023-10-17 00:00:00 | 2023-10-31 00:00:00 |           1 |         3 |                 6 |                  3 |
+|  2 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           1 |         1 |                 2 |                  1 |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2022-06-12', '2022-06-17', 2, 8, 1, 8);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select livros.nome, autores.nome, editoras.nome from livros inner join autores inner join editoras where livros.autores_id = autores.id and livros.editoras_id = editoras.id;
+ERROR 1054 (42S22): Unknown column 'livros.nome' in 'field list'
+mysql> select livros.titulo, autores.nome, editoras.nome from livros inner join autores inner join editoras where livros.autores_id = autores.id and livros.editoras_id = editoras.id;
++------------------------------------------------------+---------------------------+-----------------+
+| titulo                                               | nome                      | nome            |
++------------------------------------------------------+---------------------------+-----------------+
+| A Fundamental Importância da Legitimidade Monárquica | Renan                     | Ação Orleanista |
+| Catecismo Tradicionalista Orleanista                 | Renan                     | Ação Orleanista |
+| Floradas na Serra                                    | Dinah Silveira de Queiroz | Bloch           |
+| Trepandé                                             | Plínio Salgado            | Lisboa          |
+| Vida de Jesus                                        | Plínio Salgado            | Bloch           |
+| A Voz do Oeste                                       | Plínio Salgado            | Senac           |
+| O Cavaleiro de Itararé                               | Plínio Salgado            | Globo           |
+| O Ritmo da História                                  | Plínio Salgado            | JBC             |
+| Como Nasceram as Cidades do Brasil                   | Plínio Salgado            | MCD             |
+| O Esperado                                           | Plínio Salgado            | Lisboa          |
++------------------------------------------------------+---------------------------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-02-15', '2023-02-23', 3, 10, 1, 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-08-04 14:00:00', '2023-08-20 14:00:00', 4, 7, 1, 6);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emprestimos;
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+| id | data_inicio         | data_devolucao      | leitores_id | livros_id | livros_autores_id | livros_editoras_id |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+|  1 | 2023-10-17 00:00:00 | 2023-10-31 00:00:00 |           1 |         3 |                 6 |                  3 |
+|  2 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           1 |         1 |                 2 |                  1 |
+|  3 | 2022-06-12 00:00:00 | 2022-06-17 00:00:00 |           2 |         8 |                 1 |                  8 |
+|  4 | 2023-02-15 00:00:00 | 2023-02-23 00:00:00 |           3 |        10 |                 1 |                  2 |
+|  5 | 2023-08-04 14:00:00 | 2023-08-20 14:00:00 |           4 |         7 |                 1 |                  6 |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-10-17 11:00:00', '2023-10-31 23:59:00', 5, 2, 2, 1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-10-17 11:00:00', '2023-10-31 23:59:00', 5, 7, 1, 6);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-10-17 11:00:00', '2023-10-31 23:59:00', 7, 5, 1, 3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-10-17 11:00:00', '2023-10-31 23:59:00', 8, 4, 1, 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emprestimos;
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+| id | data_inicio         | data_devolucao      | leitores_id | livros_id | livros_autores_id | livros_editoras_id |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+|  1 | 2023-10-17 00:00:00 | 2023-10-31 00:00:00 |           1 |         3 |                 6 |                  3 |
+|  2 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           1 |         1 |                 2 |                  1 |
+|  3 | 2022-06-12 00:00:00 | 2022-06-17 00:00:00 |           2 |         8 |                 1 |                  8 |
+|  4 | 2023-02-15 00:00:00 | 2023-02-23 00:00:00 |           3 |        10 |                 1 |                  2 |
+|  5 | 2023-08-04 14:00:00 | 2023-08-20 14:00:00 |           4 |         7 |                 1 |                  6 |
+|  6 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           5 |         2 |                 2 |                  1 |
+|  7 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           5 |         7 |                 1 |                  6 |
+|  8 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           7 |         5 |                 1 |                  3 |
+|  9 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           8 |         4 |                 1 |                  2 |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into emprestimos (data_inicio, data_devolucao, leitores_id, livros_id, livros_autores_id, livros_editoras_id) values ('2023-11-01 13:00:00', '2023-11-30 21:00:00', 9, 6, 1, 5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emprestimos;
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+| id | data_inicio         | data_devolucao      | leitores_id | livros_id | livros_autores_id | livros_editoras_id |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+|  1 | 2023-10-17 00:00:00 | 2023-10-31 00:00:00 |           1 |         3 |                 6 |                  3 |
+|  2 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           1 |         1 |                 2 |                  1 |
+|  3 | 2022-06-12 00:00:00 | 2022-06-17 00:00:00 |           2 |         8 |                 1 |                  8 |
+|  4 | 2023-02-15 00:00:00 | 2023-02-23 00:00:00 |           3 |        10 |                 1 |                  2 |
+|  5 | 2023-08-04 14:00:00 | 2023-08-20 14:00:00 |           4 |         7 |                 1 |                  6 |
+|  6 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           5 |         2 |                 2 |                  1 |
+|  7 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           5 |         7 |                 1 |                  6 |
+|  8 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           7 |         5 |                 1 |                  3 |
+|  9 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           8 |         4 |                 1 |                  2 |
+| 10 | 2023-11-01 13:00:00 | 2023-11-30 21:00:00 |           9 |         6 |                 1 |                  5 |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> select emprestimos.id, leitores.nome, livros.titulo from emprestimos inner join leitores inner join livros where emprestimos.leitores_id = leitores.id and emprestimos.livros_id = livros.id;
++----+----------------+------------------------------------------------------+
+| id | nome           | titulo                                               |
++----+----------------+------------------------------------------------------+
+|  1 | Márcio Teodoro | Floradas na Serra                                    |
+|  2 | Márcio Teodoro | A Fundamental Importância da Legitimidade Monárquica |
+|  3 | Miyu Shako     | O Ritmo da História                                  |
+|  4 | Haiyori Kairin | O Esperado                                           |
+|  5 | Magical Fany   | O Cavaleiro de Itararé                               |
+|  6 | Kenny Goring   | Catecismo Tradicionalista Orleanista                 |
+|  7 | Kenny Goring   | O Cavaleiro de Itararé                               |
+|  8 | Gabrielle      | Vida de Jesus                                        |
+|  9 | Kamilly        | Trepandé                                             |
+| 10 | Bruna          | A Voz do Oeste                                       |
++----+----------------+------------------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_biblioteca |
++----------------------+
+| autores              |
+| editoras             |
+| emprestimos          |
+| leitores             |
+| livros               |
++----------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from autores;
++----+---------------------------+-----------------+-------------+
+| id | nome                      | data_nascimento | pais_origem |
++----+---------------------------+-----------------+-------------+
+|  1 | Plínio Salgado            | 1895-01-22      | Brasil      |
+|  2 | Renan                     | 1990-01-01      | Brasil      |
+|  3 | Márcio                    | 1999-05-11      | Brasil      |
+|  4 | Thiago                    | 1994-12-04      | Brasil      |
+|  5 | Rafael                    | 1986-04-24      | Brasil      |
+|  6 | Dinah Silveira de Queiroz | 1911-11-09      | Brasil      |
+|  7 | Heitor                    | 2004-08-30      | Brasil      |
+|  8 | José Castorino Teodoro    | 1946-03-20      | Brasil      |
+|  9 | Adolpho Bloch             | 1908-10-08      | Ucrânia     |
+| 10 | Adolph Hitler             | 1899-04-20      | Áustria     |
++----+---------------------------+-----------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from editoras;
++----+-----------------+-------------------------+----------+
+| id | nome            | endereco                | telefone |
++----+-----------------+-------------------------+----------+
+|  1 | Ação Orleanista | Rio de Janeiro          |     NULL |
+|  2 | Lisboa          | Belo Horizonte          |     NULL |
+|  3 | Bloch           | Rio de Janeiro          |     NULL |
+|  4 | Legião Anchieta | São José dos Campos     |     NULL |
+|  5 | Senac           | Rua Calixto Razzolini   |     NULL |
+|  6 | Globo           | Rio de Janeiro          |     NULL |
+|  7 | Pró Monarquia   | Rua Itápolis, 873       |     NULL |
+|  8 | JBC             | Al. dos Maracatins, 780 |     NULL |
+|  9 | MCD             | Rua 25, 35              |     NULL |
+| 10 | RCH             | Rua Chile, 2134         |     NULL |
++----+-----------------+-------------------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from emprestimos;
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+| id | data_inicio         | data_devolucao      | leitores_id | livros_id | livros_autores_id | livros_editoras_id |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+|  1 | 2023-10-17 00:00:00 | 2023-10-31 00:00:00 |           1 |         3 |                 6 |                  3 |
+|  2 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           1 |         1 |                 2 |                  1 |
+|  3 | 2022-06-12 00:00:00 | 2022-06-17 00:00:00 |           2 |         8 |                 1 |                  8 |
+|  4 | 2023-02-15 00:00:00 | 2023-02-23 00:00:00 |           3 |        10 |                 1 |                  2 |
+|  5 | 2023-08-04 14:00:00 | 2023-08-20 14:00:00 |           4 |         7 |                 1 |                  6 |
+|  6 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           5 |         2 |                 2 |                  1 |
+|  7 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           5 |         7 |                 1 |                  6 |
+|  8 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           7 |         5 |                 1 |                  3 |
+|  9 | 2023-10-17 11:00:00 | 2023-10-31 23:59:00 |           8 |         4 |                 1 |                  2 |
+| 10 | 2023-11-01 13:00:00 | 2023-11-30 21:00:00 |           9 |         6 |                 1 |                  5 |
++----+---------------------+---------------------+-------------+-----------+-------------------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from leitores;
++----+----------------+----------+-------+----------+
+| id | nome           | endereco | email | telefone |
++----+----------------+----------+-------+----------+
+|  1 | Márcio Teodoro | NULL     | NULL  |      999 |
+|  2 | Miyu Shako     | NULL     | NULL  |     7272 |
+|  3 | Haiyori Kairin | NULL     | NULL  |       17 |
+|  4 | Magical Fany   | NULL     | NULL  |     2147 |
+|  5 | Kenny Goring   | NULL     | NULL  |   111406 |
+|  6 | Odilson        | NULL     | NULL  |     2011 |
+|  7 | Gabrielle      | NULL     | NULL  |     8765 |
+|  8 | Kamilly        | NULL     | NULL  |    92043 |
+|  9 | Bruna          | NULL     | NULL  |    80085 |
+| 10 | Gawr Gura      | NULL     | NULL  |        0 |
++----+----------------+----------+-------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from livros;
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+| id | isbn      | titulo                                               | ano_publicacao | autores_id | editoras_id |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+|  1 |      1822 | A Fundamental Importância da Legitimidade Monárquica |           2020 |          2 |           1 |
+|  2 |      1840 | Catecismo Tradicionalista Orleanista                 |           2020 |          2 |           1 |
+|  3 |     97865 | Floradas na Serra                                    |           1939 |          6 |           3 |
+|  4 |   2847149 | Trepandé                                             |           1972 |          1 |           2 |
+|  5 |    141441 | Vida de Jesus                                        |           1978 |          1 |           3 |
+|  6 |   1981549 | A Voz do Oeste                                       |           1948 |          1 |           5 |
+|  7 | 636366336 | O Cavaleiro de Itararé                               |           1955 |          1 |           6 |
+|  8 | 292572567 | O Ritmo da História                                  |           NULL |          1 |           8 |
+|  9 | 257825725 | Como Nasceram as Cidades do Brasil                   |           1946 |          1 |           9 |
+| 10 |  11021301 | O Esperado                                           |           1981 |          1 |           2 |
++----+-----------+------------------------------------------------------+----------------+------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select nome, count(nome) from autores group by nome;
++---------------------------+-------------+
+| nome                      | count(nome) |
++---------------------------+-------------+
+| Plínio Salgado            |           1 |
+| Renan                     |           1 |
+| Márcio                    |           1 |
+| Thiago                    |           1 |
+| Rafael                    |           1 |
+| Dinah Silveira de Queiroz |           1 |
+| Heitor                    |           1 |
+| José Castorino Teodoro    |           1 |
+| Adolpho Bloch             |           1 |
+| Adolph Hitler             |           1 |
++---------------------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select autores.nome, count(livros.titulo) from autores inner join livros where autores.id = livros.autores_id groupby autores.nome;
++---------------------------+----------------------+
+| nome                      | count(livros.titulo) |
++---------------------------+----------------------+
+| Renan                     |                    2 |
+| Dinah Silveira de Queiroz |                    1 |
+| Plínio Salgado            |                    7 |
++---------------------------+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> select autores.nome, count(livros.titulo) from autores inner join livros where autores.id = livros.autores_id groupby autores.nome;
++---------------------------+----------------------+
+| nome                      | count(livros.titulo) |
++---------------------------+----------------------+
+| Renan                     |                    2 |
+| Dinah Silveira de Queiroz |                    1 |
+| Plínio Salgado            |                    7 |
++---------------------------+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> select autores.nome, count(livros.titulo) from autores inner join livros where autores.id = livros.autores_id groupby count(livros.titulo);
+ERROR 1056 (42000): Can't group on 'count(livros.titulo)'
+mysql> select autores.nome, count(livros.titulo) from autores inner join livros where autores.id = livros.autores_id;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'biblioteca.autores.nome'; this is incompatible with sql_mode=only_full_group_by
+mysql> select count(emprestimos.id), leitores.nome from emprestimos inner join leitores where leitores.id = emprestimos.lei
+tores_id;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #2 of SELECT list contains nonaggregated column 'biblioteca.leitores.nome'; this is incompatible with sql_mode=only_full_group_by
+mysql> select count(emprestimos.id), leitores.nome from emprestimos inner join leitores where leitores.id = emprestimos.leitores_id group by emprestimos.id;
++-----------------------+----------------+
+| count(emprestimos.id) | nome           |
++-----------------------+----------------+
+|                     1 | Márcio Teodoro |
+|                     1 | Márcio Teodoro |
+|                     1 | Miyu Shako     |
+|                     1 | Haiyori Kairin |
+|                     1 | Magical Fany   |
+|                     1 | Kenny Goring   |
+|                     1 | Kenny Goring   |
+|                     1 | Gabrielle      |
+|                     1 | Kamilly        |
+|                     1 | Bruna          |
++-----------------------+----------------+
+10 rows in set (0.00 sec)
+
+mysql> select count(emprestimos.leitores_id), leitores.nome from emprestimos inner join leitores where leitores.id = emprestimos.leitores_id group by emprestimos.id;
++--------------------------------+----------------+
+| count(emprestimos.leitores_id) | nome           |
++--------------------------------+----------------+
+|                              1 | Márcio Teodoro |
+|                              1 | Márcio Teodoro |
+|                              1 | Miyu Shako     |
+|                              1 | Haiyori Kairin |
+|                              1 | Magical Fany   |
+|                              1 | Kenny Goring   |
+|                              1 | Kenny Goring   |
+|                              1 | Gabrielle      |
+|                              1 | Kamilly        |
+|                              1 | Bruna          |
++--------------------------------+----------------+
+10 rows in set (0.00 sec)
+
+mysql> select count(emprestimos.leitores_id), leitores.nome from emprestimos inner join leitores where leitores.id = emprestimos.leitores_id group by leitores.nome;
++--------------------------------+----------------+
+| count(emprestimos.leitores_id) | nome           |
++--------------------------------+----------------+
+|                              2 | Márcio Teodoro |
+|                              1 | Miyu Shako     |
+|                              1 | Haiyori Kairin |
+|                              1 | Magical Fany   |
+|                              2 | Kenny Goring   |
+|                              1 | Gabrielle      |
+|                              1 | Kamilly        |
+|                              1 | Bruna          |
++--------------------------------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select count(emprestimos.id), leitores.nome from emprestimos inner join leitores where leitores.id = emprestimos.leitores_id group by leitores.nome;
++-----------------------+----------------+
+| count(emprestimos.id) | nome           |
++-----------------------+----------------+
+|                     2 | Márcio Teodoro |
+|                     1 | Miyu Shako     |
+|                     1 | Haiyori Kairin |
+|                     1 | Magical Fany   |
+|                     2 | Kenny Goring   |
+|                     1 | Gabrielle      |
+|                     1 | Kamilly        |
+|                     1 | Bruna          |
++-----------------------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select count(emprestimos.id), leitores.nome from emprestimos inner join leitores where leitores.id = 1;
++-----------------------+----------------+
+| count(emprestimos.id) | nome           |
++-----------------------+----------------+
+|                    10 | Márcio Teodoro |
++-----------------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> select count(emprestimos.id), leitores.nome from emprestimos inner join leitores where leitores.id = 1 and emprestimos.leitores_id = leitores.id;
++-----------------------+----------------+
+| count(emprestimos.id) | nome           |
++-----------------------+----------------+
+|                     2 | Márcio Teodoro |
++-----------------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> select nome from leitores where nome like "M%";
++----------------+
+| nome           |
++----------------+
+| Márcio Teodoro |
+| Miyu Shako     |
+| Magical Fany   |
++----------------+
+3 rows in set (0.00 sec)
+
+mysql> select nome,id from leitores where nome like "M%";
++----------------+----+
+| nome           | id |
++----------------+----+
+| Márcio Teodoro |  1 |
+| Miyu Shako     |  2 |
+| Magical Fany   |  4 |
++----------------+----+
+3 rows in set (0.00 sec)
+
+mysql>

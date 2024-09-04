@@ -1,0 +1,927 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 26
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create databaste teste;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databaste teste' at line 1
+mysql> \c
+mysql> help
+
+For information about MySQL products and services, visit:
+   http://www.mysql.com/
+For developer information, including the MySQL Reference Manual, visit:
+   http://dev.mysql.com/
+To buy MySQL Enterprise support, training, or other products, visit:
+   https://shop.mysql.com/
+
+List of all MySQL commands:
+Note that all text commands must be first on line and end with ';'
+?         (\?) Synonym for `help'.
+clear     (\c) Clear the current input statement.
+connect   (\r) Reconnect to the server. Optional arguments are db and host.
+delimiter (\d) Set statement delimiter.
+ego       (\G) Send command to mysql server, display result vertically.
+exit      (\q) Exit mysql. Same as quit.
+go        (\g) Send command to mysql server.
+help      (\h) Display this help.
+notee     (\t) Don't write into outfile.
+print     (\p) Print current command.
+prompt    (\R) Change your mysql prompt.
+quit      (\q) Quit mysql.
+rehash    (\#) Rebuild completion hash.
+source    (\.) Execute an SQL script file. Takes a file name as an argument.
+status    (\s) Get status information from the server.
+system    (\!) Execute a system shell command.
+tee       (\T) Set outfile [to_outfile]. Append everything into given outfile.
+use       (\u) Use another database. Takes database name as argument.
+charset   (\C) Switch to another charset. Might be needed for processing binlog with multi-byte charsets.
+warnings  (\W) Show warnings after every statement.
+nowarning (\w) Don't show warnings after every statement.
+resetconnection(\x) Clean session context.
+query_attributes Sets string parameters (name1 value1 name2 value2 ...) for the next query to pick up.
+ssl_session_data_print Serializes the current SSL session data to stdout or file
+
+For server side help, type 'help contents'
+
+mysql> new database quitanda
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'new database quitanda' at line 1
+mysql> new database quitanda;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'new database quitanda' at line 1
+mysql> create database quitanda;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use quitanda;
+Database changed
+mysql> create table frutas;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table frutas (
+    -> id int (10) auto_increment,
+    -> nome varchar(255),
+    -> quantidade varchar(255),
+    -> cor varchar(255),
+    -> data_aquisicao varchar(255),
+    -> primary_key (id)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id)
+)' at line 7
+mysql> desc frutas
+    -> ;
+ERROR 1146 (42S02): Table 'quitanda.frutas' doesn't exist
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| quitanda           |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> use quitanda
+Database changed
+mysql> show tables
+    -> ;
+Empty set (0.02 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table frutas;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table frutas (
+    -> id int (10) auto_increment,
+    -> nome varchar(255),
+    -> quantidade varchar(255),
+    -> cor varchar(255),
+    -> data_aquisicao varchar(255),
+    -> primary_key (id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id),
+)' at line 7
+mysql> create table frutas (
+    -> id int (10) auto_increment,
+    -> nome varchar(255),
+    -> quantidade varchar(255),
+    -> cor varchar(255),
+    -> data_aquisicao varchar(255),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | varchar(255) | YES  |     | NULL    |                |
+| cor            | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | varchar(255) | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> alter table frutas
+    -> add tipo varchar (255);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | varchar(255) | YES  |     | NULL    |                |
+| cor            | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | varchar(255) | YES  |     | NULL    |                |
+| tipo           | varchar(255) | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> drop column tipo;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | varchar(255) | YES  |     | NULL    |                |
+| cor            | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | varchar(255) | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> rename column cor to estado;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | varchar(255) | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | varchar(255) | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> modify column data_aquisicao date;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | varchar(255) | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> add foreign key (tabela) references (tabela)atributo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(tabela)atributo' at line 2
+mysql> add foreign key (tabela) references tabela(atributo);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key (tabela) references tabela(atributo)' at line 1
+mysql> create database tabela
+    ->
+    -> ;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> drop database tabela
+    -> ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| quitanda           |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use quitanda
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_quitanda |
++--------------------+
+| frutas             |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> modify column quantidade int;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'modify column quantidade int' at line 1
+mysql> alter table frutas
+    -> modify column quantidade int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> add foreign key (tabela) references tabela(atributo);
+ERROR 1072 (42000): Key column 'tabela' doesn't exist in table
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> create table categorias
+    -> id int(10) not_null,
+    -> nome varchar(255) not_null,
+    -> primary_key (id)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id int(10) not_null,
+nome varchar(255) not_null,
+primary_key (id)
+)' at line 2
+mysql> create table categorias;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table categorias (
+    -> id int(10) not_null,
+    -> nome varchar(255) not_null,
+    -> primary_key (id)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not_null,
+nome varchar(255) not_null,
+primary_key (id)
+)' at line 2
+mysql> show tables;
++--------------------+
+| Tables_in_quitanda |
++--------------------+
+| frutas             |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> create table categorias (
+    -> id int(10) auto_increment,
+    -> nome varchar(255) not null,
+    -> primary key (id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5
+mysql> create table categorias (
+    -> id int(10) not null auto increment,
+    -> nome varchar(255) not null,
+    -> primary key (id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment,
+nome varchar(255) not null,
+primary key (id),
+)' at line 2
+mysql> create table categorias (
+    -> id int(10) auto_increment,
+    -> nome varchar(255) not null,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> desc categorias;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> add foreign key categoria references categorias(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references categorias(id)' at line 2
+mysql> alter table frutas
+    -> add foreign key (categoria) references categorias(id);
+ERROR 1072 (42000): Key column 'categoria' doesn't exist in table
+mysql> alter table frutas
+    -> add foreign key (categorias) references categorias(id);
+ERROR 1072 (42000): Key column 'categorias' doesn't exist in table
+mysql> add foreign key (id) references categorias(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key (id) references categorias(id)' at line 1
+mysql> add foreign key categorias references categorias(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key categorias references categorias(id)' at line 1
+mysql> add foreign key frutas references categorias(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key frutas references categorias(id)' at line 1
+mysql> alter table frutas
+    -> add foreign key (frutas) references categorias(id);
+ERROR 1072 (42000): Key column 'frutas' doesn't exist in table
+mysql> alter table frutas
+    -> alter table frutas
+    -> add categoria int not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table frutas
+add categoria int not null' at line 2
+mysql> alter table frutas
+    -> add categoria int(10) not null;
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table frutas
+    -> add foreign key (categoria) references categorias(id);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
+| categoria      | int          | NO   | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> rename column categoria to id_categoria;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> add constrait fk_fruta_categoria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add constrait fk_fruta_categoria' at line 1
+mysql> alter table frutas
+    -> add constraint fk_fruta_categoria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> alter table frutas
+    -> add constraint fk_frutas_categoria
+    -> foreign_key (id_categoria)
+    -> references categoria(id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign_key (id_categoria)
+references categoria(id)' at line 3
+mysql> alter table frutas
+    -> add constraint fk_frutas_categoria
+    -> foreign_key (id_categoria)
+    -> references categorias(id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign_key (id_categoria)
+references categorias(id)' at line 3
+mysql> alter table frutas
+    -> drop foreign key id_categoria;
+ERROR 1091 (42000): Can't DROP 'id_categoria'; check that column/key exists
+mysql> drop foreign key categorias(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key categorias(id)' at line 1
+mysql> alter table frutas
+    -> drop foreign key id_categoria;
+ERROR 1091 (42000): Can't DROP 'id_categoria'; check that column/key exists
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
+| id_categoria   | int          | NO   | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> add constraint fk_frutas_categorias,
+    -> foreign key (id_categoria),
+    -> references categorias(id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+foreign key (id_categoria),
+references categorias(id)' at line 2
+mysql> alter table frutas
+    -> add constraint fk_frutas_categorias,
+    -> foreign key (id_categoria)
+    -> references categorias(id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+foreign key (id_categoria)
+references categorias(id)' at line 2
+mysql> desc categorias;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> drop foreign key id_categoria;
+ERROR 1091 (42000): Can't DROP 'id_categoria'; check that column/key exists
+mysql> drop foreign key (id_categoria);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (id_categoria)' at line 1
+mysql> drop foreign key id_categoria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key id_categoria' at line 1
+mysql> alter table frutas
+    -> drop foreign key (id_categoria);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id_categoria)' at line 2
+mysql> alter table frutas
+    -> drop column id_categoria;
+ERROR 1828 (HY000): Cannot drop column 'id_categoria': needed in a foreign key constraint 'frutas_ibfk_1'
+mysql> alter table frutas
+    -> drop constraint frutas_ibfk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table frutas
+    -> drop column id_categoria;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc categorias;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table frutas
+    -> add constraint fk_fruta_categoria
+    -> foreign key (id_categoria)
+    -> references categorias(id)
+    -> ;
+ERROR 1072 (42000): Key column 'id_categoria' doesn't exist in table
+mysql> alter table frutas
+    -> add column id_categoria int(10) auto_increment
+    -> add constraint fk_fruta_categoria
+    -> foreign key (id_categoria)
+    -> references categorias(id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add constraint fk_fruta_categoria
+foreign key (id_categoria)
+references categori' at line 3
+mysql> alter table frutas
+    -> add id_categoria int(10) auto_increment
+    -> add constraint fk_fruta_categoria
+    -> foreign (id_categoria)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add constraint fk_fruta_categoria
+foreign (id_categoria)' at line 3
+mysql> alter table frutas
+    -> add id_categoria int(10) auto_increment
+    -> ;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> alter table frutas
+    -> add id_categoria int(10);
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table frutas
+    -> add constraint fk_fruta_categoria
+    -> foreign key (id_categoria)
+    -> references categorias(id)
+    -> ;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
+| id_categoria   | int          | YES  | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| quitanda           |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> create database Empresa (
+    -> Departamento,
+    -> Funcionario,
+    -> Dependentes;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(
+Departamento,
+Funcionario,
+Dependentes' at line 1
+mysql> create database Empresa (
+    -> Departamento,
+    -> Funcionario,
+    -> Dependentes;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(
+Departamento,
+Funcionario,
+Dependentes' at line 1
+mysql> create database Empresa (
+    -> Departamento,
+    -> Funcionario,
+    -> Dependentes
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(
+Departamento,
+Funcionario,
+Dependentes
+)' at line 1
+mysql> create database Empresa;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use Empresa
+Database changed
+mysql> create table Departamento;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table Departamento (
+    -> id int(10) auto_increment,
+    -> descricao varchar(255)
+    -> );
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> desc Departamento;
+ERROR 1146 (42S02): Table 'empresa.departamento' doesn't exist
+mysql> create table Departamento (
+    -> id int(10) auto_increment
+    -> descricao varchar(255)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'descricao varchar(255)
+)' at line 3
+mysql>  create table frutas (
+    ->     -> id int (10) auto_increment,
+    ->     -> nome varchar(255),
+    ->     -> quantidade varchar(255),
+    ->     -> cor varchar(255),
+    ->     -> data_aquisicao varchar(255),
+    ->     -> primary_key (id),
+    -> \c
+mysql> create table departamento (
+    -> id int (10) auto_increment,
+    -> descricao varchar(255),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> create table funcionario (
+    -> id int (10) auto_increment,
+    -> nome varchar(255),
+    -> endereco varchar(255),
+    -> telefone int (11),
+    -> cod_departamento
+    -> ,
+    -> primary key (id)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+primary key (id)
+)' at line 7
+mysql> create table funcionario (
+    -> id int (10) auto_increment,
+    -> nome varchar(255) not null,
+    -> endereco varchar(255),
+    -> \c
+mysql> create table funcionario (
+    -> codigo int (10) auto_increment,
+    -> nome varchar (255) not null,
+    -> endereco varchar (255),
+    -> telefone int (11),
+    -> cod_departamento int (10) not null,
+    -> primary key (codigo)
+    -> );
+Query OK, 0 rows affected, 3 warnings (0.01 sec)
+
+mysql> create table dependentes (
+    -> codigo int (10) auto_increment,
+    -> cod_funcionario int (10) not null,
+    -> nome varchar (255) not null,
+    -> data_nascimento date,
+    -> primary key (codigo)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> show tables
+    -> ;
++-------------------+
+| Tables_in_empresa |
++-------------------+
+| departamento      |
+| dependentes       |
+| funcionario       |
++-------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc departamento;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int          | NO   | PRI | NULL    | auto_increment |
+| descricao | varchar(255) | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> desc dependentes;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| codigo          | int          | NO   | PRI | NULL    | auto_increment |
+| cod_funcionario | int          | NO   |     | NULL    |                |
+| nome            | varchar(255) | NO   |     | NULL    |                |
+| data_nascimento | date         | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc funcionario;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| codigo           | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(255) | NO   |     | NULL    |                |
+| endereco         | varchar(255) | YES  |     | NULL    |                |
+| telefone         | int          | YES  |     | NULL    |                |
+| cod_departamento | int          | NO   |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table funcionario
+    -> add constraint fk_dept_funcionario
+    -> add foreign key (cod_departamento)
+    -> references departamento(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key (cod_departamento)
+references departamento(id)' at line 3
+mysql> alter table funcionario
+    -> add constraint fk_dept_funcionario
+    -> add foreign key (cod_departamento)
+    -> references departamento(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key (cod_departamento)
+references departamento(id)' at line 3
+mysql> alter table funcionario
+    -> add constraint fk_dept_funcionario
+    -> add foreign key (cod_departamento)
+    -> references departamento(id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key (cod_departamento)
+references departamento(id)' at line 3
+mysql> alter table funcionario
+    -> add constraint fk_dept_funcionario
+    -> foreign key (cod_departamento)ario
+    -> references departamento(id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ario
+references departamento(id)' at line 3
+mysql> alter table funcionario
+    -> add constraint fk_funcionario_dept
+    -> foreign key (cod_departamento)
+    -> references departamento(id)
+    -> ;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc funcionario;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| codigo           | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(255) | NO   |     | NULL    |                |
+| endereco         | varchar(255) | YES  |     | NULL    |                |
+| telefone         | int          | YES  |     | NULL    |                |
+| cod_departamento | int          | NO   | MUL | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table dependentes
+    -> add constraint fk_dependente_funcionario
+    -> foreign key (cod_funcionario)
+    -> references funcionario(codigo)
+    -> ;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc dependentes
+    -> ;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| codigo          | int          | NO   | PRI | NULL    | auto_increment |
+| cod_funcionario | int          | NO   | MUL | NULL    |                |
+| nome            | varchar(255) | NO   |     | NULL    |                |
+| data_nascimento | date         | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc departamento;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int          | NO   | PRI | NULL    | auto_increment |
+| descricao | varchar(255) | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table dependentes
+    -> drop column cod_funcionario;
+ERROR 1828 (HY000): Cannot drop column 'cod_funcionario': needed in a foreign key constraint 'fk_dependente_funcionario'
+mysql> alter table departamento
+    -> add nome varchar (255)
+    -> quantidade int (3)
+    -> chefia int (10)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'quantidade int (3)
+chefia int (10)' at line 3
+mysql> alter table departamento
+    -> add nome varchar (255),
+    -> add quantidade_funcionarios (4),
+    -> chefia varchar (255),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(4),
+chefia varchar (255),' at line 3
+mysql> alter table departamento
+    -> add nome varchar (255),
+    -> add quantidade_funcionarios (4),
+    -> add chefia varchar (255)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(4),
+add chefia varchar (255)' at line 3
+mysql> alter table departamento
+    -> add nome varchar (255),
+    -> add quantidade_funcionarios int (4),
+    -> add chefia varchar (255)
+    -> ;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table funcionario
+    -> add idade int (3),
+    -> add data_nascimento date,
+    -> add sobrenome varchar (200),
+    -> add rg int (9),
+    -> add cpf int (11),
+    -> add email varchar(255),
+    -> add estado_civil varchar (255)
+    -> ;
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 3
+
+mysql> alter table dependentes
+    -> add sobrenome varchar (200),
+    -> add idade int (3),
+    -> add endereco varchar (255)
+    -> ;
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc departamento;
++-------------------------+--------------+------+-----+---------+----------------+
+| Field                   | Type         | Null | Key | Default | Extra          |
++-------------------------+--------------+------+-----+---------+----------------+
+| id                      | int          | NO   | PRI | NULL    | auto_increment |
+| descricao               | varchar(255) | YES  |     | NULL    |                |
+| nome                    | varchar(255) | YES  |     | NULL    |                |
+| quantidade_funcionarios | int          | YES  |     | NULL    |                |
+| chefia                  | varchar(255) | YES  |     | NULL    |                |
++-------------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc funcionario;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| codigo           | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(255) | NO   |     | NULL    |                |
+| endereco         | varchar(255) | YES  |     | NULL    |                |
+| telefone         | int          | YES  |     | NULL    |                |
+| cod_departamento | int          | NO   | MUL | NULL    |                |
+| idade            | int          | YES  |     | NULL    |                |
+| data_nascimento  | date         | YES  |     | NULL    |                |
+| sobrenome        | varchar(200) | YES  |     | NULL    |                |
+| rg               | int          | YES  |     | NULL    |                |
+| cpf              | int          | YES  |     | NULL    |                |
+| email            | varchar(255) | YES  |     | NULL    |                |
+| estado_civil     | varchar(255) | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> desc dependentes;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| codigo          | int          | NO   | PRI | NULL    | auto_increment |
+| cod_funcionario | int          | NO   | MUL | NULL    |                |
+| nome            | varchar(255) | NO   |     | NULL    |                |
+| data_nascimento | date         | YES  |     | NULL    |                |
+| sobrenome       | varchar(200) | YES  |     | NULL    |                |
+| idade           | int          | YES  |     | NULL    |                |
+| endereco        | varchar(255) | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> alter table funcionario
+    -> modify column rg not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null' at line 2
+mysql> alter table funcionario
+    -> alter table funcionario
+    -> modify column rg int (9) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table funcionario
+modify column rg int (9) not null' at line 2
+mysql> modify column rg int (9) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'modify column rg int (9) not null' at line 1
+mysql> alter table funcionario
+    -> modify column rg int (9) not null;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc funcionario;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| codigo           | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(255) | NO   |     | NULL    |                |
+| endereco         | varchar(255) | YES  |     | NULL    |                |
+| telefone         | int          | YES  |     | NULL    |                |
+| cod_departamento | int          | NO   | MUL | NULL    |                |
+| idade            | int          | YES  |     | NULL    |                |
+| data_nascimento  | date         | YES  |     | NULL    |                |
+| sobrenome        | varchar(200) | YES  |     | NULL    |                |
+| rg               | int          | NO   |     | NULL    |                |
+| cpf              | int          | YES  |     | NULL    |                |
+| email            | varchar(255) | YES  |     | NULL    |                |
+| estado_civil     | varchar(255) | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> ^S

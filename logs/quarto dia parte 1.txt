@@ -1,0 +1,135 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 37
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database escola;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use escola;
+Database changed
+mysql> create table aluno (
+    -> id int auto_increment,
+    -> nome varchar(255) not null,
+    -> idade int(3),
+    -> endereco varchar(255),
+    -> data_nascimento date,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_escola |
++------------------+
+| aluno            |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> desc aluno;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int          | NO   | PRI | NULL    | auto_increment |
+| nome            | varchar(255) | NO   |     | NULL    |                |
+| idade           | int          | YES  |     | NULL    |                |
+| endereco        | varchar(255) | YES  |     | NULL    |                |
+| data_nascimento | date         | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into aluno (nome, idade, endereco, data_nascimento) values ('Márcio', 15, 'Rua Justiliano, 552', '1999-05-
+11');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from aluno;
++----+--------+-------+---------------------+-----------------+
+| id | nome   | idade | endereco            | data_nascimento |
++----+--------+-------+---------------------+-----------------+
+|  1 | Márcio |    15 | Rua Justiliano, 552 | 1999-05-11      |
++----+--------+-------+---------------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> insert into aluno (nome, idade) values ('Gabriele', 17);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from aluno;
++----+----------+-------+---------------------+-----------------+
+| id | nome     | idade | endereco            | data_nascimento |
++----+----------+-------+---------------------+-----------------+
+|  1 | Márcio   |    15 | Rua Justiliano, 552 | 1999-05-11      |
+|  2 | Gabriele |    17 | NULL                | NULL            |
++----+----------+-------+---------------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> use quitanda;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_quitanda |
++--------------------+
+| categorias         |
+| frutas             |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc categorias;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from categorias;
++----+----------+
+| id | nome     |
++----+----------+
+|  1 | Legumes  |
+|  2 | Frutas   |
+|  3 | Grãos    |
+|  4 | Verduras |
+|  5 | Outros   |
++----+----------+
+5 rows in set (0.00 sec)
+
+mysql> desc frutas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255) | YES  |     | NULL    |                |
+| quantidade     | int          | YES  |     | NULL    |                |
+| estado         | varchar(255) | YES  |     | NULL    |                |
+| data_aquisicao | date         | YES  |     | NULL    |                |
+| id_categoria   | int          | YES  | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from frutas;
++----+----------+------------+--------+----------------+--------------+
+| id | nome     | quantidade | estado | data_aquisicao | id_categoria |
++----+----------+------------+--------+----------------+--------------+
+|  1 | Laranja  |       NULL | NULL   | NULL           |         NULL |
+|  2 | Pêra     |       NULL | NULL   | NULL           |         NULL |
+|  3 | Maça     |       NULL | NULL   | NULL           |         NULL |
+|  4 | Uva      |       NULL | NULL   | NULL           |         NULL |
+|  5 | Banana   |       NULL | NULL   | NULL           |         NULL |
+|  6 | Manga    |       NULL | NULL   | NULL           |         NULL |
+|  7 | Melância |       NULL | NULL   | NULL           |         NULL |
+|  8 | Melão    |       NULL | NULL   | NULL           |         NULL |
+|  9 | Abacate  |       NULL | NULL   | NULL           |         NULL |
+| 10 | Mamão    |       NULL | NULL   | NULL           |         NULL |
++----+----------+------------+--------+----------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,2101 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sakila;
+Database changed
+mysql> desc filme;
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                 | Type                                                                | Null | Key | Default| Extra                                         |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| filme_id              | smallint unsigned                                                   | NO   | PRI | NULL| auto_increment                                |
+| titulo                | varchar(255)                                                        | NO   | MUL | NULL|                                               |
+| descricao             | text                                                                | YES  |     | NULL|                                               |
+| ano_de_lancamento     | year                                                                | YES  |     | NULL|                                               |
+| idioma_id             | tinyint unsigned                                                    | NO   | MUL | NULL|                                               |
+| idioma_original_id    | tinyint unsigned                                                    | YES  | MUL | NULL|                                               |
+| duracao_da_locacao    | tinyint unsigned                                                    | NO   |     | 3|                                               |
+| preco_da_locacao      | decimal(4,2)                                                        | NO   |     | 4.99|                                               |
+| duracao_do_filme      | smallint unsigned                                                   | YES  |     | NULL|                                               |
+| custo_de_substituicao | decimal(5,2)                                                        | NO   |     | 19.99|                                               |
+| classificacao         | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G|                                               |
+| recursos_especiais    | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL|                                               |
+| ultima_atualizacao    | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP| DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.01 sec)
+
+mysql> select titulo from filme where duracao_do_filme > 100 and classificacao = "G";
++-------------------------+
+| titulo                  |
++-------------------------+
+| AFFAIR PREJUDICE        |
+| AFRICAN EGG             |
+| ALAMO VIDEOTAPE         |
+| ATLANTIS CAUSE          |
+| AUTUMN CROW             |
+| BAKED CLEOPATRA         |
+| BALLROOM MOCKINGBIRD    |
+| BAREFOOT MANCHURIAN     |
+| BEACH HEARTBREAKERS     |
+| BEAUTY GREASE           |
+| BIRD INDEPENDENCE       |
+| BLANKET BEVERLY         |
+| BREAKFAST GOLDFINGER    |
+| BUGSY SONG              |
+| CAPER MOTIONS           |
+| CASUALTIES ENCINO       |
+| CAT CONEHEADS           |
+| CATCH AMISTAD           |
+| CHISUM BEHAVIOR         |
+| CHITTY LOCK             |
+| CITIZEN SHREK           |
+| CLERKS ANGELS           |
+| COLOR PHILADELPHIA      |
+| CONNECTION MICROCOSMOS  |
+| CONQUERER NUTS          |
+| CONTROL ANTHEM          |
+| CROSSROADS CASUALTIES   |
+| DADDY PITTSBURGH        |
+| DANCING FEVER           |
+| DARN FORRESTER          |
+| DAY UNFAITHFUL          |
+| DAZED PUNK              |
+| DIARY PANIC             |
+| DOGMA FAMILY            |
+| DRACULA CRYSTAL         |
+| DRUMLINE CYCLONE        |
+| DUDE BLINDNESS          |
+| DUFFEL APOCALYPSE       |
+| DWARFS ALTER            |
+| EASY GLADIATOR          |
+| EMPIRE MALKOVICH        |
+| ENCINO ELF              |
+| EXORCIST STING          |
+| EXTRAORDINARY CONQUERER |
+| FANTASIA PARK           |
+| FARGO GANDHI            |
+| FIDELITY DEVIL          |
+| FIREHOUSE VIETNAM       |
+| GILBERT PELICAN         |
+| GLASS DYING             |
+| GOSFORD DONNIE          |
+| GRADUATE LORD           |
+| GRAPES FURY             |
+| GREASE YOUTH            |
+| HEAVYWEIGHTS BEAST      |
+| HOCUS FRIDA             |
+| HOOSIERS BIRDCAGE       |
+| HUNGER ROOF             |
+| INTRIGUE WORST          |
+| ITALIAN AFRICAN         |
+| JAPANESE RUN            |
+| JAWS HARRY              |
+| JUMANJI BLADE           |
+| LAWLESS VISION          |
+| LIBERTY MAGNIFICENT     |
+| MALKOVICH PET           |
+| MARRIED GO              |
+| MENAGERIE RUSHMORE      |
+| MOB DUFFEL              |
+| MONTEREY LABYRINTH      |
+| MOONWALKER FOOL         |
+| MULAN MOON              |
+| MUSCLE BRIGHT           |
+| MUSSOLINI SPOILERS      |
+| NEWSIES STORY           |
+| OPERATION OPERATION     |
+| PACIFIC AMISTAD         |
+| PANIC CLUB              |
+| POTLUCK MIXED           |
+| ROCK INSTINCT           |
+| SAGEBRUSH CLUELESS      |
+| SAINTS BRIDE            |
+| SAMURAI LION            |
+| SASSY PACKER            |
+| SATURDAY LAMBS          |
+| SCISSORHANDS SLUMS      |
+| SECRETS PARADISE        |
+| SHINING ROSES           |
+| SPOILERS HELLFIGHTERS   |
+| STRANGER STRANGERS      |
+| SWEETHEARTS SUSPECTS    |
+| TORQUE BOUND            |
+| TRACY CIDER             |
+| TRAFFIC HOBBIT          |
+| TRAP GUYS               |
+| WARDROBE PHANTOM        |
+| WARS PLUTO              |
+| WATERSHIP FRONTIER      |
+| WEST LION               |
+| YOUNG LANGUAGE          |
++-------------------------+
+100 rows in set (0.00 sec)
+
+mysql> update filme set ano_de_lancamento = '2008' where duracao_da_locacao < 4 and classificacao = "PG";
+Query OK, 36 rows affected (0.01 sec)
+Rows matched: 36  Changed: 36  Warnings: 0
+
+mysql> select titulo from filme where ano_de_lancamento = '2008';
++----------------------+
+| titulo               |
++----------------------+
+| AGENT TRUMAN         |
+| ARIZONA BANG         |
+| BEHAVIOR RUNAWAY     |
+| CHARADE DUFFEL       |
+| CHICKEN HELLFIGHTERS |
+| COWBOY DOOM          |
+| DISCIPLE MOTHER      |
+| EGYPT TENENBAUMS     |
+| EXPENDABLE STALLION  |
+| FERRIS MOTHER        |
+| FOOL MOCKINGBIRD     |
+| GABLES METROPOLIS    |
+| GRAFFITI LOVE        |
+| GRIT CLOCKWORK       |
+| HELLFIGHTERS SIERRA  |
+| LOVELY JINGLE        |
+| MAGIC MALLRATS       |
+| MAIDEN HOME          |
+| MODERN DORADO        |
+| MONEY HAROLD         |
+| NECKLACE OUTBREAK    |
+| NIGHTMARE CHILL      |
+| PAPI NECKLACE        |
+| PATHS CONTROL        |
+| PET HAUNTING         |
+| RAINBOW SHOCK        |
+| RANGE MOONWALKER     |
+| RUSH GOODFELLAS      |
+| SQUAD FISH           |
+| SUGAR WONKA          |
+| TELEGRAPH VOYAGE     |
+| TOOTSIE PILOT        |
+| TREATMENT JEKYLL     |
+| TROJAN TOMORROW      |
+| WEDDING APOLLO       |
+| WORDS HUNTER         |
++----------------------+
+36 rows in set (0.00 sec)
+
+mysql> select titulo, duracao_da_locacao, classificacao from filme where ano_de_lancamento = '2008';
++----------------------+--------------------+---------------+
+| titulo               | duracao_da_locacao | classificacao |
++----------------------+--------------------+---------------+
+| AGENT TRUMAN         |                  3 | PG            |
+| ARIZONA BANG         |                  3 | PG            |
+| BEHAVIOR RUNAWAY     |                  3 | PG            |
+| CHARADE DUFFEL       |                  3 | PG            |
+| CHICKEN HELLFIGHTERS |                  3 | PG            |
+| COWBOY DOOM          |                  3 | PG            |
+| DISCIPLE MOTHER      |                  3 | PG            |
+| EGYPT TENENBAUMS     |                  3 | PG            |
+| EXPENDABLE STALLION  |                  3 | PG            |
+| FERRIS MOTHER        |                  3 | PG            |
+| FOOL MOCKINGBIRD     |                  3 | PG            |
+| GABLES METROPOLIS    |                  3 | PG            |
+| GRAFFITI LOVE        |                  3 | PG            |
+| GRIT CLOCKWORK       |                  3 | PG            |
+| HELLFIGHTERS SIERRA  |                  3 | PG            |
+| LOVELY JINGLE        |                  3 | PG            |
+| MAGIC MALLRATS       |                  3 | PG            |
+| MAIDEN HOME          |                  3 | PG            |
+| MODERN DORADO        |                  3 | PG            |
+| MONEY HAROLD         |                  3 | PG            |
+| NECKLACE OUTBREAK    |                  3 | PG            |
+| NIGHTMARE CHILL      |                  3 | PG            |
+| PAPI NECKLACE        |                  3 | PG            |
+| PATHS CONTROL        |                  3 | PG            |
+| PET HAUNTING         |                  3 | PG            |
+| RAINBOW SHOCK        |                  3 | PG            |
+| RANGE MOONWALKER     |                  3 | PG            |
+| RUSH GOODFELLAS      |                  3 | PG            |
+| SQUAD FISH           |                  3 | PG            |
+| SUGAR WONKA          |                  3 | PG            |
+| TELEGRAPH VOYAGE     |                  3 | PG            |
+| TOOTSIE PILOT        |                  3 | PG            |
+| TREATMENT JEKYLL     |                  3 | PG            |
+| TROJAN TOMORROW      |                  3 | PG            |
+| WEDDING APOLLO       |                  3 | PG            |
+| WORDS HUNTER         |                  3 | PG            |
++----------------------+--------------------+---------------+
+36 rows in set (0.00 sec)
+
+mysql> select titulo, duracao_do_filme, classificacao from filme where classificacao = "G";
++---------------------------+------------------+---------------+
+| titulo                    | duracao_do_filme | classificacao |
++---------------------------+------------------+---------------+
+| ACE GOLDFINGER            |               48 | G             |
+| AFFAIR PREJUDICE          |              117 | G             |
+| AFRICAN EGG               |              130 | G             |
+| ALAMO VIDEOTAPE           |              126 | G             |
+| AMISTAD MIDSUMMER         |               85 | G             |
+| ANGELS LIFE               |               74 | G             |
+| ANNIE IDENTITY            |               86 | G             |
+| ARMAGEDDON LOST           |               99 | G             |
+| ATLANTIS CAUSE            |              170 | G             |
+| AUTUMN CROW               |              108 | G             |
+| BAKED CLEOPATRA           |              182 | G             |
+| BALLROOM MOCKINGBIRD      |              173 | G             |
+| BARBARELLA STREETCAR      |               65 | G             |
+| BAREFOOT MANCHURIAN       |              129 | G             |
+| BEACH HEARTBREAKERS       |              122 | G             |
+| BEAUTY GREASE             |              175 | G             |
+| BIRD INDEPENDENCE         |              163 | G             |
+| BIRDS PERDITION           |               61 | G             |
+| BLANKET BEVERLY           |              148 | G             |
+| BLOOD ARGONAUTS           |               71 | G             |
+| BLUES INSTINCT            |               50 | G             |
+| BONNIE HOLOCAUST          |               63 | G             |
+| BORROWERS BEDAZZLED       |               63 | G             |
+| BREAKFAST GOLDFINGER      |              123 | G             |
+| BRIDE INTRIGUE            |               56 | G             |
+| BUGSY SONG                |              119 | G             |
+| BULWORTH COMMANDMENTS     |               61 | G             |
+| BUNCH MINDS               |               63 | G             |
+| BUTTERFLY CHOCOLAT        |               89 | G             |
+| CAPER MOTIONS             |              176 | G             |
+| CASABLANCA SUPER          |               85 | G             |
+| CASUALTIES ENCINO         |              179 | G             |
+| CAT CONEHEADS             |              112 | G             |
+| CATCH AMISTAD             |              183 | G             |
+| CHEAPER CLYDE             |               87 | G             |
+| CHISUM BEHAVIOR           |              124 | G             |
+| CHITTY LOCK               |              107 | G             |
+| CITIZEN SHREK             |              165 | G             |
+| CLASH FREDDY              |               81 | G             |
+| CLERKS ANGELS             |              164 | G             |
+| COLDBLOODED DARLING       |               70 | G             |
+| COLOR PHILADELPHIA        |              149 | G             |
+| CONNECTION MICROCOSMOS    |              115 | G             |
+| CONQUERER NUTS            |              173 | G             |
+| CONTROL ANTHEM            |              185 | G             |
+| CROSSROADS CASUALTIES     |              153 | G             |
+| CRUELTY UNFORGIVEN        |               69 | G             |
+| DADDY PITTSBURGH          |              161 | G             |
+| DAISY MENAGERIE           |               84 | G             |
+| DANCING FEVER             |              144 | G             |
+| DARN FORRESTER            |              185 | G             |
+| DAY UNFAITHFUL            |              113 | G             |
+| DAZED PUNK                |              120 | G             |
+| DESPERATE TRAINSPOTTING   |               81 | G             |
+| DESTINY SATURDAY          |               56 | G             |
+| DIARY PANIC               |              107 | G             |
+| DIVORCE SHINING           |               47 | G             |
+| DOCTOR GRAIL              |               57 | G             |
+| DOGMA FAMILY              |              122 | G             |
+| DOWNHILL ENOUGH           |               47 | G             |
+| DRACULA CRYSTAL           |              176 | G             |
+| DRUMLINE CYCLONE          |              110 | G             |
+| DUDE BLINDNESS            |              132 | G             |
+| DUFFEL APOCALYPSE         |              171 | G             |
+| DWARFS ALTER              |              101 | G             |
+| EASY GLADIATOR            |              148 | G             |
+| EMPIRE MALKOVICH          |              177 | G             |
+| ENCINO ELF                |              143 | G             |
+| EVE RESURRECTION          |               66 | G             |
+| EXCITEMENT EVE            |               51 | G             |
+| EXORCIST STING            |              167 | G             |
+| EXTRAORDINARY CONQUERER   |              122 | G             |
+| FANTASIA PARK             |              131 | G             |
+| FARGO GANDHI              |              130 | G             |
+| FIDELITY DEVIL            |              118 | G             |
+| FIREHOUSE VIETNAM         |              103 | G             |
+| FLATLINERS KILLER         |              100 | G             |
+| GARDEN ISLAND             |               80 | G             |
+| GHOST GROUNDHOG           |               85 | G             |
+| GILBERT PELICAN           |              114 | G             |
+| GLASS DYING               |              103 | G             |
+| GOLDFINGER SENSIBILITY    |               93 | G             |
+| GOSFORD DONNIE            |              129 | G             |
+| GRADUATE LORD             |              156 | G             |
+| GRAPES FURY               |              155 | G             |
+| GREASE YOUTH              |              135 | G             |
+| GUN BONNIE                |              100 | G             |
+| HANGING DEEP              |               62 | G             |
+| HAPPINESS UNITED          |              100 | G             |
+| HARPER DYING              |               52 | G             |
+| HEARTBREAKERS BRIGHT      |               59 | G             |
+| HEAVYWEIGHTS BEAST        |              102 | G             |
+| HILLS NEIGHBORS           |               93 | G             |
+| HOCUS FRIDA               |              141 | G             |
+| HOOK CHARIOTS             |               49 | G             |
+| HOOSIERS BIRDCAGE         |              176 | G             |
+| HUNGER ROOF               |              105 | G             |
+| HYDE DOCTOR               |              100 | G             |
+| INTRIGUE WORST            |              181 | G             |
+| ITALIAN AFRICAN           |              174 | G             |
+| JAPANESE RUN              |              135 | G             |
+| JAWS HARRY                |              112 | G             |
+| JUMANJI BLADE             |              121 | G             |
+| KILL BROTHERHOOD          |               54 | G             |
+| LAWLESS VISION            |              181 | G             |
+| LIBERTY MAGNIFICENT       |              138 | G             |
+| LONELY ELEPHANT           |               67 | G             |
+| LOVER TRUMAN              |               75 | G             |
+| LUST LOCK                 |               52 | G             |
+| MALKOVICH PET             |              159 | G             |
+| MARRIED GO                |              114 | G             |
+| MEET CHOCOLATE            |               80 | G             |
+| MENAGERIE RUSHMORE        |              147 | G             |
+| MIDNIGHT WESTWARD         |               86 | G             |
+| MIDSUMMER GROUNDHOG       |               48 | G             |
+| MINORITY KISS             |               59 | G             |
+| MOB DUFFEL                |              105 | G             |
+| MONTEREY LABYRINTH        |              158 | G             |
+| MOONWALKER FOOL           |              184 | G             |
+| MOSQUITO ARMAGEDDON       |               57 | G             |
+| MULAN MOON                |              160 | G             |
+| MUSCLE BRIGHT             |              185 | G             |
+| MUSSOLINI SPOILERS        |              180 | G             |
+| NEWSIES STORY             |              159 | G             |
+| NOON PAPI                 |               57 | G             |
+| NOVOCAINE FLIGHT          |               64 | G             |
+| OPERATION OPERATION       |              156 | G             |
+| PACIFIC AMISTAD           |              144 | G             |
+| PANIC CLUB                |              102 | G             |
+| PANKY SUBMARINE           |               93 | G             |
+| PICKUP DRIVING            |               77 | G             |
+| POTLUCK MIXED             |              179 | G             |
+| PRIMARY GLASS             |               53 | G             |
+| PULP BEVERLY              |               89 | G             |
+| REBEL AIRPORT             |               73 | G             |
+| RINGS HEARTBREAKERS       |               58 | G             |
+| ROCK INSTINCT             |              102 | G             |
+| SAGEBRUSH CLUELESS        |              106 | G             |
+| SAINTS BRIDE              |              125 | G             |
+| SAMURAI LION              |              110 | G             |
+| SASSY PACKER              |              154 | G             |
+| SATISFACTION CONFIDENTIAL |               75 | G             |
+| SATURDAY LAMBS            |              150 | G             |
+| SCISSORHANDS SLUMS        |              147 | G             |
+| SECRETS PARADISE          |              109 | G             |
+| SHINING ROSES             |              125 | G             |
+| SIDE ARK                  |               52 | G             |
+| SLEEPLESS MONSOON         |               64 | G             |
+| SMILE EARRING             |               60 | G             |
+| SNOWMAN ROLLERCOASTER     |               62 | G             |
+| SPIKING ELEMENT           |               79 | G             |
+| SPOILERS HELLFIGHTERS     |              151 | G             |
+| STONE FIRE                |               94 | G             |
+| STRANGER STRANGERS        |              139 | G             |
+| SUICIDES SILENCE          |               93 | G             |
+| SUMMER SCARFACE           |               53 | G             |
+| SWEETHEARTS SUSPECTS      |              108 | G             |
+| TEEN APOLLO               |               74 | G             |
+| TIMBERLAND SKY            |               69 | G             |
+| TORQUE BOUND              |              179 | G             |
+| TRACY CIDER               |              142 | G             |
+| TRAFFIC HOBBIT            |              139 | G             |
+| TRAP GUYS                 |              110 | G             |
+| TRUMAN CRAZY              |               92 | G             |
+| TURN STAR                 |               80 | G             |
+| TYCOON GATHERING          |               82 | G             |
+| UNBREAKABLE KARATE        |               62 | G             |
+| VALLEY PACKER             |               73 | G             |
+| WAKE JAWS                 |               73 | G             |
+| WAR NOTTING               |               80 | G             |
+| WARDROBE PHANTOM          |              178 | G             |
+| WARLOCK WEREWOLF          |               83 | G             |
+| WARS PLUTO                |              128 | G             |
+| WATERFRONT DELIVERANCE    |               61 | G             |
+| WATERSHIP FRONTIER        |              112 | G             |
+| WEREWOLF LOLA             |               79 | G             |
+| WEST LION                 |              159 | G             |
+| YOUNG LANGUAGE            |              183 | G             |
++---------------------------+------------------+---------------+
+178 rows in set (0.00 sec)
+
+mysql> select titulo, duracao_do_filme, classificacao from filme where classificacao = "G" and duracao_do_filme > 100;
++-------------------------+------------------+---------------+
+| titulo                  | duracao_do_filme | classificacao |
++-------------------------+------------------+---------------+
+| AFFAIR PREJUDICE        |              117 | G             |
+| AFRICAN EGG             |              130 | G             |
+| ALAMO VIDEOTAPE         |              126 | G             |
+| ATLANTIS CAUSE          |              170 | G             |
+| AUTUMN CROW             |              108 | G             |
+| BAKED CLEOPATRA         |              182 | G             |
+| BALLROOM MOCKINGBIRD    |              173 | G             |
+| BAREFOOT MANCHURIAN     |              129 | G             |
+| BEACH HEARTBREAKERS     |              122 | G             |
+| BEAUTY GREASE           |              175 | G             |
+| BIRD INDEPENDENCE       |              163 | G             |
+| BLANKET BEVERLY         |              148 | G             |
+| BREAKFAST GOLDFINGER    |              123 | G             |
+| BUGSY SONG              |              119 | G             |
+| CAPER MOTIONS           |              176 | G             |
+| CASUALTIES ENCINO       |              179 | G             |
+| CAT CONEHEADS           |              112 | G             |
+| CATCH AMISTAD           |              183 | G             |
+| CHISUM BEHAVIOR         |              124 | G             |
+| CHITTY LOCK             |              107 | G             |
+| CITIZEN SHREK           |              165 | G             |
+| CLERKS ANGELS           |              164 | G             |
+| COLOR PHILADELPHIA      |              149 | G             |
+| CONNECTION MICROCOSMOS  |              115 | G             |
+| CONQUERER NUTS          |              173 | G             |
+| CONTROL ANTHEM          |              185 | G             |
+| CROSSROADS CASUALTIES   |              153 | G             |
+| DADDY PITTSBURGH        |              161 | G             |
+| DANCING FEVER           |              144 | G             |
+| DARN FORRESTER          |              185 | G             |
+| DAY UNFAITHFUL          |              113 | G             |
+| DAZED PUNK              |              120 | G             |
+| DIARY PANIC             |              107 | G             |
+| DOGMA FAMILY            |              122 | G             |
+| DRACULA CRYSTAL         |              176 | G             |
+| DRUMLINE CYCLONE        |              110 | G             |
+| DUDE BLINDNESS          |              132 | G             |
+| DUFFEL APOCALYPSE       |              171 | G             |
+| DWARFS ALTER            |              101 | G             |
+| EASY GLADIATOR          |              148 | G             |
+| EMPIRE MALKOVICH        |              177 | G             |
+| ENCINO ELF              |              143 | G             |
+| EXORCIST STING          |              167 | G             |
+| EXTRAORDINARY CONQUERER |              122 | G             |
+| FANTASIA PARK           |              131 | G             |
+| FARGO GANDHI            |              130 | G             |
+| FIDELITY DEVIL          |              118 | G             |
+| FIREHOUSE VIETNAM       |              103 | G             |
+| GILBERT PELICAN         |              114 | G             |
+| GLASS DYING             |              103 | G             |
+| GOSFORD DONNIE          |              129 | G             |
+| GRADUATE LORD           |              156 | G             |
+| GRAPES FURY             |              155 | G             |
+| GREASE YOUTH            |              135 | G             |
+| HEAVYWEIGHTS BEAST      |              102 | G             |
+| HOCUS FRIDA             |              141 | G             |
+| HOOSIERS BIRDCAGE       |              176 | G             |
+| HUNGER ROOF             |              105 | G             |
+| INTRIGUE WORST          |              181 | G             |
+| ITALIAN AFRICAN         |              174 | G             |
+| JAPANESE RUN            |              135 | G             |
+| JAWS HARRY              |              112 | G             |
+| JUMANJI BLADE           |              121 | G             |
+| LAWLESS VISION          |              181 | G             |
+| LIBERTY MAGNIFICENT     |              138 | G             |
+| MALKOVICH PET           |              159 | G             |
+| MARRIED GO              |              114 | G             |
+| MENAGERIE RUSHMORE      |              147 | G             |
+| MOB DUFFEL              |              105 | G             |
+| MONTEREY LABYRINTH      |              158 | G             |
+| MOONWALKER FOOL         |              184 | G             |
+| MULAN MOON              |              160 | G             |
+| MUSCLE BRIGHT           |              185 | G             |
+| MUSSOLINI SPOILERS      |              180 | G             |
+| NEWSIES STORY           |              159 | G             |
+| OPERATION OPERATION     |              156 | G             |
+| PACIFIC AMISTAD         |              144 | G             |
+| PANIC CLUB              |              102 | G             |
+| POTLUCK MIXED           |              179 | G             |
+| ROCK INSTINCT           |              102 | G             |
+| SAGEBRUSH CLUELESS      |              106 | G             |
+| SAINTS BRIDE            |              125 | G             |
+| SAMURAI LION            |              110 | G             |
+| SASSY PACKER            |              154 | G             |
+| SATURDAY LAMBS          |              150 | G             |
+| SCISSORHANDS SLUMS      |              147 | G             |
+| SECRETS PARADISE        |              109 | G             |
+| SHINING ROSES           |              125 | G             |
+| SPOILERS HELLFIGHTERS   |              151 | G             |
+| STRANGER STRANGERS      |              139 | G             |
+| SWEETHEARTS SUSPECTS    |              108 | G             |
+| TORQUE BOUND            |              179 | G             |
+| TRACY CIDER             |              142 | G             |
+| TRAFFIC HOBBIT          |              139 | G             |
+| TRAP GUYS               |              110 | G             |
+| WARDROBE PHANTOM        |              178 | G             |
+| WARS PLUTO              |              128 | G             |
+| WATERSHIP FRONTIER      |              112 | G             |
+| WEST LION               |              159 | G             |
+| YOUNG LANGUAGE          |              183 | G             |
++-------------------------+------------------+---------------+
+100 rows in set (0.00 sec)
+
+mysql> select count(*) from filme where classificacao = "PG-13" and preco_da_locacao > 2.40;
++----------+
+| count(*) |
++----------+
+|      151 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(titulo) from filme where classificacao = "PG-13" and preco_da_locacao > 2.40;
++---------------+
+| count(titulo) |
++---------------+
+|           151 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from filme where classificacao = "PG-13" or preco_da_locacao > 2.40;
++----------+
+| count(*) |
++----------+
+|      731 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from filme where classificacao = "PG-13";
++----------+
+| count(*) |
++----------+
+|      223 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_sakila |
++------------------+
+| aluguel          |
+| ator             |
+| categoria        |
+| cidade           |
+| cliente          |
+| endereco         |
+| filme            |
+| filme_ator       |
+| filme_categoria  |
+| filme_texto      |
+| funcionario      |
+| idioma           |
+| inventario       |
+| loja             |
+| pagamento        |
+| pais             |
++------------------+
+16 rows in set (0.00 sec)
+
+mysql> desc idioma;
++--------------------+------------------+------+-----+-------------------+-----------------------------------------------+
+| Field              | Type             | Null | Key | Default           | Extra                                         |
++--------------------+------------------+------+-----+-------------------+-----------------------------------------------+
+| idioma_id          | tinyint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| nome               | char(20)         | NO   |     | NULL              |                                               |
+| ultima_atualizacao | timestamp        | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------------+------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct idioma.nome from idioma inner join filme where idioma.idioma_id = filme.idioma_id;
++---------+
+| nome    |
++---------+
+| English |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select distinct idioma_id from filme;
++-----------+
+| idioma_id |
++-----------+
+|         1 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DISTINCT idioma_id, nome from idioma;
++-----------+----------+
+| idioma_id | nome     |
++-----------+----------+
+|         1 | English  |
+|         2 | Italian  |
+|         3 | Japanese |
+|         4 | Mandarin |
+|         5 | French   |
+|         6 | German   |
++-----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT idioma_id, nome FROM idioma;
++-----------+----------+
+| idioma_id | nome     |
++-----------+----------+
+|         1 | English  |
+|         2 | Italian  |
+|         3 | Japanese |
+|         4 | Mandarin |
+|         5 | French   |
+|         6 | German   |
++-----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE filme SET idioma_id = 6 WHERE preco_da_locacao > 4;
+Query OK, 336 rows affected (0.02 sec)
+Rows matched: 336  Changed: 336  Warnings: 0
+
+mysql> SELECT DISTINCT filme.titulo, idioma.nome FROM filme INNER JOIN idioma WHERE filme.idioma_id = 6 and filme.idioma_id = idioma.idioma_id;
++---------------------------+--------+
+| titulo                    | nome   |
++---------------------------+--------+
+| ACE GOLDFINGER            | German |
+| AIRPLANE SIERRA           | German |
+| AIRPORT POLLOCK           | German |
+| ALADDIN CALENDAR          | German |
+| ALI FOREVER               | German |
+| AMELIE HELLFIGHTERS       | German |
+| AMERICAN CIRCUS           | German |
+| ANTHEM LUKE               | German |
+| APACHE DIVINE             | German |
+| APOCALYPSE FLAMINGOS      | German |
+| ATTACKS HATE              | German |
+| ATTRACTION NEWTON         | German |
+| AUTUMN CROW               | German |
+| BABY HALL                 | German |
+| BACKLASH UNDEFEATED       | German |
+| BEAST HUNCHBACK           | German |
+| BEAUTY GREASE             | German |
+| BEHAVIOR RUNAWAY          | German |
+| BETRAYED REAR             | German |
+| BIKINI BORROWERS          | German |
+| BILKO ANONYMOUS           | German |
+| BIRCH ANTITRUST           | German |
+| BIRD INDEPENDENCE         | German |
+| BIRDS PERDITION           | German |
+| BLINDNESS GUN             | German |
+| BOILED DARES              | German |
+| BOOGIE AMELIE             | German |
+| BORN SPINAL               | German |
+| BOWFINGER GABLES          | German |
+| BRANNIGAN SUNRISE         | German |
+| BREAKFAST GOLDFINGER      | German |
+| BRIGHT ENCOUNTERS         | German |
+| BROOKLYN DESERT           | German |
+| BUBBLE GROSSE             | German |
+| BUCKET BROTHERHOOD        | German |
+| CALENDAR GUNFIGHT         | German |
+| CALIFORNIA BIRDS          | German |
+| CANDLES GRAPES            | German |
+| CARIBBEAN LIBERTY         | German |
+| CASABLANCA SUPER          | German |
+| CASPER DRAGONFLY          | German |
+| CASUALTIES ENCINO         | German |
+| CAT CONEHEADS             | German |
+| CENTER DINOSAUR           | German |
+| CHAMBER ITALIAN           | German |
+| CHAMPION FLATLINERS       | German |
+| CHASING FIGHT             | German |
+| CHICAGO NORTH             | German |
+| CHINATOWN GLADIATOR       | German |
+| CHISUM BEHAVIOR           | German |
+| CINCINATTI WHISPERER      | German |
+| CLERKS ANGELS             | German |
+| CLOSER BANG               | German |
+| CLUE GRAIL                | German |
+| COLDBLOODED DARLING       | German |
+| COMA HEAD                 | German |
+| COMMAND DARLING           | German |
+| COMMANDMENTS EXPRESS      | German |
+| CONEHEADS SMOOCHY         | German |
+| CONFESSIONS MAGUIRE       | German |
+| CONFIDENTIAL INTERVIEW    | German |
+| CONNECTICUT TRAMP         | German |
+| CONQUERER NUTS            | German |
+| CONTROL ANTHEM            | German |
+| CONVERSATION DOWNHILL     | German |
+| CREEPERS KANE             | German |
+| CROSSING DIVORCE          | German |
+| CROWDS TELEMARK           | German |
+| DADDY PITTSBURGH          | German |
+| DAISY MENAGERIE           | German |
+| DANGEROUS UPTOWN          | German |
+| DARKO DORADO              | German |
+| DARLING BREAKING          | German |
+| DARN FORRESTER            | German |
+| DAUGHTER MADIGAN          | German |
+| DAWN POND                 | German |
+| DAY UNFAITHFUL            | German |
+| DAZED PUNK                | German |
+| DEEP CRUSADE              | German |
+| DESERT POSEIDON           | German |
+| DESPERATE TRAINSPOTTING   | German |
+| DESTINY SATURDAY          | German |
+| DETAILS PACKER            | German |
+| DEVIL DESIRE              | German |
+| DOGMA FAMILY              | German |
+| DOORS PRESIDENT           | German |
+| DORADO NOTTING            | German |
+| DOUBTFIRE LABYRINTH       | German |
+| DOZEN LION                | German |
+| DRAGONFLY STRANGERS       | German |
+| DRIFTER COMMANDMENTS      | German |
+| DRIVING POLISH            | German |
+| DROP WATERFRONT           | German |
+| DUDE BLINDNESS            | German |
+| DURHAM PANKY              | German |
+| DYING MAKER               | German |
+| EAGLES PANKY              | German |
+| EARLY HOME                | German |
+| EASY GLADIATOR            | German |
+| EDGE KISSING              | German |
+| ELEMENT FREDDY            | German |
+| ELEPHANT TROJAN           | German |
+| ELF MURDER                | German |
+| ELIZABETH SHANE           | German |
+| ENEMY ODDS                | German |
+| EVE RESURRECTION          | German |
+| EXPECATIONS NATURAL       | German |
+| FALCON VOLUME             | German |
+| FELLOWSHIP AUTUMN         | German |
+| FEVER EMPIRE              | German |
+| FIDDLER LOST              | German |
+| FIDELITY DEVIL            | German |
+| FIRE WOLVES               | German |
+| FLAMINGOS CONNECTICUT     | German |
+| FLASH WARS                | German |
+| FLIGHT LIES               | German |
+| FLINTSTONES HAPPINESS     | German |
+| FOOL MOCKINGBIRD          | German |
+| FORRESTER COMANCHEROS     | German |
+| FREDDY STORM              | German |
+| FRENCH HOLIDAY            | German |
+| FRISCO FORREST            | German |
+| FRONTIER CABIN            | German |
+| FUGITIVE MAGUIRE          | German |
+| GALAXY SWEETHEARTS        | German |
+| GAMES BOWFINGER           | German |
+| GARDEN ISLAND             | German |
+| GHOST GROUNDHOG           | German |
+| GLADIATOR WESTWARD        | German |
+| GOLD RIVER                | German |
+| GOODFELLAS SALUTE         | German |
+| GOSFORD DONNIE            | German |
+| GRACELAND DYNAMITE        | German |
+| GRINCH MASSAGE            | German |
+| GROSSE WONDERFUL          | German |
+| GROUNDHOG UNCUT           | German |
+| GUMP DATE                 | German |
+| GUYS FALCON               | German |
+| HALL CASSIDY              | German |
+| HANGING DEEP              | German |
+| HANOVER GALAXY            | German |
+| HARRY IDAHO               | German |
+| HAUNTED ANTITRUST         | German |
+| HEAD STRANGER             | German |
+| HEARTBREAKERS BRIGHT      | German |
+| HEAVENLY GUN              | German |
+| HEAVYWEIGHTS BEAST        | German |
+| HOLES BRANNIGAN           | German |
+| HOLIDAY GAMES             | German |
+| HOLLOW JEOPARDY           | German |
+| HOME PITY                 | German |
+| HOTEL HAPPINESS           | German |
+| HUNCHBACK IMPOSSIBLE      | German |
+| HUSTLER PARTY             | German |
+| HYSTERICAL GRAIL          | German |
+| IGBY MAKER                | German |
+| IMPOSSIBLE PREJUDICE      | German |
+| INCH JET                  | German |
+| INFORMER DOUBLE           | German |
+| INNOCENT USUAL            | German |
+| INTERVIEW LIAISONS        | German |
+| INTOLERABLE INTENTIONS    | German |
+| IRON MOON                 | German |
+| ISHTAR ROCKETEER          | German |
+| ITALIAN AFRICAN           | German |
+| JERSEY SASSY              | German |
+| JET NEIGHBORS             | German |
+| JINGLE SAGEBRUSH          | German |
+| KING EVOLUTION            | German |
+| KISS GLORY                | German |
+| KISSING DOLLS             | German |
+| LADY STAGE                | German |
+| LAMBS CINCINATTI          | German |
+| LAWLESS VISION            | German |
+| LEAGUE HELLFIGHTERS       | German |
+| LEGALLY SECRETARY         | German |
+| LIAISONS SWEET            | German |
+| LIES TREATMENT            | German |
+| LOLA AGENT                | German |
+| LOSER HUSTLER             | German |
+| MADIGAN DORADO            | German |
+| MAIDEN HOME               | German |
+| MALTESE HOPE              | German |
+| MASSACRE USUAL            | German |
+| MATRIX SNOWMAN            | German |
+| MEMENTO ZOOLANDER         | German |
+| MERMAID INSECTS           | German |
+| MIDSUMMER GROUNDHOG       | German |
+| MILLION ACE               | German |
+| MINDS TRUMAN              | German |
+| MINE TITANS               | German |
+| MISSION ZOOLANDER         | German |
+| MOD SECRETARY             | German |
+| MODEL FISH                | German |
+| MONSOON CAUSE             | German |
+| MOONSHINE CABIN           | German |
+| MOONWALKER FOOL           | German |
+| MOVIE SHAKESPEARE         | German |
+| MUPPET MILE               | German |
+| MUSKETEERS WAIT           | German |
+| NAME DETECTIVE            | German |
+| NIGHTMARE CHILL           | German |
+| NORTH TEQUILA             | German |
+| NUTS TIES                 | German |
+| OCTOBER SUBMARINE         | German |
+| OPEN AFRICAN              | German |
+| OPPOSITE NECKLACE         | German |
+| OPUS ICE                  | German |
+| OUTLAW HANKY              | German |
+| PANIC CLUB                | German |
+| PANKY SUBMARINE           | German |
+| PANTHER REDS              | German |
+| PARK CITIZEN              | German |
+| PAST SUICIDES             | German |
+| PATHS CONTROL             | German |
+| PAYCHECK WAIT             | German |
+| PEAK FOREVER              | German |
+| PELICAN COMFORTS          | German |
+| PERDITION FARGO           | German |
+| PHILADELPHIA WIFE         | German |
+| PINOCCHIO SIMON           | German |
+| PITTSBURGH HUNCHBACK      | German |
+| PITY BOUND                | German |
+| PLATOON INSTINCT          | German |
+| PLUTO OLEANDER            | German |
+| POSEIDON FOREVER          | German |
+| PREJUDICE OLEANDER        | German |
+| PRESIDENT BANG            | German |
+| PRIVATE DROP              | German |
+| PUNK DIVORCE              | German |
+| QUEEN LUKE                | German |
+| QUILLS BULL               | German |
+| RAGE GAMES                | German |
+| RAGING AIRPLANE           | German |
+| RAINBOW SHOCK             | German |
+| RANGE MOONWALKER          | German |
+| RECORDS ZORRO             | German |
+| REDS POCUS                | German |
+| REQUIEM TYCOON            | German |
+| RIGHT CRANES              | German |
+| ROAD ROXANNE              | German |
+| ROCKY WAR                 | German |
+| ROSES TREASURE            | German |
+| RULES HUMAN               | German |
+| SABRINA MIDNIGHT          | German |
+| SATISFACTION CONFIDENTIAL | German |
+| SATURDAY LAMBS            | German |
+| SATURN NAME               | German |
+| SCALAWAG DUCK             | German |
+| SCARFACE BANG             | German |
+| SCHOOL JACKET             | German |
+| SCORPION APOLLO           | German |
+| SEATTLE EXPECATIONS       | German |
+| SECRET GROUNDHOG          | German |
+| SECRETARY ROUGE           | German |
+| SECRETS PARADISE          | German |
+| SENSE GREEK               | German |
+| SENSIBILITY REAR          | German |
+| SEVEN SWARM               | German |
+| SHAWSHANK BUBBLE          | German |
+| SHOW LORD                 | German |
+| SILVERADO GOLDFINGER      | German |
+| SISTER FREDDY             | German |
+| SLACKER LIAISONS          | German |
+| SLEEPING SUSPECTS         | German |
+| SLEEPLESS MONSOON         | German |
+| SNATCH SLIPPER            | German |
+| SOLDIERS EVOLUTION        | German |
+| SOMETHING DUCK            | German |
+| SPARTACUS CHEAPER         | German |
+| SPEED SUIT                | German |
+| SPICE SORORITY            | German |
+| STAGECOACH ARMAGEDDON     | German |
+| STEEL SANTA               | German |
+| STEERS ARMAGEDDON         | German |
+| STEPMOM DREAM             | German |
+| STING PERSONAL            | German |
+| STRANGER STRANGERS        | German |
+| STRANGERS GRAFFITI        | German |
+| STREETCAR INTENTIONS      | German |
+| SUBMARINE BED             | German |
+| SUGAR WONKA               | German |
+| SUICIDES SILENCE          | German |
+| SUIT WALLS                | German |
+| SUNRISE LEAGUE            | German |
+| SUPER WYOMING             | German |
+| SWEDEN SHINING            | German |
+| TEEN APOLLO               | German |
+| TELEGRAPH VOYAGE          | German |
+| TEMPLE ATTRACTION         | German |
+| TEQUILA PAST              | German |
+| TERMINATOR CLUB           | German |
+| THIEF PELICAN             | German |
+| THIN SAGEBRUSH            | German |
+| TIES HUNGER               | German |
+| TITANIC BOONDOCK          | German |
+| TITANS JERK               | German |
+| TORQUE BOUND              | German |
+| TOURIST PELICAN           | German |
+| TRADING PINOCCHIO         | German |
+| TRAFFIC HOBBIT            | German |
+| TRAIN BUNCH               | German |
+| TRAINSPOTTING STRANGERS   | German |
+| TRAP GUYS                 | German |
+| TRIP NEWTON               | German |
+| TRUMAN CRAZY              | German |
+| TWISTED PIRATES           | German |
+| TYCOON GATHERING          | German |
+| UNDEFEATED DALMATIONS     | German |
+| USUAL UNTOUCHABLES        | German |
+| VAMPIRE WHALE             | German |
+| VANILLA DAY               | German |
+| VELVET TERMINATOR         | German |
+| VIDEOTAPE ARSENIC         | German |
+| VILLAIN DESPERATE         | German |
+| VIRGIN DAISY              | German |
+| VIRTUAL SPOILERS          | German |
+| VOLUME HOUSE              | German |
+| WAKE JAWS                 | German |
+| WALLS ARTIST              | German |
+| WANDA CHAMBER             | German |
+| WAR NOTTING               | German |
+| WASH HEAVENLY             | German |
+| WATERFRONT DELIVERANCE    | German |
+| WEREWOLF LOLA             | German |
+| WEST LION                 | German |
+| WHALE BIKINI              | German |
+| WHISPERER GIANT           | German |
+| WIFE TURN                 | German |
+| WITCHES PANIC             | German |
+| WIZARD COLDBLOODED        | German |
+| WONDERLAND CHRISTMAS      | German |
+| WORKING MICROCOSMOS       | German |
+| WYOMING STORM             | German |
+| YENTL IDAHO               | German |
+| ZORRO ARK                 | German |
++---------------------------+--------+
+336 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT filme.titulo, idioma.nome FROM filme INNER JOIN idioma WHERE filme.idioma_id = 6 AND filme.idioma_id = idioma.idioma_id;
++---------------------------+--------+
+| titulo                    | nome   |
++---------------------------+--------+
+| ACE GOLDFINGER            | German |
+| AIRPLANE SIERRA           | German |
+| AIRPORT POLLOCK           | German |
+| ALADDIN CALENDAR          | German |
+| ALI FOREVER               | German |
+| AMELIE HELLFIGHTERS       | German |
+| AMERICAN CIRCUS           | German |
+| ANTHEM LUKE               | German |
+| APACHE DIVINE             | German |
+| APOCALYPSE FLAMINGOS      | German |
+| ATTACKS HATE              | German |
+| ATTRACTION NEWTON         | German |
+| AUTUMN CROW               | German |
+| BABY HALL                 | German |
+| BACKLASH UNDEFEATED       | German |
+| BEAST HUNCHBACK           | German |
+| BEAUTY GREASE             | German |
+| BEHAVIOR RUNAWAY          | German |
+| BETRAYED REAR             | German |
+| BIKINI BORROWERS          | German |
+| BILKO ANONYMOUS           | German |
+| BIRCH ANTITRUST           | German |
+| BIRD INDEPENDENCE         | German |
+| BIRDS PERDITION           | German |
+| BLINDNESS GUN             | German |
+| BOILED DARES              | German |
+| BOOGIE AMELIE             | German |
+| BORN SPINAL               | German |
+| BOWFINGER GABLES          | German |
+| BRANNIGAN SUNRISE         | German |
+| BREAKFAST GOLDFINGER      | German |
+| BRIGHT ENCOUNTERS         | German |
+| BROOKLYN DESERT           | German |
+| BUBBLE GROSSE             | German |
+| BUCKET BROTHERHOOD        | German |
+| CALENDAR GUNFIGHT         | German |
+| CALIFORNIA BIRDS          | German |
+| CANDLES GRAPES            | German |
+| CARIBBEAN LIBERTY         | German |
+| CASABLANCA SUPER          | German |
+| CASPER DRAGONFLY          | German |
+| CASUALTIES ENCINO         | German |
+| CAT CONEHEADS             | German |
+| CENTER DINOSAUR           | German |
+| CHAMBER ITALIAN           | German |
+| CHAMPION FLATLINERS       | German |
+| CHASING FIGHT             | German |
+| CHICAGO NORTH             | German |
+| CHINATOWN GLADIATOR       | German |
+| CHISUM BEHAVIOR           | German |
+| CINCINATTI WHISPERER      | German |
+| CLERKS ANGELS             | German |
+| CLOSER BANG               | German |
+| CLUE GRAIL                | German |
+| COLDBLOODED DARLING       | German |
+| COMA HEAD                 | German |
+| COMMAND DARLING           | German |
+| COMMANDMENTS EXPRESS      | German |
+| CONEHEADS SMOOCHY         | German |
+| CONFESSIONS MAGUIRE       | German |
+| CONFIDENTIAL INTERVIEW    | German |
+| CONNECTICUT TRAMP         | German |
+| CONQUERER NUTS            | German |
+| CONTROL ANTHEM            | German |
+| CONVERSATION DOWNHILL     | German |
+| CREEPERS KANE             | German |
+| CROSSING DIVORCE          | German |
+| CROWDS TELEMARK           | German |
+| DADDY PITTSBURGH          | German |
+| DAISY MENAGERIE           | German |
+| DANGEROUS UPTOWN          | German |
+| DARKO DORADO              | German |
+| DARLING BREAKING          | German |
+| DARN FORRESTER            | German |
+| DAUGHTER MADIGAN          | German |
+| DAWN POND                 | German |
+| DAY UNFAITHFUL            | German |
+| DAZED PUNK                | German |
+| DEEP CRUSADE              | German |
+| DESERT POSEIDON           | German |
+| DESPERATE TRAINSPOTTING   | German |
+| DESTINY SATURDAY          | German |
+| DETAILS PACKER            | German |
+| DEVIL DESIRE              | German |
+| DOGMA FAMILY              | German |
+| DOORS PRESIDENT           | German |
+| DORADO NOTTING            | German |
+| DOUBTFIRE LABYRINTH       | German |
+| DOZEN LION                | German |
+| DRAGONFLY STRANGERS       | German |
+| DRIFTER COMMANDMENTS      | German |
+| DRIVING POLISH            | German |
+| DROP WATERFRONT           | German |
+| DUDE BLINDNESS            | German |
+| DURHAM PANKY              | German |
+| DYING MAKER               | German |
+| EAGLES PANKY              | German |
+| EARLY HOME                | German |
+| EASY GLADIATOR            | German |
+| EDGE KISSING              | German |
+| ELEMENT FREDDY            | German |
+| ELEPHANT TROJAN           | German |
+| ELF MURDER                | German |
+| ELIZABETH SHANE           | German |
+| ENEMY ODDS                | German |
+| EVE RESURRECTION          | German |
+| EXPECATIONS NATURAL       | German |
+| FALCON VOLUME             | German |
+| FELLOWSHIP AUTUMN         | German |
+| FEVER EMPIRE              | German |
+| FIDDLER LOST              | German |
+| FIDELITY DEVIL            | German |
+| FIRE WOLVES               | German |
+| FLAMINGOS CONNECTICUT     | German |
+| FLASH WARS                | German |
+| FLIGHT LIES               | German |
+| FLINTSTONES HAPPINESS     | German |
+| FOOL MOCKINGBIRD          | German |
+| FORRESTER COMANCHEROS     | German |
+| FREDDY STORM              | German |
+| FRENCH HOLIDAY            | German |
+| FRISCO FORREST            | German |
+| FRONTIER CABIN            | German |
+| FUGITIVE MAGUIRE          | German |
+| GALAXY SWEETHEARTS        | German |
+| GAMES BOWFINGER           | German |
+| GARDEN ISLAND             | German |
+| GHOST GROUNDHOG           | German |
+| GLADIATOR WESTWARD        | German |
+| GOLD RIVER                | German |
+| GOODFELLAS SALUTE         | German |
+| GOSFORD DONNIE            | German |
+| GRACELAND DYNAMITE        | German |
+| GRINCH MASSAGE            | German |
+| GROSSE WONDERFUL          | German |
+| GROUNDHOG UNCUT           | German |
+| GUMP DATE                 | German |
+| GUYS FALCON               | German |
+| HALL CASSIDY              | German |
+| HANGING DEEP              | German |
+| HANOVER GALAXY            | German |
+| HARRY IDAHO               | German |
+| HAUNTED ANTITRUST         | German |
+| HEAD STRANGER             | German |
+| HEARTBREAKERS BRIGHT      | German |
+| HEAVENLY GUN              | German |
+| HEAVYWEIGHTS BEAST        | German |
+| HOLES BRANNIGAN           | German |
+| HOLIDAY GAMES             | German |
+| HOLLOW JEOPARDY           | German |
+| HOME PITY                 | German |
+| HOTEL HAPPINESS           | German |
+| HUNCHBACK IMPOSSIBLE      | German |
+| HUSTLER PARTY             | German |
+| HYSTERICAL GRAIL          | German |
+| IGBY MAKER                | German |
+| IMPOSSIBLE PREJUDICE      | German |
+| INCH JET                  | German |
+| INFORMER DOUBLE           | German |
+| INNOCENT USUAL            | German |
+| INTERVIEW LIAISONS        | German |
+| INTOLERABLE INTENTIONS    | German |
+| IRON MOON                 | German |
+| ISHTAR ROCKETEER          | German |
+| ITALIAN AFRICAN           | German |
+| JERSEY SASSY              | German |
+| JET NEIGHBORS             | German |
+| JINGLE SAGEBRUSH          | German |
+| KING EVOLUTION            | German |
+| KISS GLORY                | German |
+| KISSING DOLLS             | German |
+| LADY STAGE                | German |
+| LAMBS CINCINATTI          | German |
+| LAWLESS VISION            | German |
+| LEAGUE HELLFIGHTERS       | German |
+| LEGALLY SECRETARY         | German |
+| LIAISONS SWEET            | German |
+| LIES TREATMENT            | German |
+| LOLA AGENT                | German |
+| LOSER HUSTLER             | German |
+| MADIGAN DORADO            | German |
+| MAIDEN HOME               | German |
+| MALTESE HOPE              | German |
+| MASSACRE USUAL            | German |
+| MATRIX SNOWMAN            | German |
+| MEMENTO ZOOLANDER         | German |
+| MERMAID INSECTS           | German |
+| MIDSUMMER GROUNDHOG       | German |
+| MILLION ACE               | German |
+| MINDS TRUMAN              | German |
+| MINE TITANS               | German |
+| MISSION ZOOLANDER         | German |
+| MOD SECRETARY             | German |
+| MODEL FISH                | German |
+| MONSOON CAUSE             | German |
+| MOONSHINE CABIN           | German |
+| MOONWALKER FOOL           | German |
+| MOVIE SHAKESPEARE         | German |
+| MUPPET MILE               | German |
+| MUSKETEERS WAIT           | German |
+| NAME DETECTIVE            | German |
+| NIGHTMARE CHILL           | German |
+| NORTH TEQUILA             | German |
+| NUTS TIES                 | German |
+| OCTOBER SUBMARINE         | German |
+| OPEN AFRICAN              | German |
+| OPPOSITE NECKLACE         | German |
+| OPUS ICE                  | German |
+| OUTLAW HANKY              | German |
+| PANIC CLUB                | German |
+| PANKY SUBMARINE           | German |
+| PANTHER REDS              | German |
+| PARK CITIZEN              | German |
+| PAST SUICIDES             | German |
+| PATHS CONTROL             | German |
+| PAYCHECK WAIT             | German |
+| PEAK FOREVER              | German |
+| PELICAN COMFORTS          | German |
+| PERDITION FARGO           | German |
+| PHILADELPHIA WIFE         | German |
+| PINOCCHIO SIMON           | German |
+| PITTSBURGH HUNCHBACK      | German |
+| PITY BOUND                | German |
+| PLATOON INSTINCT          | German |
+| PLUTO OLEANDER            | German |
+| POSEIDON FOREVER          | German |
+| PREJUDICE OLEANDER        | German |
+| PRESIDENT BANG            | German |
+| PRIVATE DROP              | German |
+| PUNK DIVORCE              | German |
+| QUEEN LUKE                | German |
+| QUILLS BULL               | German |
+| RAGE GAMES                | German |
+| RAGING AIRPLANE           | German |
+| RAINBOW SHOCK             | German |
+| RANGE MOONWALKER          | German |
+| RECORDS ZORRO             | German |
+| REDS POCUS                | German |
+| REQUIEM TYCOON            | German |
+| RIGHT CRANES              | German |
+| ROAD ROXANNE              | German |
+| ROCKY WAR                 | German |
+| ROSES TREASURE            | German |
+| RULES HUMAN               | German |
+| SABRINA MIDNIGHT          | German |
+| SATISFACTION CONFIDENTIAL | German |
+| SATURDAY LAMBS            | German |
+| SATURN NAME               | German |
+| SCALAWAG DUCK             | German |
+| SCARFACE BANG             | German |
+| SCHOOL JACKET             | German |
+| SCORPION APOLLO           | German |
+| SEATTLE EXPECATIONS       | German |
+| SECRET GROUNDHOG          | German |
+| SECRETARY ROUGE           | German |
+| SECRETS PARADISE          | German |
+| SENSE GREEK               | German |
+| SENSIBILITY REAR          | German |
+| SEVEN SWARM               | German |
+| SHAWSHANK BUBBLE          | German |
+| SHOW LORD                 | German |
+| SILVERADO GOLDFINGER      | German |
+| SISTER FREDDY             | German |
+| SLACKER LIAISONS          | German |
+| SLEEPING SUSPECTS         | German |
+| SLEEPLESS MONSOON         | German |
+| SNATCH SLIPPER            | German |
+| SOLDIERS EVOLUTION        | German |
+| SOMETHING DUCK            | German |
+| SPARTACUS CHEAPER         | German |
+| SPEED SUIT                | German |
+| SPICE SORORITY            | German |
+| STAGECOACH ARMAGEDDON     | German |
+| STEEL SANTA               | German |
+| STEERS ARMAGEDDON         | German |
+| STEPMOM DREAM             | German |
+| STING PERSONAL            | German |
+| STRANGER STRANGERS        | German |
+| STRANGERS GRAFFITI        | German |
+| STREETCAR INTENTIONS      | German |
+| SUBMARINE BED             | German |
+| SUGAR WONKA               | German |
+| SUICIDES SILENCE          | German |
+| SUIT WALLS                | German |
+| SUNRISE LEAGUE            | German |
+| SUPER WYOMING             | German |
+| SWEDEN SHINING            | German |
+| TEEN APOLLO               | German |
+| TELEGRAPH VOYAGE          | German |
+| TEMPLE ATTRACTION         | German |
+| TEQUILA PAST              | German |
+| TERMINATOR CLUB           | German |
+| THIEF PELICAN             | German |
+| THIN SAGEBRUSH            | German |
+| TIES HUNGER               | German |
+| TITANIC BOONDOCK          | German |
+| TITANS JERK               | German |
+| TORQUE BOUND              | German |
+| TOURIST PELICAN           | German |
+| TRADING PINOCCHIO         | German |
+| TRAFFIC HOBBIT            | German |
+| TRAIN BUNCH               | German |
+| TRAINSPOTTING STRANGERS   | German |
+| TRAP GUYS                 | German |
+| TRIP NEWTON               | German |
+| TRUMAN CRAZY              | German |
+| TWISTED PIRATES           | German |
+| TYCOON GATHERING          | German |
+| UNDEFEATED DALMATIONS     | German |
+| USUAL UNTOUCHABLES        | German |
+| VAMPIRE WHALE             | German |
+| VANILLA DAY               | German |
+| VELVET TERMINATOR         | German |
+| VIDEOTAPE ARSENIC         | German |
+| VILLAIN DESPERATE         | German |
+| VIRGIN DAISY              | German |
+| VIRTUAL SPOILERS          | German |
+| VOLUME HOUSE              | German |
+| WAKE JAWS                 | German |
+| WALLS ARTIST              | German |
+| WANDA CHAMBER             | German |
+| WAR NOTTING               | German |
+| WASH HEAVENLY             | German |
+| WATERFRONT DELIVERANCE    | German |
+| WEREWOLF LOLA             | German |
+| WEST LION                 | German |
+| WHALE BIKINI              | German |
+| WHISPERER GIANT           | German |
+| WIFE TURN                 | German |
+| WITCHES PANIC             | German |
+| WIZARD COLDBLOODED        | German |
+| WONDERLAND CHRISTMAS      | German |
+| WORKING MICROCOSMOS       | German |
+| WYOMING STORM             | German |
+| YENTL IDAHO               | German |
+| ZORRO ARK                 | German |
++---------------------------+--------+
+336 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT filme.titulo,idioma.nome, filme.preco_da_locacao FROM filme INNER JOIN idioma WHERE filme.idioma_id = 6AND filme.idioma_id = idioma.idioma_id;
++---------------------------+--------+------------------+
+| titulo                    | nome   | preco_da_locacao |
++---------------------------+--------+------------------+
+| ACE GOLDFINGER            | German |             4.99 |
+| AIRPLANE SIERRA           | German |             4.99 |
+| AIRPORT POLLOCK           | German |             4.99 |
+| ALADDIN CALENDAR          | German |             4.99 |
+| ALI FOREVER               | German |             4.99 |
+| AMELIE HELLFIGHTERS       | German |             4.99 |
+| AMERICAN CIRCUS           | German |             4.99 |
+| ANTHEM LUKE               | German |             4.99 |
+| APACHE DIVINE             | German |             4.99 |
+| APOCALYPSE FLAMINGOS      | German |             4.99 |
+| ATTACKS HATE              | German |             4.99 |
+| ATTRACTION NEWTON         | German |             4.99 |
+| AUTUMN CROW               | German |             4.99 |
+| BABY HALL                 | German |             4.99 |
+| BACKLASH UNDEFEATED       | German |             4.99 |
+| BEAST HUNCHBACK           | German |             4.99 |
+| BEAUTY GREASE             | German |             4.99 |
+| BEHAVIOR RUNAWAY          | German |             4.99 |
+| BETRAYED REAR             | German |             4.99 |
+| BIKINI BORROWERS          | German |             4.99 |
+| BILKO ANONYMOUS           | German |             4.99 |
+| BIRCH ANTITRUST           | German |             4.99 |
+| BIRD INDEPENDENCE         | German |             4.99 |
+| BIRDS PERDITION           | German |             4.99 |
+| BLINDNESS GUN             | German |             4.99 |
+| BOILED DARES              | German |             4.99 |
+| BOOGIE AMELIE             | German |             4.99 |
+| BORN SPINAL               | German |             4.99 |
+| BOWFINGER GABLES          | German |             4.99 |
+| BRANNIGAN SUNRISE         | German |             4.99 |
+| BREAKFAST GOLDFINGER      | German |             4.99 |
+| BRIGHT ENCOUNTERS         | German |             4.99 |
+| BROOKLYN DESERT           | German |             4.99 |
+| BUBBLE GROSSE             | German |             4.99 |
+| BUCKET BROTHERHOOD        | German |             4.99 |
+| CALENDAR GUNFIGHT         | German |             4.99 |
+| CALIFORNIA BIRDS          | German |             4.99 |
+| CANDLES GRAPES            | German |             4.99 |
+| CARIBBEAN LIBERTY         | German |             4.99 |
+| CASABLANCA SUPER          | German |             4.99 |
+| CASPER DRAGONFLY          | German |             4.99 |
+| CASUALTIES ENCINO         | German |             4.99 |
+| CAT CONEHEADS             | German |             4.99 |
+| CENTER DINOSAUR           | German |             4.99 |
+| CHAMBER ITALIAN           | German |             4.99 |
+| CHAMPION FLATLINERS       | German |             4.99 |
+| CHASING FIGHT             | German |             4.99 |
+| CHICAGO NORTH             | German |             4.99 |
+| CHINATOWN GLADIATOR       | German |             4.99 |
+| CHISUM BEHAVIOR           | German |             4.99 |
+| CINCINATTI WHISPERER      | German |             4.99 |
+| CLERKS ANGELS             | German |             4.99 |
+| CLOSER BANG               | German |             4.99 |
+| CLUE GRAIL                | German |             4.99 |
+| COLDBLOODED DARLING       | German |             4.99 |
+| COMA HEAD                 | German |             4.99 |
+| COMMAND DARLING           | German |             4.99 |
+| COMMANDMENTS EXPRESS      | German |             4.99 |
+| CONEHEADS SMOOCHY         | German |             4.99 |
+| CONFESSIONS MAGUIRE       | German |             4.99 |
+| CONFIDENTIAL INTERVIEW    | German |             4.99 |
+| CONNECTICUT TRAMP         | German |             4.99 |
+| CONQUERER NUTS            | German |             4.99 |
+| CONTROL ANTHEM            | German |             4.99 |
+| CONVERSATION DOWNHILL     | German |             4.99 |
+| CREEPERS KANE             | German |             4.99 |
+| CROSSING DIVORCE          | German |             4.99 |
+| CROWDS TELEMARK           | German |             4.99 |
+| DADDY PITTSBURGH          | German |             4.99 |
+| DAISY MENAGERIE           | German |             4.99 |
+| DANGEROUS UPTOWN          | German |             4.99 |
+| DARKO DORADO              | German |             4.99 |
+| DARLING BREAKING          | German |             4.99 |
+| DARN FORRESTER            | German |             4.99 |
+| DAUGHTER MADIGAN          | German |             4.99 |
+| DAWN POND                 | German |             4.99 |
+| DAY UNFAITHFUL            | German |             4.99 |
+| DAZED PUNK                | German |             4.99 |
+| DEEP CRUSADE              | German |             4.99 |
+| DESERT POSEIDON           | German |             4.99 |
+| DESPERATE TRAINSPOTTING   | German |             4.99 |
+| DESTINY SATURDAY          | German |             4.99 |
+| DETAILS PACKER            | German |             4.99 |
+| DEVIL DESIRE              | German |             4.99 |
+| DOGMA FAMILY              | German |             4.99 |
+| DOORS PRESIDENT           | German |             4.99 |
+| DORADO NOTTING            | German |             4.99 |
+| DOUBTFIRE LABYRINTH       | German |             4.99 |
+| DOZEN LION                | German |             4.99 |
+| DRAGONFLY STRANGERS       | German |             4.99 |
+| DRIFTER COMMANDMENTS      | German |             4.99 |
+| DRIVING POLISH            | German |             4.99 |
+| DROP WATERFRONT           | German |             4.99 |
+| DUDE BLINDNESS            | German |             4.99 |
+| DURHAM PANKY              | German |             4.99 |
+| DYING MAKER               | German |             4.99 |
+| EAGLES PANKY              | German |             4.99 |
+| EARLY HOME                | German |             4.99 |
+| EASY GLADIATOR            | German |             4.99 |
+| EDGE KISSING              | German |             4.99 |
+| ELEMENT FREDDY            | German |             4.99 |
+| ELEPHANT TROJAN           | German |             4.99 |
+| ELF MURDER                | German |             4.99 |
+| ELIZABETH SHANE           | German |             4.99 |
+| ENEMY ODDS                | German |             4.99 |
+| EVE RESURRECTION          | German |             4.99 |
+| EXPECATIONS NATURAL       | German |             4.99 |
+| FALCON VOLUME             | German |             4.99 |
+| FELLOWSHIP AUTUMN         | German |             4.99 |
+| FEVER EMPIRE              | German |             4.99 |
+| FIDDLER LOST              | German |             4.99 |
+| FIDELITY DEVIL            | German |             4.99 |
+| FIRE WOLVES               | German |             4.99 |
+| FLAMINGOS CONNECTICUT     | German |             4.99 |
+| FLASH WARS                | German |             4.99 |
+| FLIGHT LIES               | German |             4.99 |
+| FLINTSTONES HAPPINESS     | German |             4.99 |
+| FOOL MOCKINGBIRD          | German |             4.99 |
+| FORRESTER COMANCHEROS     | German |             4.99 |
+| FREDDY STORM              | German |             4.99 |
+| FRENCH HOLIDAY            | German |             4.99 |
+| FRISCO FORREST            | German |             4.99 |
+| FRONTIER CABIN            | German |             4.99 |
+| FUGITIVE MAGUIRE          | German |             4.99 |
+| GALAXY SWEETHEARTS        | German |             4.99 |
+| GAMES BOWFINGER           | German |             4.99 |
+| GARDEN ISLAND             | German |             4.99 |
+| GHOST GROUNDHOG           | German |             4.99 |
+| GLADIATOR WESTWARD        | German |             4.99 |
+| GOLD RIVER                | German |             4.99 |
+| GOODFELLAS SALUTE         | German |             4.99 |
+| GOSFORD DONNIE            | German |             4.99 |
+| GRACELAND DYNAMITE        | German |             4.99 |
+| GRINCH MASSAGE            | German |             4.99 |
+| GROSSE WONDERFUL          | German |             4.99 |
+| GROUNDHOG UNCUT           | German |             4.99 |
+| GUMP DATE                 | German |             4.99 |
+| GUYS FALCON               | German |             4.99 |
+| HALL CASSIDY              | German |             4.99 |
+| HANGING DEEP              | German |             4.99 |
+| HANOVER GALAXY            | German |             4.99 |
+| HARRY IDAHO               | German |             4.99 |
+| HAUNTED ANTITRUST         | German |             4.99 |
+| HEAD STRANGER             | German |             4.99 |
+| HEARTBREAKERS BRIGHT      | German |             4.99 |
+| HEAVENLY GUN              | German |             4.99 |
+| HEAVYWEIGHTS BEAST        | German |             4.99 |
+| HOLES BRANNIGAN           | German |             4.99 |
+| HOLIDAY GAMES             | German |             4.99 |
+| HOLLOW JEOPARDY           | German |             4.99 |
+| HOME PITY                 | German |             4.99 |
+| HOTEL HAPPINESS           | German |             4.99 |
+| HUNCHBACK IMPOSSIBLE      | German |             4.99 |
+| HUSTLER PARTY             | German |             4.99 |
+| HYSTERICAL GRAIL          | German |             4.99 |
+| IGBY MAKER                | German |             4.99 |
+| IMPOSSIBLE PREJUDICE      | German |             4.99 |
+| INCH JET                  | German |             4.99 |
+| INFORMER DOUBLE           | German |             4.99 |
+| INNOCENT USUAL            | German |             4.99 |
+| INTERVIEW LIAISONS        | German |             4.99 |
+| INTOLERABLE INTENTIONS    | German |             4.99 |
+| IRON MOON                 | German |             4.99 |
+| ISHTAR ROCKETEER          | German |             4.99 |
+| ITALIAN AFRICAN           | German |             4.99 |
+| JERSEY SASSY              | German |             4.99 |
+| JET NEIGHBORS             | German |             4.99 |
+| JINGLE SAGEBRUSH          | German |             4.99 |
+| KING EVOLUTION            | German |             4.99 |
+| KISS GLORY                | German |             4.99 |
+| KISSING DOLLS             | German |             4.99 |
+| LADY STAGE                | German |             4.99 |
+| LAMBS CINCINATTI          | German |             4.99 |
+| LAWLESS VISION            | German |             4.99 |
+| LEAGUE HELLFIGHTERS       | German |             4.99 |
+| LEGALLY SECRETARY         | German |             4.99 |
+| LIAISONS SWEET            | German |             4.99 |
+| LIES TREATMENT            | German |             4.99 |
+| LOLA AGENT                | German |             4.99 |
+| LOSER HUSTLER             | German |             4.99 |
+| MADIGAN DORADO            | German |             4.99 |
+| MAIDEN HOME               | German |             4.99 |
+| MALTESE HOPE              | German |             4.99 |
+| MASSACRE USUAL            | German |             4.99 |
+| MATRIX SNOWMAN            | German |             4.99 |
+| MEMENTO ZOOLANDER         | German |             4.99 |
+| MERMAID INSECTS           | German |             4.99 |
+| MIDSUMMER GROUNDHOG       | German |             4.99 |
+| MILLION ACE               | German |             4.99 |
+| MINDS TRUMAN              | German |             4.99 |
+| MINE TITANS               | German |             4.99 |
+| MISSION ZOOLANDER         | German |             4.99 |
+| MOD SECRETARY             | German |             4.99 |
+| MODEL FISH                | German |             4.99 |
+| MONSOON CAUSE             | German |             4.99 |
+| MOONSHINE CABIN           | German |             4.99 |
+| MOONWALKER FOOL           | German |             4.99 |
+| MOVIE SHAKESPEARE         | German |             4.99 |
+| MUPPET MILE               | German |             4.99 |
+| MUSKETEERS WAIT           | German |             4.99 |
+| NAME DETECTIVE            | German |             4.99 |
+| NIGHTMARE CHILL           | German |             4.99 |
+| NORTH TEQUILA             | German |             4.99 |
+| NUTS TIES                 | German |             4.99 |
+| OCTOBER SUBMARINE         | German |             4.99 |
+| OPEN AFRICAN              | German |             4.99 |
+| OPPOSITE NECKLACE         | German |             4.99 |
+| OPUS ICE                  | German |             4.99 |
+| OUTLAW HANKY              | German |             4.99 |
+| PANIC CLUB                | German |             4.99 |
+| PANKY SUBMARINE           | German |             4.99 |
+| PANTHER REDS              | German |             4.99 |
+| PARK CITIZEN              | German |             4.99 |
+| PAST SUICIDES             | German |             4.99 |
+| PATHS CONTROL             | German |             4.99 |
+| PAYCHECK WAIT             | German |             4.99 |
+| PEAK FOREVER              | German |             4.99 |
+| PELICAN COMFORTS          | German |             4.99 |
+| PERDITION FARGO           | German |             4.99 |
+| PHILADELPHIA WIFE         | German |             4.99 |
+| PINOCCHIO SIMON           | German |             4.99 |
+| PITTSBURGH HUNCHBACK      | German |             4.99 |
+| PITY BOUND                | German |             4.99 |
+| PLATOON INSTINCT          | German |             4.99 |
+| PLUTO OLEANDER            | German |             4.99 |
+| POSEIDON FOREVER          | German |             4.99 |
+| PREJUDICE OLEANDER        | German |             4.99 |
+| PRESIDENT BANG            | German |             4.99 |
+| PRIVATE DROP              | German |             4.99 |
+| PUNK DIVORCE              | German |             4.99 |
+| QUEEN LUKE                | German |             4.99 |
+| QUILLS BULL               | German |             4.99 |
+| RAGE GAMES                | German |             4.99 |
+| RAGING AIRPLANE           | German |             4.99 |
+| RAINBOW SHOCK             | German |             4.99 |
+| RANGE MOONWALKER          | German |             4.99 |
+| RECORDS ZORRO             | German |             4.99 |
+| REDS POCUS                | German |             4.99 |
+| REQUIEM TYCOON            | German |             4.99 |
+| RIGHT CRANES              | German |             4.99 |
+| ROAD ROXANNE              | German |             4.99 |
+| ROCKY WAR                 | German |             4.99 |
+| ROSES TREASURE            | German |             4.99 |
+| RULES HUMAN               | German |             4.99 |
+| SABRINA MIDNIGHT          | German |             4.99 |
+| SATISFACTION CONFIDENTIAL | German |             4.99 |
+| SATURDAY LAMBS            | German |             4.99 |
+| SATURN NAME               | German |             4.99 |
+| SCALAWAG DUCK             | German |             4.99 |
+| SCARFACE BANG             | German |             4.99 |
+| SCHOOL JACKET             | German |             4.99 |
+| SCORPION APOLLO           | German |             4.99 |
+| SEATTLE EXPECATIONS       | German |             4.99 |
+| SECRET GROUNDHOG          | German |             4.99 |
+| SECRETARY ROUGE           | German |             4.99 |
+| SECRETS PARADISE          | German |             4.99 |
+| SENSE GREEK               | German |             4.99 |
+| SENSIBILITY REAR          | German |             4.99 |
+| SEVEN SWARM               | German |             4.99 |
+| SHAWSHANK BUBBLE          | German |             4.99 |
+| SHOW LORD                 | German |             4.99 |
+| SILVERADO GOLDFINGER      | German |             4.99 |
+| SISTER FREDDY             | German |             4.99 |
+| SLACKER LIAISONS          | German |             4.99 |
+| SLEEPING SUSPECTS         | German |             4.99 |
+| SLEEPLESS MONSOON         | German |             4.99 |
+| SNATCH SLIPPER            | German |             4.99 |
+| SOLDIERS EVOLUTION        | German |             4.99 |
+| SOMETHING DUCK            | German |             4.99 |
+| SPARTACUS CHEAPER         | German |             4.99 |
+| SPEED SUIT                | German |             4.99 |
+| SPICE SORORITY            | German |             4.99 |
+| STAGECOACH ARMAGEDDON     | German |             4.99 |
+| STEEL SANTA               | German |             4.99 |
+| STEERS ARMAGEDDON         | German |             4.99 |
+| STEPMOM DREAM             | German |             4.99 |
+| STING PERSONAL            | German |             4.99 |
+| STRANGER STRANGERS        | German |             4.99 |
+| STRANGERS GRAFFITI        | German |             4.99 |
+| STREETCAR INTENTIONS      | German |             4.99 |
+| SUBMARINE BED             | German |             4.99 |
+| SUGAR WONKA               | German |             4.99 |
+| SUICIDES SILENCE          | German |             4.99 |
+| SUIT WALLS                | German |             4.99 |
+| SUNRISE LEAGUE            | German |             4.99 |
+| SUPER WYOMING             | German |             4.99 |
+| SWEDEN SHINING            | German |             4.99 |
+| TEEN APOLLO               | German |             4.99 |
+| TELEGRAPH VOYAGE          | German |             4.99 |
+| TEMPLE ATTRACTION         | German |             4.99 |
+| TEQUILA PAST              | German |             4.99 |
+| TERMINATOR CLUB           | German |             4.99 |
+| THIEF PELICAN             | German |             4.99 |
+| THIN SAGEBRUSH            | German |             4.99 |
+| TIES HUNGER               | German |             4.99 |
+| TITANIC BOONDOCK          | German |             4.99 |
+| TITANS JERK               | German |             4.99 |
+| TORQUE BOUND              | German |             4.99 |
+| TOURIST PELICAN           | German |             4.99 |
+| TRADING PINOCCHIO         | German |             4.99 |
+| TRAFFIC HOBBIT            | German |             4.99 |
+| TRAIN BUNCH               | German |             4.99 |
+| TRAINSPOTTING STRANGERS   | German |             4.99 |
+| TRAP GUYS                 | German |             4.99 |
+| TRIP NEWTON               | German |             4.99 |
+| TRUMAN CRAZY              | German |             4.99 |
+| TWISTED PIRATES           | German |             4.99 |
+| TYCOON GATHERING          | German |             4.99 |
+| UNDEFEATED DALMATIONS     | German |             4.99 |
+| USUAL UNTOUCHABLES        | German |             4.99 |
+| VAMPIRE WHALE             | German |             4.99 |
+| VANILLA DAY               | German |             4.99 |
+| VELVET TERMINATOR         | German |             4.99 |
+| VIDEOTAPE ARSENIC         | German |             4.99 |
+| VILLAIN DESPERATE         | German |             4.99 |
+| VIRGIN DAISY              | German |             4.99 |
+| VIRTUAL SPOILERS          | German |             4.99 |
+| VOLUME HOUSE              | German |             4.99 |
+| WAKE JAWS                 | German |             4.99 |
+| WALLS ARTIST              | German |             4.99 |
+| WANDA CHAMBER             | German |             4.99 |
+| WAR NOTTING               | German |             4.99 |
+| WASH HEAVENLY             | German |             4.99 |
+| WATERFRONT DELIVERANCE    | German |             4.99 |
+| WEREWOLF LOLA             | German |             4.99 |
+| WEST LION                 | German |             4.99 |
+| WHALE BIKINI              | German |             4.99 |
+| WHISPERER GIANT           | German |             4.99 |
+| WIFE TURN                 | German |             4.99 |
+| WITCHES PANIC             | German |             4.99 |
+| WIZARD COLDBLOODED        | German |             4.99 |
+| WONDERLAND CHRISTMAS      | German |             4.99 |
+| WORKING MICROCOSMOS       | German |             4.99 |
+| WYOMING STORM             | German |             4.99 |
+| YENTL IDAHO               | German |             4.99 |
+| ZORRO ARK                 | German |             4.99 |
++---------------------------+--------+------------------+
+336 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT
+    -> filme.titulo,
+    -> idioma.nome,
+    -> filme.preco_da_locacao
+    -> FROM
+    -> filme
+    -> INNER JOIN
+    -> idioma
+    -> WHERE
+    -> filme.idioma_id = 6
+    -> AND
+    -> filme.idioma_id = idioma.idioma_id
+    -> AND
+    -> filme.preco_da_locacao > 4
+    -> ;
++---------------------------+--------+------------------+
+| titulo                    | nome   | preco_da_locacao |
++---------------------------+--------+------------------+
+| ACE GOLDFINGER            | German |             4.99 |
+| AIRPLANE SIERRA           | German |             4.99 |
+| AIRPORT POLLOCK           | German |             4.99 |
+| ALADDIN CALENDAR          | German |             4.99 |
+| ALI FOREVER               | German |             4.99 |
+| AMELIE HELLFIGHTERS       | German |             4.99 |
+| AMERICAN CIRCUS           | German |             4.99 |
+| ANTHEM LUKE               | German |             4.99 |
+| APACHE DIVINE             | German |             4.99 |
+| APOCALYPSE FLAMINGOS      | German |             4.99 |
+| ATTACKS HATE              | German |             4.99 |
+| ATTRACTION NEWTON         | German |             4.99 |
+| AUTUMN CROW               | German |             4.99 |
+| BABY HALL                 | German |             4.99 |
+| BACKLASH UNDEFEATED       | German |             4.99 |
+| BEAST HUNCHBACK           | German |             4.99 |
+| BEAUTY GREASE             | German |             4.99 |
+| BEHAVIOR RUNAWAY          | German |             4.99 |
+| BETRAYED REAR             | German |             4.99 |
+| BIKINI BORROWERS          | German |             4.99 |
+| BILKO ANONYMOUS           | German |             4.99 |
+| BIRCH ANTITRUST           | German |             4.99 |
+| BIRD INDEPENDENCE         | German |             4.99 |
+| BIRDS PERDITION           | German |             4.99 |
+| BLINDNESS GUN             | German |             4.99 |
+| BOILED DARES              | German |             4.99 |
+| BOOGIE AMELIE             | German |             4.99 |
+| BORN SPINAL               | German |             4.99 |
+| BOWFINGER GABLES          | German |             4.99 |
+| BRANNIGAN SUNRISE         | German |             4.99 |
+| BREAKFAST GOLDFINGER      | German |             4.99 |
+| BRIGHT ENCOUNTERS         | German |             4.99 |
+| BROOKLYN DESERT           | German |             4.99 |
+| BUBBLE GROSSE             | German |             4.99 |
+| BUCKET BROTHERHOOD        | German |             4.99 |
+| CALENDAR GUNFIGHT         | German |             4.99 |
+| CALIFORNIA BIRDS          | German |             4.99 |
+| CANDLES GRAPES            | German |             4.99 |
+| CARIBBEAN LIBERTY         | German |             4.99 |
+| CASABLANCA SUPER          | German |             4.99 |
+| CASPER DRAGONFLY          | German |             4.99 |
+| CASUALTIES ENCINO         | German |             4.99 |
+| CAT CONEHEADS             | German |             4.99 |
+| CENTER DINOSAUR           | German |             4.99 |
+| CHAMBER ITALIAN           | German |             4.99 |
+| CHAMPION FLATLINERS       | German |             4.99 |
+| CHASING FIGHT             | German |             4.99 |
+| CHICAGO NORTH             | German |             4.99 |
+| CHINATOWN GLADIATOR       | German |             4.99 |
+| CHISUM BEHAVIOR           | German |             4.99 |
+| CINCINATTI WHISPERER      | German |             4.99 |
+| CLERKS ANGELS             | German |             4.99 |
+| CLOSER BANG               | German |             4.99 |
+| CLUE GRAIL                | German |             4.99 |
+| COLDBLOODED DARLING       | German |             4.99 |
+| COMA HEAD                 | German |             4.99 |
+| COMMAND DARLING           | German |             4.99 |
+| COMMANDMENTS EXPRESS      | German |             4.99 |
+| CONEHEADS SMOOCHY         | German |             4.99 |
+| CONFESSIONS MAGUIRE       | German |             4.99 |
+| CONFIDENTIAL INTERVIEW    | German |             4.99 |
+| CONNECTICUT TRAMP         | German |             4.99 |
+| CONQUERER NUTS            | German |             4.99 |
+| CONTROL ANTHEM            | German |             4.99 |
+| CONVERSATION DOWNHILL     | German |             4.99 |
+| CREEPERS KANE             | German |             4.99 |
+| CROSSING DIVORCE          | German |             4.99 |
+| CROWDS TELEMARK           | German |             4.99 |
+| DADDY PITTSBURGH          | German |             4.99 |
+| DAISY MENAGERIE           | German |             4.99 |
+| DANGEROUS UPTOWN          | German |             4.99 |
+| DARKO DORADO              | German |             4.99 |
+| DARLING BREAKING          | German |             4.99 |
+| DARN FORRESTER            | German |             4.99 |
+| DAUGHTER MADIGAN          | German |             4.99 |
+| DAWN POND                 | German |             4.99 |
+| DAY UNFAITHFUL            | German |             4.99 |
+| DAZED PUNK                | German |             4.99 |
+| DEEP CRUSADE              | German |             4.99 |
+| DESERT POSEIDON           | German |             4.99 |
+| DESPERATE TRAINSPOTTING   | German |             4.99 |
+| DESTINY SATURDAY          | German |             4.99 |
+| DETAILS PACKER            | German |             4.99 |
+| DEVIL DESIRE              | German |             4.99 |
+| DOGMA FAMILY              | German |             4.99 |
+| DOORS PRESIDENT           | German |             4.99 |
+| DORADO NOTTING            | German |             4.99 |
+| DOUBTFIRE LABYRINTH       | German |             4.99 |
+| DOZEN LION                | German |             4.99 |
+| DRAGONFLY STRANGERS       | German |             4.99 |
+| DRIFTER COMMANDMENTS      | German |             4.99 |
+| DRIVING POLISH            | German |             4.99 |
+| DROP WATERFRONT           | German |             4.99 |
+| DUDE BLINDNESS            | German |             4.99 |
+| DURHAM PANKY              | German |             4.99 |
+| DYING MAKER               | German |             4.99 |
+| EAGLES PANKY              | German |             4.99 |
+| EARLY HOME                | German |             4.99 |
+| EASY GLADIATOR            | German |             4.99 |
+| EDGE KISSING              | German |             4.99 |
+| ELEMENT FREDDY            | German |             4.99 |
+| ELEPHANT TROJAN           | German |             4.99 |
+| ELF MURDER                | German |             4.99 |
+| ELIZABETH SHANE           | German |             4.99 |
+| ENEMY ODDS                | German |             4.99 |
+| EVE RESURRECTION          | German |             4.99 |
+| EXPECATIONS NATURAL       | German |             4.99 |
+| FALCON VOLUME             | German |             4.99 |
+| FELLOWSHIP AUTUMN         | German |             4.99 |
+| FEVER EMPIRE              | German |             4.99 |
+| FIDDLER LOST              | German |             4.99 |
+| FIDELITY DEVIL            | German |             4.99 |
+| FIRE WOLVES               | German |             4.99 |
+| FLAMINGOS CONNECTICUT     | German |             4.99 |
+| FLASH WARS                | German |             4.99 |
+| FLIGHT LIES               | German |             4.99 |
+| FLINTSTONES HAPPINESS     | German |             4.99 |
+| FOOL MOCKINGBIRD          | German |             4.99 |
+| FORRESTER COMANCHEROS     | German |             4.99 |
+| FREDDY STORM              | German |             4.99 |
+| FRENCH HOLIDAY            | German |             4.99 |
+| FRISCO FORREST            | German |             4.99 |
+| FRONTIER CABIN            | German |             4.99 |
+| FUGITIVE MAGUIRE          | German |             4.99 |
+| GALAXY SWEETHEARTS        | German |             4.99 |
+| GAMES BOWFINGER           | German |             4.99 |
+| GARDEN ISLAND             | German |             4.99 |
+| GHOST GROUNDHOG           | German |             4.99 |
+| GLADIATOR WESTWARD        | German |             4.99 |
+| GOLD RIVER                | German |             4.99 |
+| GOODFELLAS SALUTE         | German |             4.99 |
+| GOSFORD DONNIE            | German |             4.99 |
+| GRACELAND DYNAMITE        | German |             4.99 |
+| GRINCH MASSAGE            | German |             4.99 |
+| GROSSE WONDERFUL          | German |             4.99 |
+| GROUNDHOG UNCUT           | German |             4.99 |
+| GUMP DATE                 | German |             4.99 |
+| GUYS FALCON               | German |             4.99 |
+| HALL CASSIDY              | German |             4.99 |
+| HANGING DEEP              | German |             4.99 |
+| HANOVER GALAXY            | German |             4.99 |
+| HARRY IDAHO               | German |             4.99 |
+| HAUNTED ANTITRUST         | German |             4.99 |
+| HEAD STRANGER             | German |             4.99 |
+| HEARTBREAKERS BRIGHT      | German |             4.99 |
+| HEAVENLY GUN              | German |             4.99 |
+| HEAVYWEIGHTS BEAST        | German |             4.99 |
+| HOLES BRANNIGAN           | German |             4.99 |
+| HOLIDAY GAMES             | German |             4.99 |
+| HOLLOW JEOPARDY           | German |             4.99 |
+| HOME PITY                 | German |             4.99 |
+| HOTEL HAPPINESS           | German |             4.99 |
+| HUNCHBACK IMPOSSIBLE      | German |             4.99 |
+| HUSTLER PARTY             | German |             4.99 |
+| HYSTERICAL GRAIL          | German |             4.99 |
+| IGBY MAKER                | German |             4.99 |
+| IMPOSSIBLE PREJUDICE      | German |             4.99 |
+| INCH JET                  | German |             4.99 |
+| INFORMER DOUBLE           | German |             4.99 |
+| INNOCENT USUAL            | German |             4.99 |
+| INTERVIEW LIAISONS        | German |             4.99 |
+| INTOLERABLE INTENTIONS    | German |             4.99 |
+| IRON MOON                 | German |             4.99 |
+| ISHTAR ROCKETEER          | German |             4.99 |
+| ITALIAN AFRICAN           | German |             4.99 |
+| JERSEY SASSY              | German |             4.99 |
+| JET NEIGHBORS             | German |             4.99 |
+| JINGLE SAGEBRUSH          | German |             4.99 |
+| KING EVOLUTION            | German |             4.99 |
+| KISS GLORY                | German |             4.99 |
+| KISSING DOLLS             | German |             4.99 |
+| LADY STAGE                | German |             4.99 |
+| LAMBS CINCINATTI          | German |             4.99 |
+| LAWLESS VISION            | German |             4.99 |
+| LEAGUE HELLFIGHTERS       | German |             4.99 |
+| LEGALLY SECRETARY         | German |             4.99 |
+| LIAISONS SWEET            | German |             4.99 |
+| LIES TREATMENT            | German |             4.99 |
+| LOLA AGENT                | German |             4.99 |
+| LOSER HUSTLER             | German |             4.99 |
+| MADIGAN DORADO            | German |             4.99 |
+| MAIDEN HOME               | German |             4.99 |
+| MALTESE HOPE              | German |             4.99 |
+| MASSACRE USUAL            | German |             4.99 |
+| MATRIX SNOWMAN            | German |             4.99 |
+| MEMENTO ZOOLANDER         | German |             4.99 |
+| MERMAID INSECTS           | German |             4.99 |
+| MIDSUMMER GROUNDHOG       | German |             4.99 |
+| MILLION ACE               | German |             4.99 |
+| MINDS TRUMAN              | German |             4.99 |
+| MINE TITANS               | German |             4.99 |
+| MISSION ZOOLANDER         | German |             4.99 |
+| MOD SECRETARY             | German |             4.99 |
+| MODEL FISH                | German |             4.99 |
+| MONSOON CAUSE             | German |             4.99 |
+| MOONSHINE CABIN           | German |             4.99 |
+| MOONWALKER FOOL           | German |             4.99 |
+| MOVIE SHAKESPEARE         | German |             4.99 |
+| MUPPET MILE               | German |             4.99 |
+| MUSKETEERS WAIT           | German |             4.99 |
+| NAME DETECTIVE            | German |             4.99 |
+| NIGHTMARE CHILL           | German |             4.99 |
+| NORTH TEQUILA             | German |             4.99 |
+| NUTS TIES                 | German |             4.99 |
+| OCTOBER SUBMARINE         | German |             4.99 |
+| OPEN AFRICAN              | German |             4.99 |
+| OPPOSITE NECKLACE         | German |             4.99 |
+| OPUS ICE                  | German |             4.99 |
+| OUTLAW HANKY              | German |             4.99 |
+| PANIC CLUB                | German |             4.99 |
+| PANKY SUBMARINE           | German |             4.99 |
+| PANTHER REDS              | German |             4.99 |
+| PARK CITIZEN              | German |             4.99 |
+| PAST SUICIDES             | German |             4.99 |
+| PATHS CONTROL             | German |             4.99 |
+| PAYCHECK WAIT             | German |             4.99 |
+| PEAK FOREVER              | German |             4.99 |
+| PELICAN COMFORTS          | German |             4.99 |
+| PERDITION FARGO           | German |             4.99 |
+| PHILADELPHIA WIFE         | German |             4.99 |
+| PINOCCHIO SIMON           | German |             4.99 |
+| PITTSBURGH HUNCHBACK      | German |             4.99 |
+| PITY BOUND                | German |             4.99 |
+| PLATOON INSTINCT          | German |             4.99 |
+| PLUTO OLEANDER            | German |             4.99 |
+| POSEIDON FOREVER          | German |             4.99 |
+| PREJUDICE OLEANDER        | German |             4.99 |
+| PRESIDENT BANG            | German |             4.99 |
+| PRIVATE DROP              | German |             4.99 |
+| PUNK DIVORCE              | German |             4.99 |
+| QUEEN LUKE                | German |             4.99 |
+| QUILLS BULL               | German |             4.99 |
+| RAGE GAMES                | German |             4.99 |
+| RAGING AIRPLANE           | German |             4.99 |
+| RAINBOW SHOCK             | German |             4.99 |
+| RANGE MOONWALKER          | German |             4.99 |
+| RECORDS ZORRO             | German |             4.99 |
+| REDS POCUS                | German |             4.99 |
+| REQUIEM TYCOON            | German |             4.99 |
+| RIGHT CRANES              | German |             4.99 |
+| ROAD ROXANNE              | German |             4.99 |
+| ROCKY WAR                 | German |             4.99 |
+| ROSES TREASURE            | German |             4.99 |
+| RULES HUMAN               | German |             4.99 |
+| SABRINA MIDNIGHT          | German |             4.99 |
+| SATISFACTION CONFIDENTIAL | German |             4.99 |
+| SATURDAY LAMBS            | German |             4.99 |
+| SATURN NAME               | German |             4.99 |
+| SCALAWAG DUCK             | German |             4.99 |
+| SCARFACE BANG             | German |             4.99 |
+| SCHOOL JACKET             | German |             4.99 |
+| SCORPION APOLLO           | German |             4.99 |
+| SEATTLE EXPECATIONS       | German |             4.99 |
+| SECRET GROUNDHOG          | German |             4.99 |
+| SECRETARY ROUGE           | German |             4.99 |
+| SECRETS PARADISE          | German |             4.99 |
+| SENSE GREEK               | German |             4.99 |
+| SENSIBILITY REAR          | German |             4.99 |
+| SEVEN SWARM               | German |             4.99 |
+| SHAWSHANK BUBBLE          | German |             4.99 |
+| SHOW LORD                 | German |             4.99 |
+| SILVERADO GOLDFINGER      | German |             4.99 |
+| SISTER FREDDY             | German |             4.99 |
+| SLACKER LIAISONS          | German |             4.99 |
+| SLEEPING SUSPECTS         | German |             4.99 |
+| SLEEPLESS MONSOON         | German |             4.99 |
+| SNATCH SLIPPER            | German |             4.99 |
+| SOLDIERS EVOLUTION        | German |             4.99 |
+| SOMETHING DUCK            | German |             4.99 |
+| SPARTACUS CHEAPER         | German |             4.99 |
+| SPEED SUIT                | German |             4.99 |
+| SPICE SORORITY            | German |             4.99 |
+| STAGECOACH ARMAGEDDON     | German |             4.99 |
+| STEEL SANTA               | German |             4.99 |
+| STEERS ARMAGEDDON         | German |             4.99 |
+| STEPMOM DREAM             | German |             4.99 |
+| STING PERSONAL            | German |             4.99 |
+| STRANGER STRANGERS        | German |             4.99 |
+| STRANGERS GRAFFITI        | German |             4.99 |
+| STREETCAR INTENTIONS      | German |             4.99 |
+| SUBMARINE BED             | German |             4.99 |
+| SUGAR WONKA               | German |             4.99 |
+| SUICIDES SILENCE          | German |             4.99 |
+| SUIT WALLS                | German |             4.99 |
+| SUNRISE LEAGUE            | German |             4.99 |
+| SUPER WYOMING             | German |             4.99 |
+| SWEDEN SHINING            | German |             4.99 |
+| TEEN APOLLO               | German |             4.99 |
+| TELEGRAPH VOYAGE          | German |             4.99 |
+| TEMPLE ATTRACTION         | German |             4.99 |
+| TEQUILA PAST              | German |             4.99 |
+| TERMINATOR CLUB           | German |             4.99 |
+| THIEF PELICAN             | German |             4.99 |
+| THIN SAGEBRUSH            | German |             4.99 |
+| TIES HUNGER               | German |             4.99 |
+| TITANIC BOONDOCK          | German |             4.99 |
+| TITANS JERK               | German |             4.99 |
+| TORQUE BOUND              | German |             4.99 |
+| TOURIST PELICAN           | German |             4.99 |
+| TRADING PINOCCHIO         | German |             4.99 |
+| TRAFFIC HOBBIT            | German |             4.99 |
+| TRAIN BUNCH               | German |             4.99 |
+| TRAINSPOTTING STRANGERS   | German |             4.99 |
+| TRAP GUYS                 | German |             4.99 |
+| TRIP NEWTON               | German |             4.99 |
+| TRUMAN CRAZY              | German |             4.99 |
+| TWISTED PIRATES           | German |             4.99 |
+| TYCOON GATHERING          | German |             4.99 |
+| UNDEFEATED DALMATIONS     | German |             4.99 |
+| USUAL UNTOUCHABLES        | German |             4.99 |
+| VAMPIRE WHALE             | German |             4.99 |
+| VANILLA DAY               | German |             4.99 |
+| VELVET TERMINATOR         | German |             4.99 |
+| VIDEOTAPE ARSENIC         | German |             4.99 |
+| VILLAIN DESPERATE         | German |             4.99 |
+| VIRGIN DAISY              | German |             4.99 |
+| VIRTUAL SPOILERS          | German |             4.99 |
+| VOLUME HOUSE              | German |             4.99 |
+| WAKE JAWS                 | German |             4.99 |
+| WALLS ARTIST              | German |             4.99 |
+| WANDA CHAMBER             | German |             4.99 |
+| WAR NOTTING               | German |             4.99 |
+| WASH HEAVENLY             | German |             4.99 |
+| WATERFRONT DELIVERANCE    | German |             4.99 |
+| WEREWOLF LOLA             | German |             4.99 |
+| WEST LION                 | German |             4.99 |
+| WHALE BIKINI              | German |             4.99 |
+| WHISPERER GIANT           | German |             4.99 |
+| WIFE TURN                 | German |             4.99 |
+| WITCHES PANIC             | German |             4.99 |
+| WIZARD COLDBLOODED        | German |             4.99 |
+| WONDERLAND CHRISTMAS      | German |             4.99 |
+| WORKING MICROCOSMOS       | German |             4.99 |
+| WYOMING STORM             | German |             4.99 |
+| YENTL IDAHO               | German |             4.99 |
+| ZORRO ARK                 | German |             4.99 |
++---------------------------+--------+------------------+
+336 rows in set (0.00 sec)
+
+mysql> select distinct (nome) from idioma i, filme f where i.idioma_id = f.idioma_id;
++---------+
+| nome    |
++---------+
+| English |
+| German  |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_sakila |
++------------------+
+| aluguel          |
+| ator             |
+| categoria        |
+| cidade           |
+| cliente          |
+| endereco         |
+| filme            |
+| filme_ator       |
+| filme_categoria  |
+| filme_texto      |
+| funcionario      |
+| idioma           |
+| inventario       |
+| loja             |
+| pagamento        |
+| pais             |
++------------------+
+16 rows in set (0.01 sec)
+
+mysql> desc pais;
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field              | Type              | Null | Key | Default           | Extra                                         |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| pais_id            | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| pais               | varchar(50)       | NO   |     | NULL              |                                               |
+| ultima_atualizacao | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc cliente;
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field              | Type              | Null | Key | Default           | Extra                                         |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| cliente_id         | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| loja_id            | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| primeiro_nome      | varchar(45)       | NO   |     | NULL              |                                               |
+| ultimo_nome        | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email              | varchar(50)       | YES  |     | NULL              |                                               |
+| endereco_id        | smallint unsigned | NO   | MUL | NULL              |                                               |
+| ativo              | tinyint(1)        | NO   |     | 1                 |                                               |
+| data_criacao       | datetime          | NO   |     | NULL              |                                               |
+| ultima_atualizacao | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.00 sec)
+
+mysql> desc cidade;
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field              | Type              | Null | Key | Default           | Extra                                         |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| cidade_id          | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| cidade             | varchar(50)       | NO   |     | NULL              |                                               |
+| pais_id            | smallint unsigned | NO   | MUL | NULL              |                                               |
+| ultima_atualizacao | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select pais.pais, cidade.cidade from pais inner join cidade where sum (cidade.cidade like "A%" or cidade.cidade like "%R%") > 3 and pais.pais_id = cidade.pais_id order by cidade.cidade desc
+    -> ;
+ERROR 1630 (42000): FUNCTION sakila.sum does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select pais.pais, cidade.cidade from pais inner join cidade where having sum (cidade.cidade like "A%" or cidade.cidade l
+ike "%R%") > 3 and pais.pais_id = cidade.pais_id order by cidade.cidade desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'having sum (cidade.cidade like "A%" or cidade.cidade like "%R%") > 3 and pais.pa' at line 1
+mysql> select pais.pais, cidade.cidade from pais inner join cidade where cidade.cidade like "A%" or cidade.cidade like "%R%" and cidade.pais_id = pais.pais_id group by pais order by pais desc;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'sakila.cidade.cidade' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select pais.pais, cidade.cidade from pais inner join cidade where cidade.cidade like "A%" or cidade.cidade like "%R%" and cidade.pais_id = pais.pais_id group by pais.pais order by pais.pais desc;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'sakila.cidade.cidade' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql>

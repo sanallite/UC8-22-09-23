@@ -1,0 +1,1283 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 38
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use quitanda;
+Database changed
+mysql> desc frutas;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| id           | int         | NO   | PRI | NULL    | auto_increment |
+| nome         | varchar(50) | NO   |     | NULL    |                |
+| quantidade   | int         | NO   |     | NULL    |                |
+| cor          | varchar(50) | NO   |     | NULL    |                |
+| categoria_id | int         | NO   |     | NULL    |                |
+| estado       | varchar(50) | NO   |     | NULL    |                |
+| data         | date        | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.02 sec)
+
+mysql> use sakila;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_sakila |
++------------------+
+| aluguel          |
+| ator             |
+| categoria        |
+| cidade           |
+| cliente          |
+| endereco         |
+| filme            |
+| filme_ator       |
+| filme_categoria  |
+| filme_texto      |
+| funcionario      |
+| idioma           |
+| inventario       |
+| loja             |
+| pagamento        |
+| pais             |
++------------------+
+16 rows in set (0.00 sec)
+
+mysql> desc filme;
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                 | Type                                                                | Null | Key | Default           | Extra                                         |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| filme_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| titulo                | varchar(255)                                                        | NO   | MUL | NULL              |                                               |
+| descricao             | text                                                                | YES  |     | NULL              |                                               |
+| ano_de_lancamento     | year                                                                | YES  |     | NULL              |                                               |
+| idioma_id             | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| idioma_original_id    | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| duracao_da_locacao    | tinyint unsigned                                                    | NO   |     | 3
+       |                                               |
+| preco_da_locacao      | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| duracao_do_filme      | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| custo_de_substituicao | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| classificacao         | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G
+       |                                               |
+| recursos_especiais    | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| ultima_atualizacao    | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.00 sec)
+
+mysql> desc ator;
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field              | Type              | Null | Key | Default           | Extra
+  |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| ator_id            | smallint unsigned | NO   | PRI | NULL              | auto_increment
+  |
+| primeiro_nome      | varchar(45)       | NO   |     | NULL              |
+  |
+| ultimo_nome        | varchar(45)       | NO   | MUL | NULL              |
+  |
+| ultima_atualizacao | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> desc filme_ator;
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field              | Type              | Null | Key | Default           | Extra
+  |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| ator_id            | smallint unsigned | NO   | PRI | NULL              |
+  |
+| filme_id           | smallint unsigned | NO   | PRI | NULL              |
+  |
+| ultima_atualizacao | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(fa.ator_id), f.titulo from filme_ator fa, ator a, filme f where fa.ator_id = a.ator_id and fa.filme_id = f.filme_id group by titulo order by "A" asc;
++-------------------+-----------------------------+
+| count(fa.ator_id) | titulo                      |
++-------------------+-----------------------------+
+|                 7 | BACKLASH UNDEFEATED         |
+|                 4 | BETRAYED REAR               |
+|                 7 | CAPER MOTIONS               |
+|                 5 | CATCH AMISTAD               |
+|                 6 | CHANCE RESURRECTION         |
+|                 6 | CONFUSED CANDLES            |
+|                 8 | CUPBOARD SINNERS            |
+|                 6 | DIVIDE MONSTER              |
+|                 8 | DOOM DANCING                |
+|                 9 | DOORS PRESIDENT             |
+|                 8 | DRIVER ANNIE                |
+|                 9 | FEATHERS METAL              |
+|                 5 | FIRE WOLVES                 |
+|                 6 | HILLS NEIGHBORS             |
+|                 6 | HOME PITY                   |
+|                 3 | INNOCENT USUAL              |
+|                 5 | JAWBREAKER BROOKLYN         |
+|                 9 | LUKE MUMMY                  |
+|                 7 | MAGNOLIA FORRESTER          |
+|                 8 | MAIDEN HOME                 |
+|                11 | MAKER GABLES                |
+|                 5 | MILLION ACE                 |
+|                 7 | MOURNING PURPLE             |
+|                 2 | NUTS TIES                   |
+|                 9 | OKLAHOMA JUMANJI            |
+|                 3 | OPERATION OPERATION         |
+|                 5 | PRINCESS GIANT              |
+|                 8 | RESERVOIR ADAPTATION        |
+|                 4 | SABRINA MIDNIGHT            |
+|                 4 | SINNERS ATLANTIS            |
+|                 7 | STREETCAR INTENTIONS        |
+|                11 | SUBMARINE BED               |
+|                 8 | BOULEVARD MOB               |
+|                 4 | BRAVEHEART HUMAN            |
+|                 6 | BUCKET BROTHERHOOD          |
+|                 2 | BUGSY SONG                  |
+|                 4 | CASABLANCA SUPER            |
+|                 3 | CHARADE DUFFEL              |
+|                 8 | DANGEROUS UPTOWN            |
+|                 5 | DEVIL DESIRE                |
+|                 9 | FRISCO FORREST              |
+|                 6 | GRINCH MASSAGE              |
+|                 6 | HOURS RAGE                  |
+|                 3 | HURRICANE AFFAIR            |
+|                11 | IMAGE PRINCESS              |
+|                 4 | ISHTAR ROCKETEER            |
+|                 6 | LABYRINTH LEAGUE            |
+|                 6 | LEAGUE HELLFIGHTERS         |
+|                 6 | MADIGAN DORADO              |
+|                 7 | MADNESS ATTACKS             |
+|                 4 | MAGIC MALLRATS              |
+|                 9 | MASSAGE IMAGE               |
+|                 6 | MEMENTO ZOOLANDER           |
+|                 8 | NECKLACE OUTBREAK           |
+|                 5 | PATHS CONTROL               |
+|                 7 | PLUTO OLEANDER              |
+|                 5 | PRIVATE DROP                |
+|                 6 | RAIDERS ANTITRUST           |
+|                 7 | REUNION WITCHES             |
+|                12 | SKY MIRACLE                 |
+|                 3 | SPEAKEASY DATE              |
+|                 6 | STAGECOACH ARMAGEDDON       |
+|                 6 | TIES HUNGER                 |
+|                 5 | USUAL UNTOUCHABLES          |
+|                 4 | WORST BANGER                |
+|                 8 | APOLLO TEEN                 |
+|                 4 | CLUB GRAFFITI               |
+|                 9 | FAMILY SWEET                |
+|                 4 | FLINTSTONES HAPPINESS       |
+|                 3 | GALAXY SWEETHEARTS          |
+|                 6 | GLORY TRACY                 |
+|                 6 | HALF OUTFIELD               |
+|                 4 | HEDWIG ALTER                |
+|                 6 | HOLIDAY GAMES               |
+|                 9 | HOUSE DYNAMITE              |
+|                 7 | MONEY HAROLD                |
+|                 6 | OPPOSITE NECKLACE           |
+|                 5 | PEAK FOREVER                |
+|                 5 | PIANIST OUTFIELD            |
+|                 7 | PILOT HOOSIERS              |
+|                 5 | PRESIDENT BANG              |
+|                13 | RANDOM GO                   |
+|                 5 | REDEMPTION COMFORTS         |
+|                 5 | SONG HEDWIG                 |
+|                 6 | SPIKING ELEMENT             |
+|                 4 | STEPMOM DREAM               |
+|                 7 | SUNDANCE INVASION           |
+|                 5 | VICTORY ACADEMY             |
+|                 8 | WORLD LEATHERNECKS          |
+|                 8 | ARACHNOPHOBIA ROLLERCOASTER |
+|                 7 | ARMAGEDDON LOST             |
+|                 3 | ARSENIC INDEPENDENCE        |
+|                 8 | BADMAN DAWN                 |
+|                 5 | BARBARELLA STREETCAR        |
+|                 6 | CHAPLIN LICENSE             |
+|                 8 | CHICAGO NORTH               |
+|                 4 | CINCINATTI WHISPERER        |
+|                 8 | FICTION CHRISTMAS           |
+|                 4 | GROSSE WONDERFUL            |
+|                 5 | HAPPINESS UNITED            |
+|                 6 | KING EVOLUTION              |
+|                12 | LESSON CLEOPATRA            |
+|                 5 | MANNEQUIN WORST             |
+|                 6 | METROPOLIS COMA             |
+|                 5 | ORANGE GRAPES               |
+|                 3 | PAPI NECKLACE               |
+|                 5 | ROBBERS JOON                |
+|                 8 | SHIP WONDERLAND             |
+|                 9 | STRANGELOVE DESIRE          |
+|                 9 | VELVET TERMINATOR           |
+|                 9 | WAR NOTTING                 |
+|                 9 | WEST LION                   |
+|                 7 | BUTTERFLY CHOCOLAT          |
+|                 8 | CARIBBEAN LIBERTY           |
+|                 7 | CLASH FREDDY                |
+|                 7 | CLEOPATRA DEVIL             |
+|                 5 | EXORCIST STING              |
+|                 4 | HARPER DYING                |
+|                 5 | HEARTBREAKERS BRIGHT        |
+|                 9 | INDEPENDENCE HOTEL          |
+|                 9 | JAPANESE RUN                |
+|                 2 | JINGLE SAGEBRUSH            |
+|                 8 | KARATE MOON                 |
+|                 6 | LOLA AGENT                  |
+|                 7 | MONSTER SPARTACUS           |
+|                 6 | NONE SPIKING                |
+|                 2 | NOTORIOUS REUNION           |
+|                 6 | PAST SUICIDES               |
+|                 4 | PATRIOT ROMAN               |
+|                 6 | POTLUCK MIXED               |
+|                 6 | RAINBOW SHOCK               |
+|                 6 | RUGRATS SHAKESPEARE         |
+|                 2 | SOUP WISDOM                 |
+|                 7 | TITANS JERK                 |
+|                 8 | UNFAITHFUL KILL             |
+|                 9 | WAIT CIDER                  |
+|                 9 | ALABAMA DEVIL               |
+|                 7 | ARTIST COLDBLOODED          |
+|                10 | BERETS AGENT                |
+|                 6 | BOOGIE AMELIE               |
+|                 9 | BORN SPINAL                 |
+|                 4 | BRIGHT ENCOUNTERS           |
+|                 6 | CLUE GRAIL                  |
+|                 4 | CLYDE THEORY                |
+|                 6 | DAWN POND                   |
+|                 5 | DIRTY ACE                   |
+|                 3 | GATHERING CALENDAR          |
+|                 7 | HIGH ENCINO                 |
+|                 6 | JET NEIGHBORS               |
+|                 5 | KILLER INNOCENT             |
+|                 4 | LOSE INCH                   |
+|                 8 | RECORDS ZORRO               |
+|                 7 | ROCKETEER MOTHER            |
+|                 5 | SHEPHERD MIDSUMMER          |
+|                 6 | SWEET BROTHERHOOD           |
+|                 5 | BEAST HUNCHBACK             |
+|                 7 | BENEATH RUSH                |
+|                 5 | BREAKFAST GOLDFINGER        |
+|                 7 | CARRIE BUNCH                |
+|                 6 | CRANES RESERVOIR            |
+|                 7 | DESIRE ALIEN                |
+|                 4 | DISTURBING SCARFACE         |
+|                 3 | DRAGONFLY STRANGERS         |
+|                 8 | GANDHI KWAI                 |
+|                 4 | HUSTLER PARTY               |
+|                 2 | INTENTIONS EMPIRE           |
+|                 8 | JADE BUNCH                  |
+|                 5 | MULAN MOON                  |
+|                13 | MUMMY CREATURES             |
+|                 7 | ORDER BETRAYED              |
+|                 7 | OUTLAW HANKY                |
+|                 8 | PACIFIC AMISTAD             |
+|                 6 | RACER EGG                   |
+|                 2 | SAMURAI LION                |
+|                 2 | SATURN NAME                 |
+|                 7 | SEVEN SWARM                 |
+|                 5 | STORY SIDE                  |
+|                 8 | SUMMER SCARFACE             |
+|                 3 | SUNSET RACER                |
+|                 6 | SWARM GOLD                  |
+|                 8 | TROJAN TOMORROW             |
+|                 2 | VANISHED GARDEN             |
+|                 8 | WARDROBE PHANTOM            |
+|                12 | ARABIA DOGMA                |
+|                 4 | ARIZONA BANG                |
+|                 4 | CONFESSIONS MAGUIRE         |
+|                13 | CRAZY HOME                  |
+|                 6 | DINOSAUR SECRETARY          |
+|                11 | FIDDLER LOST                |
+|                 9 | FLATLINERS KILLER           |
+|                 8 | IDOLS SNATCHERS             |
+|                 3 | MATRIX SNOWMAN              |
+|                 8 | MOVIE SHAKESPEARE           |
+|                 8 | PANKY SUBMARINE             |
+|                 3 | PAYCHECK WAIT               |
+|                 7 | PRIX UNDEFEATED             |
+|                 8 | SEA VIRGIN                  |
+|                 5 | SIERRA DIVIDE               |
+|                 9 | SOLDIERS EVOLUTION          |
+|                 8 | SPINAL ROCKY                |
+|                 5 | SUNRISE LEAGUE              |
+|                 8 | SUSPECTS QUILLS             |
+|                 9 | WORKER TARZAN               |
+|                 5 | ANALYZE HOOSIERS            |
+|                 6 | BASIC EASY                  |
+|                10 | CHINATOWN GLADIATOR         |
+|                 4 | DORADO NOTTING              |
+|                 8 | DROP WATERFRONT             |
+|                 2 | HEAD STRANGER               |
+|                 6 | KICK SAVANNAH               |
+|                 8 | MIGHTY LUCK                 |
+|                 3 | MOULIN WAKE                 |
+|                 8 | REQUIEM TYCOON              |
+|                 7 | RIGHT CRANES                |
+|                 6 | SAVANNAH TOWN               |
+|                 5 | SUIT WALLS                  |
+|                 6 | TRUMAN CRAZY                |
+|                 8 | VIRGINIAN PLUTO             |
+|                 3 | WHISPERER GIANT             |
+|                 6 | WOLVES DESIRE               |
+|                 3 | ARK RIDGEMONT               |
+|                 6 | BANGER PINOCCHIO            |
+|                 5 | BED HIGHBALL                |
+|                13 | BOONDOCK BALLROOM           |
+|                 7 | DRIFTER COMMANDMENTS        |
+|                 5 | ELF MURDER                  |
+|                 3 | FEVER EMPIRE                |
+|                 6 | GRAFFITI LOVE               |
+|                 6 | HEAVENLY GUN                |
+|                 2 | ITALIAN AFRICAN             |
+|                 3 | MASKED BUBBLE               |
+|                 4 | NEWTON LABYRINTH            |
+|                 5 | PITTSBURGH HUNCHBACK        |
+|                 7 | POTTER CONNECTICUT          |
+|                 8 | PURPLE MOVIE                |
+|                 4 | QUILLS BULL                 |
+|                 6 | SLEEPY JAPANESE             |
+|                 8 | TADPOLE PARK                |
+|                 6 | WARLOCK WEREWOLF            |
+|                 7 | BALLROOM MOCKINGBIRD        |
+|                 8 | DOUBLE WRATH                |
+|                 5 | DOUBTFIRE LABYRINTH         |
+|                 5 | ELEPHANT TROJAN             |
+|                 3 | FANTASIA PARK               |
+|                 8 | GREEDY ROOTS                |
+|                 7 | GROOVE FICTION              |
+|                 8 | HOMICIDE PEACH              |
+|                 8 | LADY STAGE                  |
+|                 8 | MUPPET MILE                 |
+|                 7 | NASH CHOCOLAT               |
+|                 5 | PERDITION FARGO             |
+|                 7 | PUNK DIVORCE                |
+|                 3 | ROLLERCOASTER BRINGING      |
+|                 7 | RUSHMORE MERMAID            |
+|                 7 | STING PERSONAL              |
+|                 7 | THIEF PELICAN               |
+|                 6 | WAGON JAWS                  |
+|                 5 | WALLS ARTIST                |
+|                10 | WEDDING APOLLO              |
+|                 5 | WONDERLAND CHRISTMAS        |
+|                 6 | WYOMING STORM               |
+|                 8 | ALONE TRIP                  |
+|                 9 | ANGELS LIFE                 |
+|                 7 | ANTITRUST TOMATOES          |
+|                 6 | BALLOON HOMEWARD            |
+|                 5 | BINGO TALENTED              |
+|                 4 | BIRDCAGE CASPER             |
+|                 4 | CABIN FLASH                 |
+|                 4 | CAT CONEHEADS               |
+|                 5 | COMANCHEROS ENEMY           |
+|                 5 | DESERT POSEIDON             |
+|                 4 | DESPERATE TRAINSPOTTING     |
+|                 7 | EXTRAORDINARY CONQUERER     |
+|                 5 | GHOST GROUNDHOG             |
+|                 4 | HOTEL HAPPINESS             |
+|                 4 | HUNTER ALTER                |
+|                 9 | LOVERBOY ATTACKS            |
+|                 7 | MAGNIFICENT CHITTY          |
+|                11 | MASK PEACH                  |
+|                 4 | NATURAL STOCK               |
+|                 7 | SCARFACE BANG               |
+|                 7 | SENSE GREEK                 |
+|                 6 | TRAMP OTHERS                |
+|                 8 | TROUBLE DATE                |
+|                 3 | WIND PHANTOM                |
+|                 5 | ARGONAUTS TOWN              |
+|                 7 | BANG KWAI                   |
+|                 9 | CONEHEADS SMOOCHY           |
+|                 7 | DISCIPLE MOTHER             |
+|                 7 | EFFECT GLADIATOR            |
+|                 5 | GASLIGHT CRUSADE            |
+|                 7 | GROUNDHOG UNCUT             |
+|                 8 | JERK PAYCHECK               |
+|                15 | LAMBS CINCINATTI            |
+|                 5 | PELICAN COMFORTS            |
+|                 8 | ROAD ROXANNE                |
+|                 8 | ROCK INSTINCT               |
+|                 5 | SCISSORHANDS SLUMS          |
+|                 6 | SECRETARY ROUGE             |
+|                 5 | SHINING ROSES               |
+|                 3 | SHOOTIST SUPERFLY           |
+|                 5 | TROOPERS METAL              |
+|                 7 | UNFORGIVEN ZOOLANDER        |
+|                 8 | VIRGIN DAISY                |
+|                 6 | WIFE TURN                   |
+|                 5 | APOCALYPSE FLAMINGOS        |
+|                 8 | BABY HALL                   |
+|                 6 | BEETHOVEN EXORCIST          |
+|                 3 | BUBBLE GROSSE               |
+|                 7 | CAROL TEXAS                 |
+|                 7 | CONNECTICUT TRAMP           |
+|                 7 | CONNECTION MICROCOSMOS      |
+|                 7 | DONNIE ALLEY                |
+|                10 | JACKET FRISCO               |
+|                 4 | JERICHO MULAN               |
+|                 5 | LOSER HUSTLER               |
+|                 5 | MALLRATS UNITED             |
+|                 1 | MINORITY KISS               |
+|                 7 | NATIONAL STORY              |
+|                 6 | NOON PAPI                   |
+|                 9 | OPEN AFRICAN                |
+|                 3 | SIMON NORTH                 |
+|                 6 | SMOKING BARBARELLA          |
+|                 3 | SPARTACUS CHEAPER           |
+|                11 | SPIRIT FLINTSTONES          |
+|                 6 | STAMPEDE DISTURBING         |
+|                 7 | TELEGRAPH VOYAGE            |
+|                11 | TELEMARK HEARTBREAKERS      |
+|                 9 | TOMATOES HELLFIGHTERS       |
+|                 5 | TOOTSIE PILOT               |
+|                10 | WEEKEND PERSONAL            |
+|                 7 | WEREWOLF LOLA               |
+|                 4 | AMISTAD MIDSUMMER           |
+|                 4 | BULWORTH COMMANDMENTS       |
+|                 2 | CALIFORNIA BIRDS            |
+|                 6 | CREEPERS KANE               |
+|                 7 | DUDE BLINDNESS              |
+|                 9 | DURHAM PANKY                |
+|                 6 | EVE RESURRECTION            |
+|                 6 | FULL FLATLINERS             |
+|                 4 | IDENTITY LOVER              |
+|                 7 | INVASION CYCLONE            |
+|                 6 | LUCK OPUS                   |
+|                 5 | ROOF CHAMPION               |
+|                 6 | SEATTLE EXPECATIONS         |
+|                10 | SHAWSHANK BUBBLE            |
+|                 3 | SNATCH SLIPPER              |
+|                 5 | TENENBAUMS COMMAND          |
+|                 6 | WORDS HUNTER                |
+|                 5 | YOUTH KICK                  |
+|                 4 | ALAMO VIDEOTAPE             |
+|                 5 | BEAUTY GREASE               |
+|                 5 | EYES DRIVING                |
+|                 5 | HUNTING MUSKETEERS          |
+|                 5 | IGBY MAKER                  |
+|                 3 | MUSIC BOONDOCK              |
+|                 8 | NEWSIES STORY               |
+|                 6 | PARK CITIZEN                |
+|                 4 | REEF SALUTE                 |
+|                 6 | SENSIBILITY REAR            |
+|                 4 | SILENCE KANE                |
+|                 7 | SLIPPER FIDELITY            |
+|                11 | SPICE SORORITY              |
+|                 9 | STRANGER STRANGERS          |
+|                 5 | WOMEN DORADO                |
+|                 7 | DRIVING POLISH              |
+|                 7 | DRUMS DYNAMITE              |
+|                 4 | ENEMY ODDS                  |
+|                 8 | EXCITEMENT EVE              |
+|                 7 | GORGEOUS BINGO              |
+|                 8 | HOBBIT ALIEN                |
+|                 3 | IMPACT ALADDIN              |
+|                 4 | KENTUCKIAN GIANT            |
+|                 6 | LOVELY JINGLE               |
+|                 7 | LOVER TRUMAN                |
+|                 7 | MUSSOLINI SPOILERS          |
+|                10 | POLISH BROOKLYN             |
+|                 4 | SALUTE APOLLO               |
+|                 9 | SATURDAY LAMBS              |
+|                 7 | STOCK GLASS                 |
+|                 5 | TIGHTS DAWN                 |
+|                 7 | TRAP GUYS                   |
+|                 6 | TYCOON GATHERING            |
+|                 3 | VOICE PEACH                 |
+|                 6 | WESTWARD SEABISCUIT         |
+|                 8 | COMMAND DARLING             |
+|                 6 | CRAFT OUTFIELD              |
+|                 5 | CRYSTAL BREAKING            |
+|                 3 | DEER VIRGINIAN              |
+|                 8 | GENTLEMEN STAGE             |
+|                 4 | JEDI BENEATH                |
+|                 5 | OCTOBER SUBMARINE           |
+|                 6 | PARIS WEEKEND               |
+|                 8 | SCORPION APOLLO             |
+|                 2 | TERMINATOR CLUB             |
+|                 6 | TEXAS WATCH                 |
+|                 5 | ALLEY EVOLUTION             |
+|                 2 | BOUND CHEAPER               |
+|                 5 | BOWFINGER GABLES            |
+|                 8 | BUNCH MINDS                 |
+|                10 | DARES PLUTO                 |
+|                 4 | DATE SPEED                  |
+|                 5 | DAY UNFAITHFUL              |
+|                 4 | FURY MURDER                 |
+|                 3 | HARDLY ROBBERS              |
+|                 5 | HIGHBALL POTTER             |
+|                11 | HOLES BRANNIGAN             |
+|                 7 | LEATHERNECKS DWARFS         |
+|                10 | LUCKY FLYING                |
+|                 6 | MONTEREY LABYRINTH          |
+|                 6 | NOVOCAINE FLIGHT            |
+|                 6 | PERFECT GROOVE              |
+|                 4 | REAP UNFAITHFUL             |
+|                 5 | SWEDEN SHINING              |
+|                 4 | APACHE DIVINE               |
+|                 9 | BONNIE HOLOCAUST            |
+|                 7 | CHAMBER ITALIAN             |
+|                 2 | CHICKEN HELLFIGHTERS        |
+|                 6 | CONQUERER NUTS              |
+|                 7 | DOGMA FAMILY                |
+|                 9 | DUMBO LUST                  |
+|                 6 | FACTORY DRAGON              |
+|                 3 | FREDDY STORM                |
+|                 5 | GRAPES FURY                 |
+|                 6 | HOLLYWOOD ANONYMOUS         |
+|                 5 | KANE EXORCIST               |
+|                 3 | LOUISIANA HARRY             |
+|                 9 | PATTON INTERVIEW            |
+|                 3 | SHANE DARKNESS              |
+|                 8 | SHANGHAI TYCOON             |
+|                 4 | SLEEPLESS MONSOON           |
+|                 8 | SPY MILE                    |
+|                 7 | UPTOWN YOUNG                |
+|                 5 | WHALE BIKINI                |
+|                 2 | WONKA SEA                   |
+|                 5 | ALI FOREVER                 |
+|                 3 | CONGENIALITY QUEST          |
+|                 5 | CONTACT ANONYMOUS           |
+|                 5 | FREEDOM CLEOPATRA           |
+|                 6 | ICE CROSSING                |
+|                 6 | JEEPERS WEDDING             |
+|                 6 | LANGUAGE COWBOY             |
+|                 2 | LAWRENCE LOVE               |
+|                 8 | MURDER ANTITRUST            |
+|                 7 | SLEUTH ORIENT               |
+|                 8 | STORM HAPPINESS             |
+|                 5 | SUGAR WONKA                 |
+|                 5 | VIDEOTAPE ARSENIC           |
+|                 9 | ATLANTIS CAUSE              |
+|                 4 | BLOOD ARGONAUTS             |
+|                 4 | COMMANDMENTS EXPRESS        |
+|                 5 | DYNAMITE TARZAN             |
+|                 3 | EDGE KISSING                |
+|                 5 | FINDING ANACONDA            |
+|                 6 | GREATEST NORTH              |
+|                 6 | JUNGLE CLOSER               |
+|                 7 | LIBERTY MAGNIFICENT         |
+|                 3 | LOST BIRD                   |
+|                 7 | MARS ROMAN                  |
+|                 8 | NORTHWEST POLISH            |
+|                 6 | SONS INTERVIEW              |
+|                 4 | TOWERS HURRICANE            |
+|                 5 | AMERICAN CIRCUS             |
+|                 8 | CITIZEN SHREK               |
+|                 6 | DALMATIONS SWEDEN           |
+|                 7 | DESTINY SATURDAY            |
+|                 3 | HATE HANDICAP               |
+|                 5 | MISSION ZOOLANDER           |
+|                 7 | PRIMARY GLASS               |
+|                 8 | ALADDIN CALENDAR            |
+|                 7 | ALASKA PHANTOM              |
+|                 6 | AMADEUS HOLY                |
+|                 6 | CANYON STOCK                |
+|                13 | CHITTY LOCK                 |
+|                 5 | FIREBALL PHILADELPHIA       |
+|                 7 | INTRIGUE WORST              |
+|                 9 | JERSEY SASSY                |
+|                12 | LONELY ELEPHANT             |
+|                 8 | MODEL FISH                  |
+|                 4 | PATIENT SISTER              |
+|                10 | PREJUDICE OLEANDER          |
+|                 7 | STALLION SUNDANCE           |
+|                 4 | TOWN ARK                    |
+|                 6 | UNITED PILOT                |
+|                 5 | WATCH TRACY                 |
+|                 5 | WORKING MICROCOSMOS         |
+|                 5 | AIRPLANE SIERRA             |
+|                 2 | CHARIOTS CONSPIRACY         |
+|                 2 | DYING MAKER                 |
+|                 9 | ENOUGH RAGING               |
+|                 4 | GLASS DYING                 |
+|                 7 | HOMEWARD CIDER              |
+|                 6 | IDAHO LOVE                  |
+|                 4 | LAWLESS VISION              |
+|                 6 | LIAISONS SWEET              |
+|                 7 | MALKOVICH PET               |
+|                 8 | METAL ARMAGEDDON            |
+|                 6 | MIXED DOORS                 |
+|                 5 | RIDGEMONT SUBMARINE         |
+|                 6 | SANTA PARIS                 |
+|                 3 | SOMETHING DUCK              |
+|                 8 | UNBREAKABLE KARATE          |
+|                 6 | WATERSHIP FRONTIER          |
+|                 6 | BILL OTHERS                 |
+|                 3 | BLINDNESS GUN               |
+|                 3 | CONVERSATION DOWNHILL       |
+|                10 | CROW GREASE                 |
+|                 9 | DARN FORRESTER              |
+|                 5 | ODDS BOOGIE                 |
+|                 7 | RAGE GAMES                  |
+|                 5 | REDS POCUS                  |
+|                 6 | SHAKESPEARE SADDLE          |
+|                 3 | BILKO ANONYMOUS             |
+|                 7 | DAISY MENAGERIE             |
+|                 5 | EVERYONE CRAFT              |
+|                 9 | FLAMINGOS CONNECTICUT       |
+|                 3 | HOLY TADPOLE                |
+|                10 | HOOSIERS BIRDCAGE           |
+|                 5 | INCH JET                    |
+|                 5 | JASON TRAP                  |
+|                 3 | MARRIED GO                  |
+|                 6 | MOD SECRETARY               |
+|                 4 | MOSQUITO ARMAGEDDON         |
+|                 5 | PITY BOUND                  |
+|                 6 | POLLOCK DELIVERANCE         |
+|                 4 | PRIDE ALAMO                 |
+|                 2 | ROBBERY BRIGHT              |
+|                 9 | SNATCHERS MONTEZUMA         |
+|                 5 | SPIRITED CASUALTIES         |
+|                 6 | AMELIE HELLFIGHTERS         |
+|                 6 | DANCING FEVER               |
+|                 6 | DOZEN LION                  |
+|                11 | FUGITIVE MAGUIRE            |
+|                 6 | GODFATHER DIARY             |
+|                 8 | MOTIONS DETAILS             |
+|                 7 | PET HAUNTING                |
+|                11 | PINOCCHIO SIMON             |
+|                 1 | SHOCK CABIN                 |
+|                 3 | TARZAN VIDEOTAPE            |
+|                 3 | TRANSLATION SUMMER          |
+|                 7 | WISDOM WORKER               |
+|                 7 | BEDAZZLED MARRIED           |
+|                 6 | CROOKED FROGMEN             |
+|                 3 | EXPECATIONS NATURAL         |
+|                 2 | FISH OPUS                   |
+|                 6 | FROGMEN BREAKING            |
+|                 7 | FROST HEAD                  |
+|                 8 | REAR TRADING                |
+|                 6 | SIDE ARK                    |
+|                 5 | DANCES NONE                 |
+|                 6 | ENCINO ELF                  |
+|                 5 | ENDING CROWDS               |
+|                 7 | HANDICAP BOONDOCK           |
+|                 5 | HONEY TIES                  |
+|                 8 | HORN WORKING                |
+|                 6 | MEET CHOCOLATE              |
+|                 7 | MOONWALKER FOOL             |
+|                10 | OLEANDER CLUE               |
+|                 5 | STRANGERS GRAFFITI          |
+|                 2 | THIN SAGEBRUSH              |
+|                10 | ACADEMY DINOSAUR            |
+|                 8 | FLYING HOOK                 |
+|                 5 | HAMLET WISDOM               |
+|                 7 | HANGING DEEP                |
+|                11 | INSTINCT AIRPORT            |
+|                 6 | INTOLERABLE INTENTIONS      |
+|                 7 | LIES TREATMENT              |
+|                 3 | REIGN GENTLEMEN             |
+|                10 | ROOTS REMEMBER              |
+|                 5 | ROXANNE REBEL               |
+|                 7 | SUPERFLY TRIP               |
+|                 5 | VAMPIRE WHALE               |
+|                 5 | AFRICAN EGG                 |
+|                 7 | ARMY FLINTSTONES            |
+|                 6 | BIRCH ANTITRUST             |
+|                 5 | BLACKOUT PRIVATE            |
+|                 4 | BLUES INSTINCT              |
+|                 2 | CIRCUS YOUTH                |
+|                 4 | CROWDS TELEMARK             |
+|                 5 | GUN BONNIE                  |
+|                 6 | HARRY IDAHO                 |
+|                 4 | LADYBUGS ARMAGEDDON         |
+|                 8 | LIFE TWISTED                |
+|                 7 | LUST LOCK                   |
+|                 4 | MADRE GABLES                |
+|                 6 | MINDS TRUMAN                |
+|                 5 | MOONSHINE CABIN             |
+|                 5 | MUSCLE BRIGHT               |
+|                 3 | SNOWMAN ROLLERCOASTER       |
+|                 5 | SQUAD FISH                  |
+|                12 | TITANIC BOONDOCK            |
+|                 4 | TRIP NEWTON                 |
+|                 7 | UNCUT SUICIDES              |
+|                 2 | CRUELTY UNFORGIVEN          |
+|                13 | DRACULA CRYSTAL             |
+|                 9 | FANTASY TROOPERS            |
+|                 3 | FORWARD TEMPLE              |
+|                 4 | HOPE TOOTSIE                |
+|                 5 | JEOPARDY ENCINO             |
+|                 8 | LICENSE WEEKEND             |
+|                 8 | RUNNER MADIGAN              |
+|                 3 | SLING LUKE                  |
+|                 4 | STRICTLY SCARFACE           |
+|                 5 | TEEN APOLLO                 |
+|                 4 | TRAINSPOTTING STRANGERS     |
+|                 7 | CADDYSHACK JEDI             |
+|                 5 | COWBOY DOOM                 |
+|                 5 | FORREST SONS                |
+|                 7 | FRENCH HOLIDAY              |
+|                 7 | HALLOWEEN NUTS              |
+|                 5 | PLATOON INSTINCT            |
+|                 5 | YOUNG LANGUAGE              |
+|                 7 | BORROWERS BEDAZZLED         |
+|                 5 | CIDER DESIRE                |
+|                 8 | CLUELESS BUCKET             |
+|                 6 | DOCTOR GRAIL                |
+|                 4 | DREAM PICKUP                |
+|                 7 | HAROLD FRENCH               |
+|                10 | INDIAN LOVE                 |
+|                 4 | INSECTS STONE               |
+|                 6 | MICROCOSMOS PARADISE        |
+|                 4 | ROUGE SQUAD                 |
+|                10 | SAINTS BRIDE                |
+|                 3 | VIRTUAL SPOILERS            |
+|                 4 | FIDELITY DEVIL              |
+|                 4 | GUNFIGHT MOON               |
+|                 4 | GUNFIGHTER MUSSOLINI        |
+|                 5 | GUYS FALCON                 |
+|                 4 | RANGE MOONWALKER            |
+|                 5 | VOLCANO TEXAS               |
+|                 5 | WON DARES                   |
+|                 4 | BLANKET BEVERLY             |
+|                 5 | BROTHERHOOD BLANKET         |
+|                 4 | DECEIVER BETRAYED           |
+|                 3 | DELIVERANCE MULHOLLAND      |
+|                 6 | EAGLES PANKY                |
+|                 5 | EARRING INSTINCT            |
+|                 3 | EASY GLADIATOR              |
+|                 9 | EMPIRE MALKOVICH            |
+|                 4 | ENTRAPMENT SATISFACTION     |
+|                 8 | GABLES METROPOLIS           |
+|                 4 | HUMAN GRAFFITI              |
+|                 3 | IMPOSSIBLE PREJUDICE        |
+|                 8 | KRAMER CHOCOLATE            |
+|                 1 | MIRACLE VIRTUAL             |
+|                 6 | THEORY MERMAID              |
+|                 2 | BRANNIGAN SUNRISE           |
+|                 5 | CHOCOLAT HARRY              |
+|                 3 | CYCLONE FAMILY              |
+|                 3 | DESTINATION JERK            |
+|                 2 | FOOL MOCKINGBIRD            |
+|                 6 | FRONTIER CABIN              |
+|                 5 | HALL CASSIDY                |
+|                 5 | MADISON TRAP                |
+|                 6 | OSCAR GOLD                  |
+|                11 | RINGS HEARTBREAKERS         |
+|                 7 | SIEGE MADRE                 |
+|                 4 | SORORITY QUEEN              |
+|                 4 | TRAIN BUNCH                 |
+|                 8 | BAREFOOT MANCHURIAN         |
+|                 7 | COLOR PHILADELPHIA          |
+|                 5 | DADDY PITTSBURGH            |
+|                 4 | DIARY PANIC                 |
+|                 4 | DOWNHILL ENOUGH             |
+|                 7 | GOLDMINE TYCOON             |
+|                 7 | ILLUSION AMELIE             |
+|                 3 | ISLAND EXORCIST             |
+|                 4 | OPUS ICE                    |
+|                 4 | PEARL DESTINY               |
+|                 5 | PIZZA JUMANJI               |
+|                 6 | SPEED SUIT                  |
+|                 7 | SPOILERS HELLFIGHTERS       |
+|                 5 | TREATMENT JEKYLL            |
+|                 6 | WASTELAND DIVINE            |
+|                 8 | DRAGON SQUAD                |
+|                 4 | ENCOUNTERS CURTAIN          |
+|                 7 | HAWK CHILL                  |
+|                 8 | IRON MOON                   |
+|                 1 | MOON BUNCH                  |
+|                 9 | RIDER CADDYSHACK            |
+|                 8 | SMILE EARRING               |
+|                 5 | UPRISING UPTOWN             |
+|                 4 | WINDOW SIDE                 |
+|                 9 | WIZARD COLDBLOODED          |
+|                 3 | BEAR GRACELAND              |
+|                 2 | BIKINI BORROWERS            |
+|                 4 | CLERKS ANGELS               |
+|                 4 | CORE SUIT                   |
+|                 2 | DUCK RACER                  |
+|                 4 | FEUD FROGMEN                |
+|                 4 | LEGEND JEDI                 |
+|                 4 | PARADISE SABRINA            |
+|                 3 | ROCKY WAR                   |
+|                 5 | UNTOUCHABLES SUNRISE        |
+|                 4 | WONDERFUL DROP              |
+|                 5 | ZOOLANDER FICTION           |
+|                 6 | ALIEN CENTER                |
+|                 4 | CANDIDATE PERDITION         |
+|                 5 | CLONES PINOCCHIO            |
+|                 5 | FREAKY POCUS                |
+|                 6 | GRACELAND DYNAMITE          |
+|                 3 | GREASE YOUTH                |
+|                 6 | LORD ARIZONA                |
+|                11 | OZ LIAISONS                 |
+|                 6 | RUN PACIFIC                 |
+|                 5 | WAKE JAWS                   |
+|                 9 | WRONG BEHAVIOR              |
+|                 2 | CAMELOT VACATION            |
+|                 4 | CHAMPION FLATLINERS         |
+|                 2 | CROSSING DIVORCE            |
+|                 6 | KNOCK WARLOCK               |
+|                 6 | MULHOLLAND BEAST            |
+|                 5 | QUEST MUSSOLINI             |
+|                 5 | SCALAWAG DUCK               |
+|                 4 | TIMBERLAND SKY              |
+|                 3 | TWISTED PIRATES             |
+|                 4 | BEVERLY OUTLAW              |
+|                 5 | CASPER DRAGONFLY            |
+|                 7 | NEIGHBORS CHARADE           |
+|                 5 | POCUS PULP                  |
+|                 4 | WITCHES PANIC               |
+|                 5 | AFFAIR PREJUDICE            |
+|                 7 | DEEP CRUSADE                |
+|                 6 | EARLY HOME                  |
+|                 5 | FARGO GANDHI                |
+|                 2 | FRANKENSTEIN STRANGER       |
+|                 7 | HANOVER GALAXY              |
+|                 5 | INTERVIEW LIAISONS          |
+|                 4 | MYSTIC TRUMAN               |
+|                 4 | ORIENT CLOSER               |
+|                 5 | ANACONDA CONFESSIONS        |
+|                 5 | BLADE POLISH                |
+|                 1 | GHOSTBUSTERS ELF            |
+|                 6 | JUMANJI BLADE               |
+|                 6 | POSEIDON FOREVER            |
+|                 5 | SILVERADO GOLDFINGER        |
+|                10 | SPLASH GUMP                 |
+|                 7 | TREASURE COMMAND            |
+|                 3 | CREATURES SHAKESPEARE       |
+|                 5 | EGYPT TENENBAUMS            |
+|                 8 | JUMPING WRATH               |
+|                 5 | PANTHER REDS                |
+|                 7 | PULP BEVERLY                |
+|                 4 | SEARCHERS WAIT              |
+|                 5 | STAR OPERATION              |
+|                 4 | VALLEY PACKER               |
+|                 5 | VANISHING ROCKY             |
+|                 4 | AIRPORT POLLOCK             |
+|                 9 | ANONYMOUS HUMAN             |
+|                 5 | CASUALTIES ENCINO           |
+|                 8 | GOODFELLAS SALUTE           |
+|                 5 | LOATHING LEGALLY            |
+|                 3 | SISTER FREDDY               |
+|                 5 | WASH HEAVENLY               |
+|                 2 | BRINGING HYSTERICAL         |
+|                10 | COAST RAINBOW               |
+|                 2 | DARLING BREAKING            |
+|                 4 | EXPENDABLE STALLION         |
+|                 4 | GANGS PRIDE                 |
+|                 6 | MERMAID INSECTS             |
+|                 5 | MOTHER OLEANDER             |
+|                 4 | OTHERS SOUP                 |
+|                 7 | SAGEBRUSH CLUELESS          |
+|                 3 | SHREK LICENSE               |
+|                 3 | UNDEFEATED DALMATIONS       |
+|                 5 | MODERN DORADO               |
+|                 8 | GLEAMING JAWBREAKER         |
+|                 6 | GUMP DATE                   |
+|                 5 | KILL BROTHERHOOD            |
+|                 2 | PARTY KNOCK                 |
+|                 3 | POND SEATTLE                |
+|                 6 | QUEEN LUKE                  |
+|                 7 | CASSIDY WYOMING             |
+|                 5 | CLOCKWORK PARADISE          |
+|                 4 | DAUGHTER MADIGAN            |
+|                 9 | HYSTERICAL GRAIL            |
+|                 5 | NORTH TEQUILA               |
+|                 3 | CHRISTMAS MOONSHINE         |
+|                 5 | GONE TROUBLE                |
+|                 2 | HOLLOW JEOPARDY             |
+|                 6 | REBEL AIRPORT               |
+|                 5 | BROOKLYN DESERT             |
+|                 6 | CLOSER BANG                 |
+|                 6 | FATAL HAUNTED               |
+|                 5 | PICKUP DRIVING              |
+|                 4 | REMEMBER DIARY              |
+|                 2 | VIETNAM SMOOCHY             |
+|                 8 | CALENDAR GUNFIGHT           |
+|                 4 | COLDBLOODED DARLING         |
+|                 2 | DARKNESS WAR                |
+|                 4 | HOOK CHARIOTS               |
+|                 6 | HYDE DOCTOR                 |
+|                 9 | MIDNIGHT WESTWARD           |
+|                 4 | GOLDFINGER SENSIBILITY      |
+|                 2 | MINE TITANS                 |
+|                 3 | SUPER WYOMING               |
+|                 3 | ZORRO ARK                   |
+|                 7 | CANDLES GRAPES              |
+|                 3 | CONTROL ANTHEM              |
+|                 5 | HAUNTING PIANIST            |
+|                10 | HEAVEN FREEDOM              |
+|                 2 | JOON NORTHWEST              |
+|                10 | SPLENDOR PATTON             |
+|                 5 | ADAPTATION HOLES            |
+|                 8 | BULL SHAWSHANK              |
+|                 7 | CHOCOLATE DUCK              |
+|                 3 | MILE MULAN                  |
+|                 3 | SUICIDES SILENCE            |
+|                12 | HELLFIGHTERS SIERRA         |
+|                 3 | MASSACRE USUAL              |
+|                 6 | TAXI KICK                   |
+|                 4 | WRATH MILE                  |
+|                 4 | ACE GOLDFINGER              |
+|                 8 | SCHOOL JACKET               |
+|                 3 | TEQUILA PAST                |
+|                 5 | VOLUME HOUSE                |
+|                 4 | BIRDS PERDITION             |
+|                 2 | CONFIDENTIAL INTERVIEW      |
+|                 5 | RUSH GOODFELLAS             |
+|                 5 | SUN CONFESSIONS             |
+|                 5 | HAUNTED ANTITRUST           |
+|                 4 | MAGUIRE APACHE              |
+|                 4 | GREEK EVERYONE              |
+|                 2 | MENAGERIE RUSHMORE          |
+|                 5 | TALENTED HOMICIDE           |
+|                 2 | VALENTINE VANISHING         |
+|                 7 | WANDA CHAMBER               |
+|                 4 | ALICE FANTASIA              |
+|                 5 | HEAVYWEIGHTS BEAST          |
+|                 6 | MAUDE MOD                   |
+|                 3 | SEABISCUIT PUNK             |
+|                 4 | ATTACKS HATE                |
+|                 3 | BUTCH PANTHER               |
+|                 2 | GOLD RIVER                  |
+|                 2 | HUNCHBACK IMPOSSIBLE        |
+|                 7 | KISS GLORY                  |
+|                 6 | MOB DUFFEL                  |
+|                 2 | PHANTOM GLORY               |
+|                 5 | SATISFACTION CONFIDENTIAL   |
+|                 5 | TEMPLE ATTRACTION           |
+|                 2 | VANILLA DAY                 |
+|                 6 | DAZED PUNK                  |
+|                 9 | PERSONAL LADYBUGS           |
+|                 3 | RAGING AIRPLANE             |
+|                 3 | SADDLE ANTITRUST            |
+|                 8 | BOILED DARES                |
+|                 4 | CHISUM BEHAVIOR             |
+|                 5 | DIVINE RESURRECTION         |
+|                 6 | VACATION BOONDOCK           |
+|                 6 | WATERFRONT DELIVERANCE      |
+|                 3 | GRIT CLOCKWORK              |
+|                 3 | INFORMER DOUBLE             |
+|                 5 | RESURRECTION SILVERADO      |
+|                 5 | RULES HUMAN                 |
+|                 2 | SHOW LORD                   |
+|                 5 | GRAIL FRANKENSTEIN          |
+|                 5 | VISION TORQUE               |
+|                 5 | COMFORTS RUSH               |
+|                 3 | GOSFORD DONNIE              |
+|                 5 | ROSES TREASURE              |
+|                 8 | CROSSROADS CASUALTIES       |
+|                 5 | EGG IGBY                    |
+|                 4 | ELEMENT FREDDY              |
+|                 3 | FIGHT JAWBREAKER            |
+|                 1 | HUNGER ROOF                 |
+|                 9 | JUGGLER HARDLY              |
+|                 7 | STATE WASTELAND             |
+|                 8 | EXPRESS LONELY              |
+|                 5 | JAWS HARRY                  |
+|                 3 | CURTAIN VIDEOTAPE           |
+|                 3 | DUFFEL APOCALYPSE           |
+|                 2 | GRADUATE LORD               |
+|                 3 | ANNIE IDENTITY              |
+|                 6 | GLADIATOR WESTWARD          |
+|                 2 | CHEAPER CLYDE               |
+|                 4 | VERTIGO NORTHWEST           |
+|                 9 | CRUSADE HONEY               |
+|                 3 | FORRESTER COMANCHEROS       |
+|                 3 | GO PURPLE                   |
+|                 3 | MOCKINGBIRD HOLLYWOOD       |
+|                 2 | PHILADELPHIA WIFE           |
+|                 3 | STREAK RIDGEMONT            |
+|                 3 | TRACY CIDER                 |
+|                 5 | BEHAVIOR RUNAWAY            |
+|                 4 | CENTER DINOSAUR             |
+|                 6 | EVOLUTION ALTER             |
+|                 4 | WARS PLUTO                  |
+|                 2 | LIGHTS DEER                 |
+|                 1 | PACKER MADIGAN              |
+|                 5 | PEACH INNOCENT              |
+|                 6 | CAUSE DATE                  |
+|                 5 | HOLOCAUST HIGHBALL          |
+|                 5 | MONSOON CAUSE               |
+|                 6 | SECRETS PARADISE            |
+|                 6 | ZHIVAGO CORE                |
+|                 7 | FELLOWSHIP AUTUMN           |
+|                 9 | INSIDER ARIZONA             |
+|                 4 | STEERS ARMAGEDDON           |
+|                 3 | STRAIGHT HOURS              |
+|                 6 | GILMORE BOILED              |
+|                 5 | FIREHOUSE VIETNAM           |
+|                 1 | MUSKETEERS WAIT             |
+|                 3 | TOURIST PELICAN             |
+|                 5 | CHILL LUCK                  |
+|                 5 | VOYAGE LEGALLY              |
+|                 3 | COMA HEAD                   |
+|                 3 | KISSING DOLLS               |
+|                 6 | TOMORROW HUSTLER            |
+|                 7 | BEACH HEARTBREAKERS         |
+|                 6 | BREAKING HOME               |
+|                 5 | PAJAMA JAWBREAKER           |
+|                 2 | ROOM ROMAN                  |
+|                 4 | SHRUNK DIVINE               |
+|                 5 | OUTBREAK DIVINE             |
+|                 3 | SECRET GROUNDHOG            |
+|                 3 | TURN STAR                   |
+|                 7 | AGENT TRUMAN                |
+|                 5 | HORROR REIGN                |
+|                 5 | TORQUE BOUND                |
+|                 2 | LOCK REAR                   |
+|                 3 | PANIC CLUB                  |
+|                 4 | ESCAPE METROPOLIS           |
+|                 5 | KWAI HOMEWARD               |
+|                 5 | MAJESTIC FLOATS             |
+|                 3 | NETWORK PEAK                |
+|                 2 | CHAINSAW UPTOWN             |
+|                 2 | NIGHTMARE CHILL             |
+|                 5 | CHASING FIGHT               |
+|                 4 | CONSPIRACY SPIRIT           |
+|                 3 | AUTUMN CROW                 |
+|                 1 | BRIDE INTRIGUE              |
+|                 8 | GAMES BOWFINGER             |
+|                 1 | MALTESE HOPE                |
+|                 6 | LEGALLY SECRETARY           |
+|                 4 | OUTFIELD MASSACRE           |
+|                 3 | NAME DETECTIVE              |
+|                 3 | RUNAWAY TENENBAUMS          |
+|                 3 | CAMPUS REMEMBER             |
+|                 7 | FLASH WARS                  |
+|                 2 | MANCHURIAN CURTAIN          |
+|                 3 | LEBOWSKI SOLDIERS           |
+|                 3 | TUXEDO MILE                 |
+|                 2 | ANTHEM LUKE                 |
+|                 2 | PURE RUNNER                 |
+|                 4 | SLEEPING SUSPECTS           |
+|                 1 | STONE FIRE                  |
+|                 3 | TRADING PINOCCHIO           |
+|                 1 | DWARFS ALTER                |
+|                 3 | STEEL SANTA                 |
+|                 3 | HOCUS FRIDA                 |
+|                 4 | ALTER VICTORY               |
+|                 3 | SLUMS DUCK                  |
+|                 2 | WILLOW TRACY                |
+|                 2 | BIRD INDEPENDENCE           |
+|                 5 | NEMO CAMPUS                 |
+|                 3 | ELIZABETH SHANE             |
+|                 4 | CELEBRITY HORN              |
+|                 5 | ENGLISH BULWORTH            |
+|                 1 | GIANT TROOPERS              |
+|                 4 | TRAFFIC HOBBIT              |
+|                 4 | LOVE SUICIDES               |
+|                 4 | DARKO DORADO                |
+|                 4 | FALCON VOLUME               |
+|                 1 | BAKED CLEOPATRA             |
+|                 2 | DETAILS PACKER              |
+|                 2 | SOUTH WAIT                  |
+|                 1 | DOLLS RAGE                  |
+|                 2 | VILLAIN DESPERATE           |
+|                 6 | DIVORCE SHINING             |
+|                 5 | SWEETHEARTS SUSPECTS        |
+|                 3 | ANYTHING SAVANNAH           |
+|                 3 | HANKY OCTOBER               |
+|                 4 | RIVER OUTLAW                |
+|                 3 | SASSY PACKER                |
+|                 4 | WILD APOLLO                 |
+|                 5 | FLOATS GARDEN               |
+|                 2 | ROMAN PUNK                  |
+|                 5 | FRIDA SLIPPER               |
+|                 3 | GARDEN ISLAND               |
+|                 3 | EARTH VISION                |
+|                 2 | MONTEZUMA COMMAND           |
+|                 4 | GILBERT PELICAN             |
+|                 4 | ATTRACTION NEWTON           |
+|                 1 | PSYCHO SHRUNK               |
+|                 3 | LION UNCUT                  |
+|                 1 | FOREVER CANDIDATE           |
+|                 3 | JEKYLL FROGMEN              |
+|                 2 | MIDSUMMER GROUNDHOG         |
+|                 2 | SMOOCHY CONTROL             |
+|                 1 | FERRIS MOTHER               |
+|                 3 | VARSITY TRIP                |
+|                 2 | NOTTING SPEAKEASY           |
+|                 3 | DETECTIVE VISION            |
+|                 2 | STAGE WORLD                 |
+|                 1 | YENTL IDAHO                 |
+|                 1 | PIRATES ROXANNE             |
+|                 1 | LOLITA WORLD                |
++-------------------+-----------------------------+
+997 rows in set (0.03 sec)
+
+mysql> use quitanda;
+Database changed
+mysql> select * frutas;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'frutas' at line 1
+mysql> select * from frutas;
+Empty set (0.00 sec)
+
+mysql> select * from frutas;
+Empty set (0.00 sec)
+
+mysql> select * from frutas;
+Empty set (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_quitanda |
++--------------------+
+| categorias         |
+| frutas             |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from categorias;
+Empty set (0.00 sec)
+
+mysql> desc categoria;
+ERROR 1146 (42S02): Table 'quitanda.categoria' doesn't exist
+mysql> desc categorias;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| id    | int  | NO   |     | NULL    |       |
+| nome  | int  | NO   |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Frutas');
+ERROR 1366 (HY000): Incorrect integer value: 'Frutas' for column 'nome' at row 1
+mysql> alter table categorias
+    -> modify column nome varchar(255) not null;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into categorias (nome) values ('Frutas');
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql> alter table categorias;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> alter table categorias
+    -> primary key (id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key (id)' at line 2
+mysql> alter table categorias
+    -> drop column id;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table categorias
+    -> add id int auto_increment,
+    -> primary key (id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key (id)' at line 3
+mysql> alter table categorias
+    -> add column id int auto_increment,
+    -> primary key (id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key (id)' at line 3
+mysql> alter table categorias
+    -> add column id int auto_increment,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> alter table categorias
+    -> add column id int auto_increment;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> drop categorias;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'categorias' at line 1
+mysql> show tables;
++--------------------+
+| Tables_in_quitanda |
++--------------------+
+| categorias         |
+| frutas             |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> drop table categorias;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table categorias (
+    -> id int auto_increment,
+    -> nome varchar(255) not null,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into categorias (nome) values ('Frutas', 'Legumes');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into categorias (nome) values ('Frutas');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into categorias (nome) values ('Legumes');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Verduras');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Grãos');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into categorias (nome) values ('Outros');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from categorias;
++----+----------+
+| id | nome     |
++----+----------+
+|  1 | Frutas   |
+|  2 | Legumes  |
+|  3 | Verduras |
+|  4 | Grãos    |
+|  5 | Outros   |
++----+----------+
+5 rows in set (0.00 sec)
+
+mysql> desc frutas;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| id           | int         | NO   | PRI | NULL    | auto_increment |
+| nome         | varchar(50) | NO   |     | NULL    |                |
+| quantidade   | int         | NO   |     | NULL    |                |
+| cor          | varchar(50) | NO   |     | NULL    |                |
+| categoria_id | int         | NO   |     | NULL    |                |
+| estado       | varchar(50) | NO   |     | NULL    |                |
+| data         | date        | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from frutas;
+Empty set (0.00 sec)
+
+mysql> alter table frutas
+    -> modify column cor varchar(255);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc frutas;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int          | NO   | PRI | NULL    | auto_increment |
+| nome         | varchar(50)  | NO   |     | NULL    |                |
+| quantidade   | int          | NO   |     | NULL    |                |
+| cor          | varchar(255) | YES  |     | NULL    |                |
+| categoria_id | int          | NO   |     | NULL    |                |
+| estado       | varchar(50)  | NO   |     | NULL    |                |
+| data         | date         | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from frutas;
++----+---------+------------+------+--------------+--------+------------+
+| id | nome    | quantidade | cor  | categoria_id | estado | data       |
++----+---------+------------+------+--------------+--------+------------+
+|  1 | Laranja |          1 | NULL |            1 | bom    | 1999-05-11 |
++----+---------+------------+------+--------------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from frutas;
++----+----------+------------+------+--------------+--------+------------+
+| id | nome     | quantidade | cor  | categoria_id | estado | data       |
++----+----------+------------+------+--------------+--------+------------+
+|  1 | Laranja  |          1 | NULL |            1 | bom    | 1999-05-11 |
+|  2 | Melancia |          2 | NULL |            1 | Bom    | 2000-05-11 |
++----+----------+------------+------+--------------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql>

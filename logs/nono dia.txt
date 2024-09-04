@@ -1,0 +1,140 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sakila;
+Database changed
+mysql> select count(*) from filme group by classificacao;
++----------+
+| count(*) |
++----------+
+|      194 |
+|      178 |
+|      210 |
+|      223 |
+|      195 |
++----------+
+5 rows in set (0.03 sec)
+
+mysql> select count(*), classificacao from filme group by classificacao;
++----------+---------------+
+| count(*) | classificacao |
++----------+---------------+
+|      194 | PG            |
+|      178 | G             |
+|      210 | NC-17         |
+|      223 | PG-13         |
+|      195 | R             |
++----------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select count(filme_id), classificacao from filme group by classificacao;
++-----------------+---------------+
+| count(filme_id) | classificacao |
++-----------------+---------------+
+|             194 | PG            |
+|             178 | G             |
+|             210 | NC-17         |
+|             223 | PG-13         |
+|             195 | R             |
++-----------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct preco_da_locacao from filme;
++------------------+
+| preco_da_locacao |
++------------------+
+|             0.99 |
+|             4.99 |
+|             2.99 |
++------------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(*), preco_da_locacao from filme group by preco_da_locacao;
++----------+------------------+
+| count(*) | preco_da_locacao |
++----------+------------------+
+|      341 |             0.99 |
+|      336 |             4.99 |
+|      323 |             2.99 |
++----------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(*), preco_da_locacao from filme group by preco_da_locacao having count(*) > 340;
++----------+------------------+
+| count(*) | preco_da_locacao |
++----------+------------------+
+|      341 |             0.99 |
++----------+------------------+
+1 row in set (0.01 sec)
+
+mysql> desc filme;
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                 | Type                                                                | Null | Key | Default       | Extra                                         |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| filme_id              | smallint unsigned                                                   | NO   | PRI | NULL       | auto_increment                                |
+| titulo                | varchar(255)                                                        | NO   | MUL | NULL       |                                               |
+| descricao             | text                                                                | YES  |     | NULL       |                                               |
+| ano_de_lancamento     | year                                                                | YES  |     | NULL       |                                               |
+| idioma_id             | tinyint unsigned                                                    | NO   | MUL | NULL       |                                               |
+| idioma_original_id    | tinyint unsigned                                                    | YES  | MUL | NULL       |                                               |
+| duracao_da_locacao    | tinyint unsigned                                                    | NO   |     | 3
+       |                                               |
+| preco_da_locacao      | decimal(4,2)                                                        | NO   |     | 4.99       |                                               |
+| duracao_do_filme      | smallint unsigned                                                   | YES  |     | NULL       |                                               |
+| custo_de_substituicao | decimal(5,2)                                                        | NO   |     | 19.99       |                                               |
+| classificacao         | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G
+       |                                               |
+| recursos_especiais    | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL       |                                               |
+| ultima_atualizacao    | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.01 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_sakila |
++------------------+
+| aluguel          |
+| ator             |
+| categoria        |
+| cidade           |
+| cliente          |
+| endereco         |
+| filme            |
+| filme_ator       |
+| filme_categoria  |
+| filme_texto      |
+| funcionario      |
+| idioma           |
+| inventario       |
+| loja             |
+| pagamento        |
+| pais             |
++------------------+
+16 rows in set (0.02 sec)
+
+mysql> desc filme_autor;
+ERROR 1146 (42S02): Table 'sakila.filme_autor' doesn't exist
+mysql> desc filme_ator;
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field              | Type              | Null | Key | Default           | Extra
+  |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| ator_id            | smallint unsigned | NO   | PRI | NULL              |
+  |
+| filme_id           | smallint unsigned | NO   | PRI | NULL              |
+  |
+| ultima_atualizacao | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(a.ator), f.filme from ator a, filme f, filme_ator fa

@@ -1,0 +1,665 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 32
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| empresa            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| quitanda           |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.03 sec)
+
+mysql> create database biblioteca;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use biblioteca;
+Database changed
+mysql> create table livros (
+    -> id int (10) auto_increment,
+    -> isbn int (10) unique,
+    -> titulo varchar (100) not null,
+    -> ano_publicacao year,
+    -> autores_id int,
+    -> editoras_id int,\c
+mysql> create table livros (
+    -> id int (10) auto_increment,
+    -> isbn int (10) unique not null,
+    -> titulo varchar (100) not null,
+    -> ano_publicacao year,
+    -> autores_id int (10),
+    -> editoras_id int (10,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+)' at line 7
+mysql> create table livros (
+    -> id int (10) auto_increment,
+    -> isbn int (10) unique not null,
+    -> titulo varchar (100) not null,
+    -> ano_publicacao year,
+    -> autores_id int (10),
+    -> editoras_id int (10,
+    -> primary key (id)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+primary key (id)
+)' at line 7
+mysql> create table livros (
+    -> id int (10) auto_increment,
+    -> isbn int (10) unique not null,
+    -> titulo varchar (100) not null,
+    -> ano_publicacao year,
+    -> autores_id int (10),
+    -> editoras_id int (10),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 4 warnings (0.06 sec)
+
+mysql> create table editoras (
+    -> id int (10) auto_increment,
+    -> nome varchar(100) not null,
+    -> endereco varchar(100),
+    -> telefone int(11),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> create table autores (
+    -> id int(10) auto_increment,
+    -> nome varchar(100) not null,
+    -> data_nascimento date,
+    -> pais_origem varchar(100),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> create table emprestimos (
+    -> id int(10) auto_increment,
+    -> data_inicio datetime,
+    -> data_devolucao datetime,
+    -> leitores_id int(10),
+    -> livros_id int(10),
+    -> livros_autores_id int(10),
+    -> livros_editoras_id int(10),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 5 warnings (0.04 sec)
+
+mysql> create table leitores (
+    -> id int(10) auto_increment,
+    -> nome varchar(100),
+    -> endereco varchar(100),
+    -> email varchar(100),
+    -> telefone int(10),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> alter table leitores
+    -> modify column nome varchar(100) not null;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table livros
+    -> add constraint fk_livros_autores
+    -> foreign key (autores_id)
+    -> references autores(id)
+    -> ;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table livros
+    -> add constraint fk_livros_editoras
+    -> foreign key (editoras_id)
+    -> references editoras(id)
+    -> ;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table emprestimos
+    -> add constraint fk_emprestimos_leitores
+    -> foreign key (leitores_id)
+    -> references leitores(id)
+    -> ;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table emprestimos
+    -> add constraint fk_emprestimos_livros
+    -> foreign key (livros_id)
+    -> references livros(id)
+    -> ;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table emprestimos
+    -> add constraint fk_emprestimos_livros_autores
+    -> foreign key (livros_autores_id)
+    -> references livros(autores_id)
+    -> ;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table emprestimos
+    -> add constraint fk_emprestimos_livros_editoras
+    -> foreign key (livros_editoras_id)
+    -> references livros(editoras_id)
+    -> ;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables
+    -> ;
++----------------------+
+| Tables_in_biblioteca |
++----------------------+
+| autores              |
+| editoras             |
+| emprestimos          |
+| leitores             |
+| livros               |
++----------------------+
+5 rows in set (0.01 sec)
+
+mysql> desc autores;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int          | NO   | PRI | NULL    | auto_increment |
+| nome            | varchar(100) | NO   |     | NULL    |                |
+| data_nascimento | date         | YES  |     | NULL    |                |
+| pais_origem     | varchar(100) | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.02 sec)
+
+mysql> desc editores;
+ERROR 1146 (42S02): Table 'biblioteca.editores' doesn't exist
+mysql> desc editoras;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| nome     | varchar(100) | NO   |     | NULL    |                |
+| endereco | varchar(100) | YES  |     | NULL    |                |
+| telefone | int          | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc emprestimos;
++--------------------+----------+------+-----+---------+----------------+
+| Field              | Type     | Null | Key | Default | Extra          |
++--------------------+----------+------+-----+---------+----------------+
+| id                 | int      | NO   | PRI | NULL    | auto_increment |
+| data_inicio        | datetime | YES  |     | NULL    |                |
+| data_devolucao     | datetime | YES  |     | NULL    |                |
+| leitores_id        | int      | YES  | MUL | NULL    |                |
+| livros_id          | int      | YES  | MUL | NULL    |                |
+| livros_autores_id  | int      | YES  | MUL | NULL    |                |
+| livros_editoras_id | int      | YES  | MUL | NULL    |                |
++--------------------+----------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> desc leitores;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| nome     | varchar(100) | NO   |     | NULL    |                |
+| endereco | varchar(100) | YES  |     | NULL    |                |
+| email    | varchar(100) | YES  |     | NULL    |                |
+| telefone | int          | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc livros;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| isbn           | int          | NO   | UNI | NULL    |                |
+| titulo         | varchar(100) | NO   |     | NULL    |                |
+| ano_publicacao | year         | YES  |     | NULL    |                |
+| autores_id     | int          | YES  | MUL | NULL    |                |
+| editoras_id    | int          | YES  | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> create database ex24_sistema_projetos;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> rename database biblioteca to ex23_biblioteca;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database biblioteca to ex23_biblioteca' at line 1
+mysql> use ex24_sistema_projetos;
+Database changed
+mysql> create table projetos (
+    -> id int auto_increment,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> alter table projetos
+    -> add nome varchar(100) not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc projetos
+    -> ;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(100) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table projetos
+    -> add data_inicio date,
+    -> add data_termino date,
+    -> add departamentos_id int,
+    -> add clientes_id int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc projetos;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(100) | NO   |     | NULL    |                |
+| data_inicio      | date         | YES  |     | NULL    |                |
+| data_termino     | date         | YES  |     | NULL    |                |
+| departamentos_id | int          | YES  |     | NULL    |                |
+| clientes_id      | int          | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> create table departamentos (
+    -> id int auto_increment,
+    -> nome varchar(100) not null,
+    -> localizacao varchar(100),
+    -> funcionario_responsavel_id int,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table funcionarios (
+    -> id int auto_increment,
+    -> nome varchar(100) not null,
+    -> cargo varchar(100),
+    -> data_contratacao date,
+    -> departamentos_id int,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table funcionarios_projeto (
+    -> id int auto_increment,
+    -> projetos_id int not null,
+    -> funcionarios_id int not null,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table tarefas (
+    -> id int auto_increment,
+    -> descricao varchar(300),
+    -> data_inicio date,
+    -> data_conclusao date,
+    -> projetos_id int,
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table clientes (
+    -> id int auto_increment,
+    -> nome varchar(100),
+    -> endereco varchar(100),
+    -> email varchar(100),
+    -> telefone int(11),
+    -> primary key (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> show tables;
++---------------------------------+
+| Tables_in_ex24_sistema_projetos |
++---------------------------------+
+| clientes                        |
+| departamentos                   |
+| funcionarios                    |
+| funcionarios_projeto            |
+| projetos                        |
+| tarefas                         |
++---------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table projetos
+    -> add constraint fk_projetos_departamentos
+    -> foreign key (departamentos_id)
+    -> references departamentos(id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table projetos
+    -> add constraint fk_projetos_clientes
+    -> foreign key (clientes_id)
+    -> references clientes(id);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios_projeto
+    -> add constraint fk_projetos_id
+    -> foreign key (projetos_id)
+    -> references projetos(id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios_projeto
+    -> add constraint fk_funcionarios_projetos
+    -> foreign key (funcionarios_id)
+    -> references funcionarios(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table tarefas
+    -> add constraint fk_tarefas_projetos
+    -> foreign key (projetos_id)
+    -> references projetos(id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table departamento
+    -> add constraint fk_responsavel_departamento
+    -> foreign key (funcionario_responsavel_id)
+    -> references funcionarios(id);
+ERROR 1146 (42S02): Table 'ex24_sistema_projetos.departamento' doesn't exist
+mysql> alter table departamentos
+    -> add constraint fk_responsavel_departamento
+    -> foreign key (funcionario_responsavel_id)
+    -> references funcionarios(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++---------------------------------+
+| Tables_in_ex24_sistema_projetos |
++---------------------------------+
+| clientes                        |
+| departamentos                   |
+| funcionarios                    |
+| funcionarios_projeto            |
+| projetos                        |
+| tarefas                         |
++---------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> desc clientes;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| nome     | varchar(100) | YES  |     | NULL    |                |
+| endereco | varchar(100) | YES  |     | NULL    |                |
+| email    | varchar(100) | YES  |     | NULL    |                |
+| telefone | int          | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table clientes
+    -> modify column nome varchar(100) not null;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++---------------------------------+
+| Tables_in_ex24_sistema_projetos |
++---------------------------------+
+| clientes                        |
+| departamentos                   |
+| funcionarios                    |
+| funcionarios_projeto            |
+| projetos                        |
+| tarefas                         |
++---------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> desc clientes;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| nome     | varchar(100) | NO   |     | NULL    |                |
+| endereco | varchar(100) | YES  |     | NULL    |                |
+| email    | varchar(100) | YES  |     | NULL    |                |
+| telefone | int          | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc departamentos;
++----------------------------+--------------+------+-----+---------+----------------+
+| Field                      | Type         | Null | Key | Default | Extra          |
++----------------------------+--------------+------+-----+---------+----------------+
+| id                         | int          | NO   | PRI | NULL    | auto_increment |
+| nome                       | varchar(100) | NO   |     | NULL    |                |
+| localizacao                | varchar(100) | YES  |     | NULL    |                |
+| funcionario_responsavel_id | int          | YES  | MUL | NULL    |                |
++----------------------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc funcionarios;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(100) | NO   |     | NULL    |                |
+| cargo            | varchar(100) | YES  |     | NULL    |                |
+| data_contratacao | date         | YES  |     | NULL    |                |
+| departamentos_id | int          | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table funcionarios
+    -> add constraint fk_funcionarios_departamentos
+    -> foreign key (departamentos_id)
+    -> references funcionarios(id);\c
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc funcionarios;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(100) | NO   |     | NULL    |                |
+| cargo            | varchar(100) | YES  |     | NULL    |                |
+| data_contratacao | date         | YES  |     | NULL    |                |
+| departamentos_id | int          | YES  | MUL | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table funcionarios
+    -> foreign key (departamentos_id)
+    -> references departamentos(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (departamentos_id)
+references departamentos(id)' at line 2
+mysql> alter table funcionarios
+    -> modify foreign key (departamentos_id)
+    -> references departamentos(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (departamentos_id)
+references departamentos(id)' at line 2
+mysql> alter table funcionarios
+    -> drop constraint fk_funcionarios_departamentos;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios
+    -> drop column departamentos_id;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios
+    -> add departamentos_id int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios
+    -> add constraint fk_funcionarios_departamentos
+    -> foreign key (departamentos_id)
+    -> references departamentos(id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc funcionarios;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(100) | NO   |     | NULL    |                |
+| cargo            | varchar(100) | YES  |     | NULL    |                |
+| data_contratacao | date         | YES  |     | NULL    |                |
+| departamentos_id | int          | YES  | MUL | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc funcionarios_projeto
+    -> ;
++-----------------+------+------+-----+---------+----------------+
+| Field           | Type | Null | Key | Default | Extra          |
++-----------------+------+------+-----+---------+----------------+
+| id              | int  | NO   | PRI | NULL    | auto_increment |
+| projetos_id     | int  | NO   | MUL | NULL    |                |
+| funcionarios_id | int  | NO   | MUL | NULL    |                |
++-----------------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc projetos;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(100) | NO   |     | NULL    |                |
+| data_inicio      | date         | YES  |     | NULL    |                |
+| data_termino     | date         | YES  |     | NULL    |                |
+| departamentos_id | int          | YES  | MUL | NULL    |                |
+| clientes_id      | int          | YES  | MUL | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc tarefas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| descricao      | varchar(300) | YES  |     | NULL    |                |
+| data_inicio    | date         | YES  |     | NULL    |                |
+| data_conclusao | date         | YES  |     | NULL    |                |
+| projetos_id    | int          | YES  | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table tarefas
+    -> modify column descricao varchar(300) not null;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++---------------------------------+
+| Tables_in_ex24_sistema_projetos |
++---------------------------------+
+| clientes                        |
+| departamentos                   |
+| funcionarios                    |
+| funcionarios_projeto            |
+| projetos                        |
+| tarefas                         |
++---------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> desc clientes;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| nome     | varchar(100) | NO   |     | NULL    |                |
+| endereco | varchar(100) | YES  |     | NULL    |                |
+| email    | varchar(100) | YES  |     | NULL    |                |
+| telefone | int          | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc departamentos;
++----------------------------+--------------+------+-----+---------+----------------+
+| Field                      | Type         | Null | Key | Default | Extra          |
++----------------------------+--------------+------+-----+---------+----------------+
+| id                         | int          | NO   | PRI | NULL    | auto_increment |
+| nome                       | varchar(100) | NO   |     | NULL    |                |
+| localizacao                | varchar(100) | YES  |     | NULL    |                |
+| funcionario_responsavel_id | int          | YES  | MUL | NULL    |                |
++----------------------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc funcionarios;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(100) | NO   |     | NULL    |                |
+| cargo            | varchar(100) | YES  |     | NULL    |                |
+| data_contratacao | date         | YES  |     | NULL    |                |
+| departamentos_id | int          | YES  | MUL | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc funcionarios_projeto;
++-----------------+------+------+-----+---------+----------------+
+| Field           | Type | Null | Key | Default | Extra          |
++-----------------+------+------+-----+---------+----------------+
+| id              | int  | NO   | PRI | NULL    | auto_increment |
+| projetos_id     | int  | NO   | MUL | NULL    |                |
+| funcionarios_id | int  | NO   | MUL | NULL    |                |
++-----------------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc projetos;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| nome             | varchar(100) | NO   |     | NULL    |                |
+| data_inicio      | date         | YES  |     | NULL    |                |
+| data_termino     | date         | YES  |     | NULL    |                |
+| departamentos_id | int          | YES  | MUL | NULL    |                |
+| clientes_id      | int          | YES  | MUL | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc tarefas;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| descricao      | varchar(300) | NO   |     | NULL    |                |
+| data_inicio    | date         | YES  |     | NULL    |                |
+| data_conclusao | date         | YES  |     | NULL    |                |
+| projetos_id    | int          | YES  | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql>

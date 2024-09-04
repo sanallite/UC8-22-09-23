@@ -1,0 +1,183 @@
+
+marcio.7997@uept46-13074-a MINGW64 ~
+$ git config --global user.name "Márcio Teodoro"
+
+marcio.7997@uept46-13074-a MINGW64 ~
+$ git config --global user.email marciorteodoro@proton.me
+
+marcio.7997@uept46-13074-a MINGW64 ~
+$ cd ~/
+
+marcio.7997@uept46-13074-a MINGW64 ~
+$ cd ..
+
+marcio.7997@uept46-13074-a MINGW64 /c/Users
+$ cd marcio.7997/Documentos/UC8%22-09-23/Git
+bash: cd: marcio.7997/Documentos/UC8%22-09-23/Git: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 /c/Users
+$ cd marcio.7997/Documentos/UC8%%22-09-23/Git
+bash: cd: marcio.7997/Documentos/UC8%%22-09-23/Git: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 /c/Users
+$ cd marcio.7997/Documents/UC8%%22-09-23/Git
+bash: cd: marcio.7997/Documents/UC8%%22-09-23/Git: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 /c/Users
+$ cd marcio.7997/Documents/UC8 22-09-23/Git
+bash: cd: too many arguments
+
+marcio.7997@uept46-13074-a MINGW64 /c/Users
+$ cd marcio.7997
+
+marcio.7997@uept46-13074-a MINGW64 ~
+$ cd Documents
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents
+$ cd UC8 22-09-23
+bash: cd: too many arguments
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents
+$ cd UC8%22-09-23
+bash: cd: UC8%22-09-23: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents
+$ cd UC8%%22-09-23
+bash: cd: UC8%%22-09-23: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents
+$ cd marcio.7997/Documents/Git
+bash: cd: marcio.7997/Documents/Git: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents
+$ cd Documents/Git
+bash: cd: Documents/Git: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents
+$ cd Git
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents/Git
+$ cd /c/users/marcio.7997/Documents/UC8 22-09-23
+bash: cd: too many arguments
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents/Git
+$ cd /c/users/marcio.7997/Documents/UC8\22-09-23
+bash: cd: /c/users/marcio.7997/Documents/UC822-09-23: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 ~/Documents/Git
+$ cd /c/users/marcio.7997
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997
+$ cd /c/users/marcio.7997/documents
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents
+$ cd UC8\22-09-23
+bash: cd: UC822-09-23: No such file or directory
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents
+$
+Display all 5216 possibilities? (y or n)
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents
+$ cd /c/users/marcio.7997/documents/Git
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git
+$ git init
+Initialized empty Git repository in C:/Users/marcio.7997/Documents/Git/.git/
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        citacoes.txt
+        comandos.png
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git add citacoes.txt
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   citacoes.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        comandos.png
+
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git commit -m "Início do arquivo"
+[master (root-commit) af53c27] Início do arquivo
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 citacoes.txt
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        comandos.png
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   citacoes.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        comandos.png
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git add citacoes.txt
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   citacoes.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        comandos.png
+
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git commit -m "Primeira citação"
+[master ee67192] Primeira citação
+ 1 file changed, 1 insertion(+)
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$ git log
+commit ee67192dab1d05b3cfd4d1a0489de36de5a21bbc (HEAD -> master)
+Author: Márcio Teodoro <marciorteodoro@proton.me>
+Date:   Wed Nov 1 10:06:16 2023 -0300
+
+    Primeira citação
+
+commit af53c2750dd6d4369b33d32bb1a98ad6297e344f
+Author: Márcio Teodoro <marciorteodoro@proton.me>
+Date:   Wed Nov 1 10:02:18 2023 -0300
+
+    Início do arquivo
+
+marcio.7997@uept46-13074-a MINGW64 /c/users/marcio.7997/documents/Git (master)
+$
